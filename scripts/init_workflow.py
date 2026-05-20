@@ -1,0 +1,90 @@
+#!/usr/bin/env python3
+"""Initialize a lightweight AI dev workflow artifact directory."""
+from __future__ import annotations
+
+import argparse
+import datetime as dt
+import pathlib
+import re
+import sys
+
+ROOT = pathlib.Path(__file__).resolve().parents[1]
+TEMPLATES = ROOT / "assets" / "templates"
+
+
+def slugify(value: str) -> str:
+    value = value.strip().lower()
+    value = re.sub(r"[^a-z0-9]+", "-", value)
+    value = re.sub(r"-+", "-", value).strip("-")
+    return value or "feature"
+
+
+def read_summary(path: pathlib.Path, max_chars: int = 1200) -> str:
+    text = path.read_text(encoding="utf-8", errors="replace")
+    lines = []
+    for line in text.splitlines():
+        if line.strip():
+            lines.append(line.rstrip())
+        if sum(len(x) for x in lines) > max_chars:
+            break
+    summary = "\n".join(lines)
+    if len(summary) > max_chars:
+        summary = summary[:max_chars].rstrip() + "…"
+    return summary
+
+
+def render(template: str, values: dict[str, str]) -> str:
+    for key, value in values.items():
+        template = template.replace("{{" + key + "}}", value)
+    return template
+
+
+def main() -> int:
+    parser = argparse.ArgumentParser()
+    parser.add_argument("--project-root", required=True, type=pathlib.Path)
+    parser.add_argument("--source-prd", required=True, type=pathlib.Path)
+    parser.add_argument("--feature", required=True)
+    parser.add_argument("--force", action="store_true")
+    args = parser.parse_args()
+
+    project_root = args.project_root.resolve()
+    source_prd = args.source_prd.resolve()
+    if not source_prd.exists():
+        print(f"source PRD not found: {source_prd}", file=sys.stderr)
+        return 2
+
+    feature_slug = slugify(args.feature)
+    workflow_dir = project_root / ".ai-workflow" / feature_slug
+    workflow_dir.mkdir(parents=True, exist_ok=True)
+
+    created_at = dt.datetime.now().astimezone().isoformat(timespec="seconds")
+    values = {
+        "FEATURE_NAME": args.feature,
+        "FEATURE_SLUG": feature_slug,
+        "SOURCE_PRD": str(source_prd),
+        "WORKFLOW_DIR": str(workflow_dir),
+        "CREATED_AT": created_at,
+        "RAW_SUMMARY": read_summary(source_prd),
+        "CURRENT_PHASE": "01_REQUIREMENTS",
+        "CHECKPOINT_STATUS": "WAITING_FOR_HUMAN_CONFIRMATION",
+        "PHASE_00_STATUS": "DONE",
+        "PHASE_01_STATUS": "READY",
+        "PHASE_02_STATUS": "NOT_STARTED",
+        "PHASE_03_STATUS": "NOT_STARTED",
+        "PHASE_04_STATUS": "NOT_STARTED",
+        "NEXT_ACTION": "Run 01 Requirements with requirements-analyst after human confirmation.",
+    }
+
+    for template_path in sorted(TEMPLATES.glob("*.md")):
+        target = workflow_dir / template_path.name
+        if target.exists() and not args.force:
+            print(f"skip existing {target}")
+            continue
+        target.write_text(render(template_path.read_text(encoding="utf-8"), values), encoding="utf-8")
+        print(f"wrote {target}")
+
+    return 0
+
+
+if __name__ == "__main__":
+    raise SystemExit(main())
