@@ -1,222 +1,222 @@
-# Evaluation Guide
+# 评估指南
 
-This guide defines how to judge whether AI Dev Workflow is useful, reliable, and worth keeping.
+这份指南用于判断 AI Dev Workflow 是否真的好用、可靠、值得保留。
 
-The goal is not to reward long documents. The goal is to prove that the workflow makes AI-assisted development more controllable, resumable, and verifiable than a raw chat-driven coding session.
+重点不是奖励“文档写得多”，而是验证这套流程是否能让 AI 辅助开发比裸聊天更可控、更容易接手、更容易验证。
 
-## Evaluation thesis
+## 评估核心
 
-A good AI development workflow should improve six things:
+一套好的 AI 研发工作流，应该改善六件事：
 
-1. Requirement clarity
-2. Scope control
-3. Handoff quality
-4. Execution readiness
-5. Verification evidence
-6. Learning and repeatability
+1. 需求更清楚
+2. 范围更可控
+3. 交接更容易
+4. 实现计划更可执行
+5. 验证证据更充分
+6. 经验更容易复用
 
-If the workflow does not improve these, it is just ceremony.
+如果这些都没有改善，那这套流程只是仪式感。
 
-## References and borrowed ideas
+## 借鉴的评估思路
 
-This rubric borrows from common software engineering evaluation ideas:
+这套评分表融合了常见软件工程里的几个思路：
 
-- Requirements traceability: every important requirement should connect to design, implementation, and verification.
-- SDLC quality gates: each phase should have explicit exit criteria before the next phase starts.
-- Definition of Done: completion requires evidence, not claims.
-- V-model thinking: requirements and design should map to later validation and verification.
-- SWE-bench-style evaluation: real software tasks should be judged by whether the final system actually passes tests or resolves the issue, not by how plausible the plan sounds.
-- Agent workflow evaluation: a later agent should be able to resume from persisted artifacts without private chat context.
+- **需求可追踪性**：重要需求应该能一路追踪到设计、实现和验证。
+- **SDLC 质量门禁**：每个阶段进入下一阶段前，都应该有明确退出标准。
+- **Definition of Done**：完成不能只靠口头声明，必须有证据。
+- **V 模型思路**：前面的需求和设计，后面应该能被验证和确认。
+- **SWE-bench 式评估**：真实软件任务最终要看是否真的通过测试、解决问题，而不是计划看起来是否合理。
+- **Agent 工作流评估**：后续 agent 应该能只靠持久化产物接手，而不是依赖私有聊天上下文。
 
-These are adapted for a lightweight artifact-first workflow, not copied as a heavyweight process framework.
+这些不是照搬重型流程，而是改造成适合轻量 artifact-first 工作流的验收标准。
 
-## What to evaluate
+## 评估对象
 
-Evaluate one workflow run, usually one PRD or feature request.
+通常评估一次完整工作流运行，也就是一个 PRD 或一个功能需求。
 
-Required inputs:
+需要查看的材料：
 
 ```text
-PRD or raw feature request
+PRD 或原始需求
 .ai-workflow/<feature>/00_INTAKE.md
 .ai-workflow/<feature>/01_REQUIREMENTS.md
 .ai-workflow/<feature>/02_TECHNICAL_DESIGN.md
 .ai-workflow/<feature>/03_IMPLEMENTATION.md
 .ai-workflow/<feature>/04_REVIEW.md
 .ai-workflow/<feature>/STATUS.md
-Implementation diff, if implementation was executed
-Test/build/lint output, if implementation was executed
+实现 diff，如果已经执行实现
+测试 / build / lint 输出，如果已经执行实现
 ```
 
-## Scoring scale
+## 评分标准
 
-Use 0 to 3 for each criterion:
+每个小项按 0 到 3 分评分：
 
-| Score | Meaning |
+| 分数 | 含义 |
 |---|---|
-| 0 | Missing or unusable |
-| 1 | Present but shallow, vague, or hard to act on |
-| 2 | Useful and mostly complete |
-| 3 | Strong, specific, actionable, and independently verifiable |
+| 0 | 缺失或不可用 |
+| 1 | 有，但很浅、很虚、难以执行 |
+| 2 | 有用，基本完整 |
+| 3 | 强，具体、可执行、可独立验证 |
 
-Total score:
+总分：
 
 ```text
-Maximum: 63 points
-Passing MVP: 42+ points and no critical gate failure
-Strong workflow: 53+ points and no critical gate failure
+满分：63 分
+MVP 通过：42+ 分，且没有关键门禁失败
+强工作流：53+ 分，且没有关键门禁失败
 ```
 
-Critical gate failures automatically fail the run even if the numeric score is high.
+如果出现关键门禁失败，即使总分很高，也判定这次运行失败。
 
-## Rubric
+## 评分表
 
-### 1. Requirement normalization
+### 1. 需求规格化
 
-Artifact: `01_REQUIREMENTS.md`
+评估文件：`01_REQUIREMENTS.md`
 
-| Criterion | Score |
+| 标准 | 分数 |
 |---|---|
-| Actors, goals, workflows, entities, states, permissions, and constraints are explicit | 0-3 |
-| Requirements are testable and not just copied from the PRD | 0-3 |
-| Open questions and ambiguities are preserved instead of guessed | 0-3 |
+| 角色、目标、流程、实体、状态、权限、约束是否明确 | 0-3 |
+| 需求是否可测试，而不是简单复制 PRD | 0-3 |
+| 不确定点是否被保留为开放问题，而不是 AI 瞎猜 | 0-3 |
 
-Strong signal:
+强信号：
 
 ```text
-The original PRD reads like business narrative; 01_REQUIREMENTS.md reads like something design and engineering can build from.
+原 PRD 是业务叙述；01_REQUIREMENTS.md 变成了设计和工程能直接使用的规格。
 ```
 
-### 2. Traceability
+### 2. 可追踪性
 
-Artifacts: `01_REQUIREMENTS.md`, `02_TECHNICAL_DESIGN.md`, `03_IMPLEMENTATION.md`, `04_REVIEW.md`
+评估文件：`01_REQUIREMENTS.md`、`02_TECHNICAL_DESIGN.md`、`03_IMPLEMENTATION.md`、`04_REVIEW.md`
 
-| Criterion | Score |
+| 标准 | 分数 |
 |---|---|
-| Important PRD requirements map to requirements/design/implementation/review artifacts | 0-3 |
-| Non-goals and deferred items are explicit | 0-3 |
-| Verification references the original requirements rather than only checking code mechanically | 0-3 |
+| 重要 PRD 需求是否能映射到需求、设计、实现、验证产物 | 0-3 |
+| 不做什么、延期什么是否明确 | 0-3 |
+| 验证是否回看原需求，而不是只机械检查代码 | 0-3 |
 
-Strong signal:
+强信号：
 
 ```text
-A reviewer can answer: where was this requirement handled, tested, deferred, or rejected?
+评审者能回答：这个需求在哪里处理、测试、延期或拒绝了？
 ```
 
-### 3. Scope control
+### 3. 范围控制
 
-Artifact: `02_TECHNICAL_DESIGN.md`
+评估文件：`02_TECHNICAL_DESIGN.md`
 
-| Criterion | Score |
+| 标准 | 分数 |
 |---|---|
-| The workflow challenges overbroad scope and proposes a realistic MVP | 0-3 |
-| It identifies risks, dependencies, edge cases, and tradeoffs | 0-3 |
-| It records human decisions instead of silently choosing strategic/product direction | 0-3 |
+| 是否主动挑战过大的范围，并提出现实 MVP | 0-3 |
+| 是否识别风险、依赖、边界情况和取舍 | 0-3 |
+| 是否记录需要人决定的问题，而不是静默替人做产品/战略决策 | 0-3 |
 
-Strong signal:
+强信号：
 
 ```text
-The workflow does not blindly implement the full PRD. It recommends the smallest useful slice and explains what waits.
+流程没有照单全收 PRD，而是能推荐最小有用切片，并说明哪些内容先等一等。
 ```
 
-### 4. Handoff and resumability
+### 4. 交接和可恢复性
 
-Artifacts: all `.ai-workflow/<feature>/` files, especially `STATUS.md`
+评估文件：所有 `.ai-workflow/<feature>/` 文件，尤其是 `STATUS.md`
 
-| Criterion | Score |
+| 标准 | 分数 |
 |---|---|
-| A fresh agent can understand current state without chat history | 0-3 |
-| `STATUS.md` accurately records phase, decisions, open questions, and next action | 0-3 |
-| Phase artifacts contain enough context for the next phase to proceed safely | 0-3 |
+| 新 agent 不看聊天记录也能理解当前状态 | 0-3 |
+| `STATUS.md` 是否准确记录阶段、决策、开放问题和下一步 | 0-3 |
+| 每个阶段产物是否给下一阶段足够上下文 | 0-3 |
 
-Strong signal:
+强信号：
 
 ```text
-Open a new session, provide only .ai-workflow/<feature>/, and the agent can say what happened and what to do next.
+新开一个会话，只给 .ai-workflow/<feature>/，agent 就能说清楚做到了哪里、下一步做什么。
 ```
 
-### 5. Implementation readiness
+### 5. 实现准备度
 
-Artifact: `03_IMPLEMENTATION.md`
+评估文件：`03_IMPLEMENTATION.md`
 
-| Criterion | Score |
+| 标准 | 分数 |
 |---|---|
-| Tasks are small, ordered, and executable | 0-3 |
-| File paths, commands, expected outputs, and verification steps are concrete | 0-3 |
-| TDD or another explicit verification-first approach is used where appropriate | 0-3 |
+| 任务是否小、顺序清楚、可执行 | 0-3 |
+| 文件路径、命令、预期输出、验证步骤是否具体 | 0-3 |
+| 适合的地方是否使用 TDD 或其他验证优先方法 | 0-3 |
 
-Strong signal:
+强信号：
 
 ```text
-Another agent can execute the plan without asking for hidden context or inventing major missing design decisions.
+另一个 agent 可以直接执行计划，不需要隐藏聊天上下文，也不用临时补大量设计决策。
 ```
 
-### 6. Verification quality
+### 6. 验证质量
 
-Artifact: `04_REVIEW.md`
+评估文件：`04_REVIEW.md`
 
-| Criterion | Score |
+| 标准 | 分数 |
 |---|---|
-| Test/build/lint/manual QA evidence is recorded with commands and outcomes | 0-3 |
-| Requirements coverage is checked against earlier artifacts | 0-3 |
-| Remaining risks are classified as fixed, accepted, deferred, or blocked | 0-3 |
+| 是否记录测试 / build / lint / 手工 QA 的命令和结果 | 0-3 |
+| 是否根据前面需求检查覆盖情况 | 0-3 |
+| 剩余风险是否被分类为已修复、已接受、延期或阻塞 | 0-3 |
 
-Strong signal:
+强信号：
 
 ```text
-The run ends with evidence, not “looks good” prose.
+流程结束时留下的是证据，而不是“看起来没问题”。
 ```
 
-### 7. Workflow efficiency and friction
+### 7. 流程效率和摩擦
 
-Artifacts: `STATUS.md`, user feedback, run notes
+评估文件：`STATUS.md`、用户反馈、运行记录
 
-| Criterion | Score |
+| 标准 | 分数 |
 |---|---|
-| The workflow adds useful control without excessive ceremony | 0-3 |
-| Human checkpoints are placed at meaningful decision points | 0-3 |
-| The process reduces rework, confusion, or duplicated context compared with raw chat | 0-3 |
+| 流程是否增加了有效控制，而不是无意义仪式 | 0-3 |
+| 人工确认点是否放在真正重要的决策位置 | 0-3 |
+| 相比裸聊天，是否减少返工、混乱或重复补上下文 | 0-3 |
 
-Strong signal:
-
-```text
-The user feels the gates improve control instead of slowing everything down for no reason.
-```
-
-## Critical gate failures
-
-Any of these fail the run:
-
-- The workflow implements code before requirements/design approval when approval was required.
-- The implementation claims completion without running any meaningful verification when verification was possible.
-- A fresh agent cannot determine current phase or next action from artifacts.
-- Major PRD requirements disappear without being marked as deferred, rejected, or out of scope.
-- The workflow silently invents product, security, compliance, or integration decisions that require human approval.
-
-## Comparison test: raw chat vs workflow
-
-The best way to prove value is to compare two runs on the same PRD.
-
-### Run A: raw chat baseline
-
-Prompt:
+强信号：
 
 ```text
-Read this PRD and implement it.
+用户感觉这些门禁提高了控制力，而不是没必要地拖慢节奏。
 ```
 
-Record:
+## 关键门禁失败
 
-- Output quality
-- Missing requirements
-- Scope drift
-- Test evidence
-- Ease of resuming in a new session
-- Number of clarification loops or rework points
+出现以下任一情况，本次运行直接失败：
 
-### Run B: AI Dev Workflow
+- 需要审批时，流程在需求/设计确认前就开始写代码。
+- 能验证却没有做任何有意义验证，就声称完成。
+- 新 agent 无法从 artifact 判断当前阶段或下一步。
+- 重要 PRD 需求消失了，且没有标记为延期、拒绝或不在范围内。
+- 流程静默替用户做了产品、安全、合规、集成等需要人工确认的决策。
 
-Run:
+## 对比实验：裸聊天 vs 工作流
+
+证明价值最好的方式，是同一个 PRD 跑两组。
+
+### A 组：裸聊天基线
+
+提示词：
+
+```text
+阅读这个 PRD 并实现它。
+```
+
+记录：
+
+- 输出质量
+- 是否漏需求
+- 是否范围漂移
+- 是否有测试证据
+- 新会话是否容易接手
+- 澄清次数和返工点
+
+### B 组：AI Dev Workflow
+
+按阶段跑：
 
 ```text
 00 Intake
@@ -226,25 +226,25 @@ Run:
 → 04 Verification & Review
 ```
 
-Record the same metrics.
+记录同样指标。
 
-### Expected improvement
+### 预期改善
 
-| Dimension | Raw chat often does | Workflow should do |
+| 维度 | 裸聊天常见问题 | 工作流应该做到 |
 |---|---|---|
-| Requirements | Mixes business prose with assumptions | Normalizes and makes testable |
-| Scope | Tries to do everything or chooses randomly | Narrows intentionally |
-| Handoff | Depends on chat history | Depends on artifacts |
-| Execution | Starts coding too early | Plans before coding |
-| Verification | Claims completion | Records evidence |
-| Resume | Hard for another agent | Clear from `STATUS.md` |
+| 需求 | 把业务描述和假设混在一起 | 规格化、可测试 |
+| 范围 | 想全做或随机取舍 | 有意识地收敛 |
+| 交接 | 依赖聊天历史 | 依赖 artifact |
+| 执行 | 太早开始写代码 | 先计划再实现 |
+| 验证 | 口头说完成 | 记录证据 |
+| 恢复 | 换 agent 难接手 | 看 `STATUS.md` 即可理解 |
 
-## Fresh-agent handoff test
+## 新 agent 接手测试
 
-This is the most important practical test.
+这是最重要的实践测试。
 
-1. Start a new agent/session.
-2. Provide only:
+1. 新开一个 agent / 会话。
+2. 只提供：
 
 ```text
 .ai-workflow/<feature>/STATUS.md
@@ -252,37 +252,37 @@ This is the most important practical test.
 .ai-workflow/<feature>/02_TECHNICAL_DESIGN.md
 ```
 
-3. Ask:
+3. 问它：
 
 ```text
-What is the current project state, what decisions have been made, what is blocked, and what should happen next?
+当前项目状态是什么？已经做了哪些决策？有什么阻塞？下一步应该做什么？
 ```
 
-Pass criteria:
+通过标准：
 
-- The answer identifies the correct phase.
-- The next action matches `STATUS.md`.
-- Open questions and risks are mentioned.
-- No hidden chat context is required.
+- 能识别正确阶段。
+- 下一步和 `STATUS.md` 一致。
+- 能提到开放问题和风险。
+- 不需要隐藏聊天上下文。
 
-## PRD-to-verification traceability test
+## PRD 到验证的追踪测试
 
-Pick 5 important PRD requirements.
+从 PRD 里挑 5 个重要需求。
 
-For each one, fill this table:
+逐个填表：
 
-| PRD requirement | Requirements section | Design section | Implementation task | Verification evidence | Status |
+| PRD 需求 | Requirements 位置 | Design 位置 | Implementation 任务 | Verification 证据 | 状态 |
 |---|---|---|---|---|---|
 |  |  |  |  |  | covered/deferred/rejected/missing |
 
-Pass criteria:
+通过标准：
 
-- 4 of 5 are covered, explicitly deferred, or explicitly rejected.
-- 0 of 5 silently disappear.
+- 5 个里至少 4 个被覆盖、明确延期或明确拒绝。
+- 0 个静默消失。
 
-## Evaluation report template
+## 评估报告模板
 
-Copy this into `.ai-workflow/<feature>/EVALUATION.md` after a run.
+一次运行结束后，可以复制到 `.ai-workflow/<feature>/EVALUATION.md`：
 
 ```markdown
 # Evaluation — <feature>
@@ -319,7 +319,7 @@ Copy this into `.ai-workflow/<feature>/EVALUATION.md` after a run.
 
 ## Fresh-agent handoff result
 
-Describe what happened when a fresh agent received only the artifacts.
+描述新 agent 只拿 artifact 接手时的表现。
 
 ## Traceability sample
 
@@ -340,19 +340,19 @@ Describe what happened when a fresh agent received only the artifacts.
 - 
 ```
 
-## Recommended MVP acceptance standard
+## 第一版推荐验收标准
 
-For the first public version of this workflow, accept it only if:
+第一版公开使用前，建议满足：
 
-1. A fresh agent can resume from artifacts.
-2. Requirements become clearer and more testable than the PRD.
-3. Design review narrows scope or records why full scope is justified.
-4. Implementation plan is executable without hidden chat context.
-5. Verification records real evidence.
-6. The workflow beats raw chat on at least 4 of these 6 dimensions: clarity, scope control, handoff, implementation readiness, verification, rework reduction.
+1. 新 agent 可以只靠 artifact 接手。
+2. requirements 产物比原 PRD 更清楚、更可测试。
+3. design review 能收敛范围，或记录为什么需要完整范围。
+4. implementation plan 不依赖隐藏聊天上下文也能执行。
+5. verification 有真实证据。
+6. 相比裸聊天，在以下 6 项中至少 4 项更好：清晰度、范围控制、交接、实现准备度、验证、返工减少。
 
-One-line standard:
+一句话标准：
 
 ```text
-The workflow is good if it turns AI development from chat-driven improvisation into artifact-driven, resumable, and verifiable execution.
+这套流程好不好，看它能不能把 AI 开发从“聊天驱动的即兴发挥”，变成“产物驱动、可接手、可验证的执行”。
 ```
