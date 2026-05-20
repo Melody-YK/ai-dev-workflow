@@ -83,6 +83,10 @@ python3 scripts/status.py "/path/to/project/.ai-workflow/<feature-slug>"
 
 See [USAGE.md](USAGE.md) for the full Chinese usage guide.
 
+## Evaluation
+
+See [EVALUATION.md](EVALUATION.md) for the rubric used to judge whether a workflow run is clear, resumable, executable, and verifiable.
+
 ## Repository layout
 
 ```text
