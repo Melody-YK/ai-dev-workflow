@@ -85,7 +85,7 @@ See [USAGE.md](USAGE.md) for the full Chinese usage guide.
 
 ## Evaluation
 
-See [EVALUATION.md](EVALUATION.md) for the rubric used to judge whether a workflow run is clear, resumable, executable, and verifiable.
+See [EVALUATION.md](EVALUATION.md) for the English rubric, or [EVALUATION.zh-CN.md](EVALUATION.zh-CN.md) for the Chinese version, used to judge whether a workflow run is clear, resumable, executable, and verifiable.
 
 ## Repository layout
 
