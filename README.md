@@ -5,7 +5,7 @@ AI Dev Workflow 是一个轻量、可控、以阶段产物交接为核心的 AI 
 它把一个 PRD 或原始需求，拆成一条清晰的研发链路：
 
 ```text
-PRD → Requirements → Product & Engineering Review → Implementation → Verification
+PRD → Requirements → Product & Engineering Review → Prototype → Implementation → Verification
 ```
 
 核心目标不是让 AI 一口气自动做完所有事，而是让每个阶段都有明确输入、明确输出、人工确认点和可验证证据。
@@ -35,6 +35,7 @@ AI Dev Workflow 的做法是：
 - **人工门禁**：关键阶段默认暂停，等待人确认后再继续。
 - **能力编排**：按能力组织流程，而不是绑定某个固定工具。
 - **可替换 skill**：`requirements-analyst`、gstack-style review、`superpowers` 是默认选择，但不是硬依赖。
+- **先原型后实现**：先用静态 HTML/CSS 验证页面、流程、角色和状态，再进入正式实现。
 - **先小后大**：第一版只做最小可用流程，不急着引入复杂状态机。
 
 ## 默认工作流
@@ -43,8 +44,9 @@ AI Dev Workflow 的做法是：
 00 Intake
 01 Requirements
 02 Product & Engineering Review
-03 Implementation Planning & Build
-04 Verification & Review
+03 Prototype
+04 Implementation Planning & Build
+05 Verification & Review
 ```
 
 默认生成的工作目录：
@@ -54,8 +56,14 @@ AI Dev Workflow 的做法是：
 ├── 00_INTAKE.md
 ├── 01_REQUIREMENTS.md
 ├── 02_TECHNICAL_DESIGN.md
-├── 03_IMPLEMENTATION.md
-├── 04_REVIEW.md
+├── 03_PROTOTYPE.md
+├── prototype/
+│   ├── index.html
+│   ├── css/
+│   │   └── style.css
+│   └── pages/
+├── 04_IMPLEMENTATION.md
+├── 05_REVIEW.md
 └── STATUS.md
 ```
 

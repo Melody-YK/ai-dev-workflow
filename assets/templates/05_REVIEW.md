@@ -1,4 +1,4 @@
-# 04 Verification & Review — {{FEATURE_NAME}}
+# 05 Verification & Review — {{FEATURE_NAME}}
 
 ## Purpose
 
@@ -8,12 +8,17 @@ Prove the implementation satisfies requirements and is ready for handoff.
 
 - `01_REQUIREMENTS.md`
 - `02_TECHNICAL_DESIGN.md`
-- `03_IMPLEMENTATION.md`
+- `03_PROTOTYPE.md`
+- `04_IMPLEMENTATION.md`
 - Implementation diff
 
 ## Requirements coverage
 
 _To be completed during review._
+
+## Prototype coverage
+
+_To compare implemented behavior against approved prototype when applicable._
 
 ## Test/build/lint evidence
 
@@ -39,6 +44,7 @@ _To be completed during review._
 ## Completion checklist
 
 - [ ] Requirements coverage checked
+- [ ] Prototype coverage checked or marked not applicable
 - [ ] Tests/build/lint evidence recorded
 - [ ] Issues fixed or accepted
 - [ ] Human accepted result

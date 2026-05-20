@@ -1,6 +1,6 @@
 ---
 name: ai-dev-workflow
-description: Orchestrate a lightweight, artifact-driven AI development workflow from PRD/intake through requirements analysis, product/engineering review, implementation planning, build, and verification. Use when the user wants to run requirements-analyst, gstack, and superpowers together in a controlled workflow, create .ai-workflow artifacts, or test an AI development process on a PRD.
+description: Orchestrate a lightweight, artifact-driven AI development workflow from PRD/intake through requirements analysis, product/engineering review, static prototype generation, implementation planning, build, and verification. Use when the user wants to run requirements-analyst, gstack, and superpowers together in a controlled workflow, create .ai-workflow artifacts, generate a requirements-driven prototype, or test an AI development process on a PRD.
 ---
 
 # AI Dev Workflow
@@ -18,8 +18,14 @@ Default workspace for a feature:
 ├── 00_INTAKE.md
 ├── 01_REQUIREMENTS.md
 ├── 02_TECHNICAL_DESIGN.md
-├── 03_IMPLEMENTATION.md
-├── 04_REVIEW.md
+├── 03_PROTOTYPE.md
+├── prototype/
+│   ├── index.html
+│   ├── css/
+│   │   └── style.css
+│   └── pages/
+├── 04_IMPLEMENTATION.md
+├── 05_REVIEW.md
 └── STATUS.md
 ```
 
@@ -41,10 +47,24 @@ If the user explicitly asks to continue without stopping, proceed, but still upd
 | 00 Intake | Capture source request and constraints | Intake normalization | This orchestrator |
 | 01 Requirements | Turn request into explicit requirements/spec | Requirements analysis | `requirements-analyst` |
 | 02 Product & Engineering Review | Challenge scope and produce technical design | Product/architecture review | `gstack` concepts: office-hours, plan-ceo-review, plan-eng-review |
-| 03 Implementation | Write plan and build with discipline | TDD execution | `superpowers`: writing-plans, subagent-driven-development or executing-plans |
-| 04 Verification & Review | Prove the result works | Verification/review/QA | `superpowers` verification + optional `gstack` review/qa |
+| 03 Prototype | Generate a requirements-driven static prototype | Prototype planning and static HTML/CSS generation | `requirements-analyst` prototype approach |
+| 04 Implementation | Write plan and build with discipline | TDD execution | `superpowers`: writing-plans, subagent-driven-development or executing-plans |
+| 05 Verification & Review | Prove the result works | Verification/review/QA | `superpowers` verification + optional `gstack` review/qa |
 
 Read `references/phase-routing.md` when deciding which capability to invoke. Read `references/capability-contracts.md` when writing handoff prompts. Read `references/artifact-spec.md` when creating or validating artifacts.
+
+## Prototype rules
+
+Default Prototype is Level 1:
+
+- Pure static HTML + CSS.
+- Open `prototype/index.html` directly in a browser.
+- No JavaScript unless the user explicitly approves Level 2 interactive prototype.
+- No CDN, backend, build tools, or CSS frameworks.
+- Generate a prototype plan first, then pages one at a time.
+- `prototype/index.html` is the navigation hub.
+- All other HTML files go under `prototype/pages/`.
+- Map every page back to requirements/user stories.
 
 ## Human gates
 
@@ -52,9 +72,10 @@ Pause after each phase unless the user says to run unattended:
 
 - After 00: confirm the normalized intake.
 - After 01: confirm requirements and unresolved questions.
-- After 02: confirm design decisions and implementation scope.
-- After 03 planning: confirm whether to execute.
-- After 04: confirm accept/rework/retro.
+- After 02: confirm design decisions and prototype scope.
+- After 03: confirm prototype approval or requested changes.
+- After 04 planning: confirm whether to execute.
+- After 05: confirm accept/rework/retro.
 
 ## Quality gates
 
@@ -64,8 +85,9 @@ Before moving to the next phase, check:
 - Decisions are recorded in `STATUS.md`.
 - Inputs consumed and outputs produced are listed.
 - The next phase has a clear handoff prompt.
+- Prototype approval is recorded before implementation unless explicitly skipped.
 
-Use `scripts/validate_artifacts.py <workflow-dir>` for a basic structural check.
+Use `scripts/validate_artifacts.py <workflow-dir>` for a basic structural check. Use `--require-prototype-files` after prototype generation.
 
 ## Output style
 

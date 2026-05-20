@@ -9,7 +9,7 @@
 默认编排三个能力：
 
 ```text
-requirements-analyst → gstack-style review → superpowers
+requirements-analyst → gstack-style review → prototype generation → superpowers
 ```
 
 它们的分工是：
@@ -19,8 +19,9 @@ requirements-analyst → gstack-style review → superpowers
 | 00 Intake | 收集原始需求、建立工作目录 | ai-dev-workflow |
 | 01 Requirements | 把 PRD 转成明确、可验证的需求规格 | requirements-analyst |
 | 02 Product & Engineering Review | 审范围、审架构、审风险、定 MVP | gstack-style review |
-| 03 Implementation | 写实现计划、TDD 实现、记录验证 | superpowers |
-| 04 Verification & Review | 测试、review、QA、发布前确认 | superpowers + optional gstack |
+| 03 Prototype | 生成需求驱动的静态 HTML/CSS 原型，验证页面、流程、角色和状态 | requirements-analyst prototype approach |
+| 04 Implementation | 写实现计划、TDD 实现、记录验证 | superpowers |
+| 05 Verification & Review | 测试、review、QA、发布前确认 | superpowers + optional gstack |
 
 ## 2. 目录结构
 
@@ -31,8 +32,14 @@ requirements-analyst → gstack-style review → superpowers
 ├── 00_INTAKE.md
 ├── 01_REQUIREMENTS.md
 ├── 02_TECHNICAL_DESIGN.md
-├── 03_IMPLEMENTATION.md
-├── 04_REVIEW.md
+├── 03_PROTOTYPE.md
+├── prototype/
+│   ├── index.html
+│   ├── css/
+│   │   └── style.css
+│   └── pages/
+├── 04_IMPLEMENTATION.md
+├── 05_REVIEW.md
 └── STATUS.md
 ```
 
@@ -101,8 +108,9 @@ python3 /Users/melody/.openclaw/workspace/ai-dev-workflow/scripts/validate_artif
 OK 00_INTAKE.md
 OK 01_REQUIREMENTS.md
 OK 02_TECHNICAL_DESIGN.md
-OK 03_IMPLEMENTATION.md
-OK 04_REVIEW.md
+OK 03_PROTOTYPE.md
+OK 04_IMPLEMENTATION.md
+OK 05_REVIEW.md
 OK STATUS.md
 ```
 
@@ -186,18 +194,53 @@ PRD.md
 - 状态流转是否闭环
 - 风险和测试策略是否明确
 
-### Step 3：跑 Implementation Planning
+### Step 3：跑 Prototype
 
 对 agent 说：
 
 ```text
-继续跑 03 Implementation Planning，先只写计划，不实现
+继续跑 03 Prototype，先写 Prototype Plan，确认后再生成页面
+```
+
+要求 agent 读取：
+
+```text
+01_REQUIREMENTS.md
+02_TECHNICAL_DESIGN.md
+PRD.md
 ```
 
 输出：
 
 ```text
-03_IMPLEMENTATION.md
+03_PROTOTYPE.md
+prototype/index.html
+prototype/css/style.css
+prototype/pages/*.html
+```
+
+这一阶段重点检查：
+
+- 页面是否覆盖核心用户流程
+- 页面是否映射到需求 / 用户故事
+- 角色、权限、状态是否能在页面上看出来
+- mock data 是否真实可信
+- 原型是否能直接用浏览器打开
+
+默认只允许 HTML + CSS，不使用 JS、CDN、后端或构建工具。
+
+### Step 4：跑 Implementation Planning
+
+对 agent 说：
+
+```text
+继续跑 04 Implementation Planning，先只写计划，不实现
+```
+
+输出：
+
+```text
+04_IMPLEMENTATION.md
 ```
 
 这一阶段应该包含：
@@ -211,12 +254,12 @@ PRD.md
 
 建议先审计划，再决定是否执行。
 
-### Step 4：执行实现
+### Step 5：执行实现
 
 确认计划后，对 agent 说：
 
 ```text
-按 03_IMPLEMENTATION.md 执行实现
+按 04_IMPLEMENTATION.md 执行实现
 ```
 
 执行时要求：
@@ -226,18 +269,18 @@ PRD.md
 - 失败要记录 blocker
 - 修改的文件要写入执行日志
 
-### Step 5：跑 Verification & Review
+### Step 6：跑 Verification & Review
 
 对 agent 说：
 
 ```text
-继续跑 04 Verification & Review
+继续跑 05 Verification & Review
 ```
 
 输出：
 
 ```text
-04_REVIEW.md
+05_REVIEW.md
 ```
 
 这一阶段记录：
@@ -310,11 +353,12 @@ PRD.md
 
 1. `01_REQUIREMENTS.md` 是否比原 PRD 更清晰、更可测试？
 2. `02_TECHNICAL_DESIGN.md` 是否能主动收敛范围，而不是照单全收？
-3. `03_IMPLEMENTATION.md` 是否能让另一个 agent 不看聊天记录也能执行？
-4. `04_REVIEW.md` 是否有真实证据，而不是“看起来完成了”？
-5. `STATUS.md` 是否能让中途换 agent 也知道项目在哪里？
+3. `03_PROTOTYPE.md` 和 `prototype/` 是否能提前验证页面、流程、角色和状态？
+4. `04_IMPLEMENTATION.md` 是否能让另一个 agent 不看聊天记录也能执行？
+5. `05_REVIEW.md` 是否有真实证据，而不是“看起来完成了”？
+6. `STATUS.md` 是否能让中途换 agent 也知道项目在哪里？
 
-如果这五点成立，第一版流程就算跑通。
+如果这些点成立，第一版流程就算跑通。
 
 ## 10. 后续可增强点
 

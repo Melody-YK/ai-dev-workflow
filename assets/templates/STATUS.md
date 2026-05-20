@@ -14,8 +14,9 @@
 | 00 Intake | `00_INTAKE.md` | {{PHASE_00_STATUS}} | ai-dev-workflow |
 | 01 Requirements | `01_REQUIREMENTS.md` | {{PHASE_01_STATUS}} | requirements-analyst |
 | 02 Product & Engineering Review | `02_TECHNICAL_DESIGN.md` | {{PHASE_02_STATUS}} | gstack-style review |
-| 03 Implementation | `03_IMPLEMENTATION.md` | {{PHASE_03_STATUS}} | superpowers |
-| 04 Verification & Review | `04_REVIEW.md` | {{PHASE_04_STATUS}} | superpowers + optional gstack |
+| 03 Prototype | `03_PROTOTYPE.md` + `prototype/` | {{PHASE_03_STATUS}} | requirements-driven prototype generation |
+| 04 Implementation | `04_IMPLEMENTATION.md` | {{PHASE_04_STATUS}} | superpowers |
+| 05 Verification & Review | `05_REVIEW.md` | {{PHASE_05_STATUS}} | superpowers + optional gstack |
 
 ## Decisions
 

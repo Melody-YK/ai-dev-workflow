@@ -72,6 +72,7 @@ def main() -> int:
         "PHASE_02_STATUS": "NOT_STARTED",
         "PHASE_03_STATUS": "NOT_STARTED",
         "PHASE_04_STATUS": "NOT_STARTED",
+        "PHASE_05_STATUS": "NOT_STARTED",
         "NEXT_ACTION": "Run 01 Requirements with requirements-analyst after human confirmation.",
     }
 

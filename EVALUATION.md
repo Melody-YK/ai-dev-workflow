@@ -41,8 +41,8 @@ PRD 或原始需求
 .ai-workflow/<feature>/00_INTAKE.md
 .ai-workflow/<feature>/01_REQUIREMENTS.md
 .ai-workflow/<feature>/02_TECHNICAL_DESIGN.md
-.ai-workflow/<feature>/03_IMPLEMENTATION.md
-.ai-workflow/<feature>/04_REVIEW.md
+.ai-workflow/<feature>/04_IMPLEMENTATION.md
+.ai-workflow/<feature>/05_REVIEW.md
 .ai-workflow/<feature>/STATUS.md
 实现 diff，如果已经执行实现
 测试 / build / lint 输出，如果已经执行实现
@@ -62,9 +62,9 @@ PRD 或原始需求
 总分：
 
 ```text
-满分：63 分
-MVP 通过：42+ 分，且没有关键门禁失败
-强工作流：53+ 分，且没有关键门禁失败
+满分：72 分
+MVP 通过：48+ 分，且没有关键门禁失败
+强工作流：60+ 分，且没有关键门禁失败
 ```
 
 如果出现关键门禁失败，即使总分很高，也判定这次运行失败。
@@ -89,7 +89,7 @@ MVP 通过：42+ 分，且没有关键门禁失败
 
 ### 2. 可追踪性
 
-评估文件：`01_REQUIREMENTS.md`、`02_TECHNICAL_DESIGN.md`、`03_IMPLEMENTATION.md`、`04_REVIEW.md`
+评估文件：`01_REQUIREMENTS.md`、`02_TECHNICAL_DESIGN.md`、`03_PROTOTYPE.md`、`04_IMPLEMENTATION.md`、`05_REVIEW.md`
 
 | 标准 | 分数 |
 |---|---|
@@ -119,7 +119,24 @@ MVP 通过：42+ 分，且没有关键门禁失败
 流程没有照单全收 PRD，而是能推荐最小有用切片，并说明哪些内容先等一等。
 ```
 
-### 4. 交接和可恢复性
+
+### 4. 原型验证
+
+评估文件：`03_PROTOTYPE.md`、`prototype/`
+
+| 标准 | 分数 |
+|---|---|
+| 是否先形成 Prototype Plan，而不是直接乱生成页面 | 0-3 |
+| 页面是否覆盖核心流程、角色、权限和状态 | 0-3 |
+| 页面是否映射到需求 / 用户故事，并能直接打开评审 | 0-3 |
+
+强信号：
+
+```text
+不用写正式代码，评审者就能通过静态原型发现流程缺口、页面缺失或权限理解错误。
+```
+
+### 5. 交接和可恢复性
 
 评估文件：所有 `.ai-workflow/<feature>/` 文件，尤其是 `STATUS.md`
 
@@ -135,9 +152,9 @@ MVP 通过：42+ 分，且没有关键门禁失败
 新开一个会话，只给 .ai-workflow/<feature>/，agent 就能说清楚做到了哪里、下一步做什么。
 ```
 
-### 5. 实现准备度
+### 6. 实现准备度
 
-评估文件：`03_IMPLEMENTATION.md`
+评估文件：`04_IMPLEMENTATION.md`
 
 | 标准 | 分数 |
 |---|---|
@@ -151,9 +168,9 @@ MVP 通过：42+ 分，且没有关键门禁失败
 另一个 agent 可以直接执行计划，不需要隐藏聊天上下文，也不用临时补大量设计决策。
 ```
 
-### 6. 验证质量
+### 7. 验证质量
 
-评估文件：`04_REVIEW.md`
+评估文件：`05_REVIEW.md`
 
 | 标准 | 分数 |
 |---|---|
@@ -167,7 +184,7 @@ MVP 通过：42+ 分，且没有关键门禁失败
 流程结束时留下的是证据，而不是“看起来没问题”。
 ```
 
-### 7. 流程效率和摩擦
+### 8. 流程效率和摩擦
 
 评估文件：`STATUS.md`、用户反馈、运行记录
 
@@ -187,10 +204,11 @@ MVP 通过：42+ 分，且没有关键门禁失败
 
 出现以下任一情况，本次运行直接失败：
 
-- 需要审批时，流程在需求/设计确认前就开始写代码。
+- 需要审批时，流程在需求/设计/原型确认前就开始写代码。
 - 能验证却没有做任何有意义验证，就声称完成。
 - 新 agent 无法从 artifact 判断当前阶段或下一步。
 - 重要 PRD 需求消失了，且没有标记为延期、拒绝或不在范围内。
+- 原型阶段声称完成，但没有页面映射、无法打开，或绕过了明确要求的静态约束。
 - 流程静默替用户做了产品、安全、合规、集成等需要人工确认的决策。
 
 ## 对比实验：裸聊天 vs 工作流
@@ -222,8 +240,9 @@ MVP 通过：42+ 分，且没有关键门禁失败
 00 Intake
 → 01 Requirements
 → 02 Product & Engineering Review
-→ 03 Implementation
-→ 04 Verification & Review
+→ 03 Prototype
+→ 04 Implementation
+→ 05 Verification & Review
 ```
 
 记录同样指标。
@@ -235,6 +254,7 @@ MVP 通过：42+ 分，且没有关键门禁失败
 | 需求 | 把业务描述和假设混在一起 | 规格化、可测试 |
 | 范围 | 想全做或随机取舍 | 有意识地收敛 |
 | 交接 | 依赖聊天历史 | 依赖 artifact |
+| 原型 | 没有可视化验证，直接写代码 | 先用静态原型验证页面和流程 |
 | 执行 | 太早开始写代码 | 先计划再实现 |
 | 验证 | 口头说完成 | 记录证据 |
 | 恢复 | 换 agent 难接手 | 看 `STATUS.md` 即可理解 |
