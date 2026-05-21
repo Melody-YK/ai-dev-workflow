@@ -4,7 +4,9 @@
 
 挑战需求范围，收敛本轮交付范围，并形成可实现的技术设计。
 
-本阶段使用 gstack-style review 作为多角色评审能力：产品、工程、安全/风险、QA。评审结果必须合并到本文件，不替代 workflow artifact contract。
+本阶段使用 gstack-style review 作为多角色评审能力：产品、工程、安全/风险、QA。
+
+本文件是 02 阶段的 workflow 级摘要、决策和门禁 artifact；不要把多角色评审压扁在本文件里。深度评审必须先写入 `reviews/`，再汇总到本文件。
 
 ## 输入
 
@@ -27,9 +29,32 @@
 - 参考契约：`references/provider-contracts/gstack-review.md`。
 - gstack 只提供 review 能力；AI Dev Workflow 拥有阶段产物、状态和门禁。
 
-## 产品评审
+## 评审产物索引
 
-_检查用户价值、业务目标、角色/流程完整性、范围是否过大，以及本轮交付边界。_
+02 阶段必须先生成或更新：
+
+```text
+reviews/
+├── product-review.md
+├── engineering-review.md
+├── security-risk-review.md
+└── qa-review.md
+```
+
+| Artifact | 状态 | 用途 |
+|---|---|---|
+| `reviews/product-review.md` | 计划中 | 产品范围、用户价值、非目标、产品风险和人工决策 |
+| `reviews/engineering-review.md` | 计划中 | 架构、数据模型、状态机、API / 集成、工程取舍 |
+| `reviews/security-risk-review.md` | 计划中 | 权限、审计、数据保护、滥用场景、阻塞风险 |
+| `reviews/qa-review.md` | 计划中 | 验收覆盖、测试路径、回归风险、证据要求 |
+
+## Executive summary
+
+_在深度 review notes 完成后填写。用 5-8 条写清楚本阶段最重要的判断、阻塞项和推荐下一步。_
+
+## 产品评审摘要
+
+_从 `reviews/product-review.md` 汇总。检查用户价值、业务目标、角色/流程完整性、范围是否过大，以及本轮交付边界。_
 
 ### 推荐本轮交付范围
 
@@ -43,9 +68,9 @@ _明确本轮不做、延期或拒绝的需求，并说明原因。_
 
 _记录价值、体验、流程、角色、运营或 adoption 风险。_
 
-## 工程评审
+## 工程评审摘要
 
-_检查架构、数据模型、状态流转、接口、迁移、可维护性和实现复杂度。_
+_从 `reviews/engineering-review.md` 汇总。检查架构、数据模型、状态流转、接口、迁移、可维护性和实现复杂度。_
 
 ### 架构设计
 
@@ -67,17 +92,17 @@ _记录接口、第三方依赖、内部服务、数据同步或事件机制。_
 
 _记录为什么选择当前方案，以及被拒绝的备选方案。_
 
-## 安全 / 风险评审
+## 安全 / 风险评审摘要
 
-_检查权限、审计、数据安全、滥用场景、合规风险和上线风险。_
+_从 `reviews/security-risk-review.md` 汇总。检查权限、审计、数据安全、滥用场景、合规风险和上线风险。_
 
 | 风险 | 影响 | 概率 | 缓解方式 | 负责人 | 状态 |
 |---|---|---|---|---|---|
 |  |  |  |  |  | open |
 
-## QA / 测试策略
+## QA / 测试策略摘要
 
-_引用 `requirements/validation.md`，说明自动化测试、手工 QA、回归范围和关键验收路径。_
+_从 `reviews/qa-review.md` 汇总。引用 `requirements/validation.md`，说明自动化测试、手工 QA、回归范围和关键验收路径。_
 
 | 场景 | 验收标准 | 测试方式 | 证据位置 | 状态 |
 |---|---|---|---|---|
@@ -103,7 +128,11 @@ _记录重要需求在本评审中被接受、调整、延期或拒绝的情况�
 
 ## 完成检查清单
 
-- [ ] 产品评审已完成，本轮交付范围明确
+- [ ] `reviews/product-review.md` 已完成，并有明确产品结论
+- [ ] `reviews/engineering-review.md` 已完成，并有明确工程推荐方案
+- [ ] `reviews/security-risk-review.md` 已完成，并有权限/审计/数据风险结论
+- [ ] `reviews/qa-review.md` 已完成，并有核心验收路径和证据要求
+- [ ] 产品评审摘要已完成，本轮交付范围明确
 - [ ] 不做什么已记录
 - [ ] 工程方案足够具体，可进入实现计划
 - [ ] 数据模型、状态流转、API / 集成已记录

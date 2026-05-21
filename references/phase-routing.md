@@ -49,8 +49,13 @@ Suggested handoff:
 ```text
 Read <workflow>/01_REQUIREMENTS.md, all files under <workflow>/requirements/, and the source PRD.
 Perform product review, engineering review, security/risk review, and QA review.
-Write <workflow>/02_TECHNICAL_DESIGN.md with recommended current delivery scope, non-goals, product review, engineering review, architecture, data model direction, state transitions, APIs/integrations, risk register, and QA/test matrix.
-If the review accepts, changes, defers, or rejects important requirements, update <workflow>/requirements/traceability.md or record the needed update in 02_TECHNICAL_DESIGN.md.
+First write provider-native review notes:
+- <workflow>/reviews/product-review.md
+- <workflow>/reviews/engineering-review.md
+- <workflow>/reviews/security-risk-review.md
+- <workflow>/reviews/qa-review.md
+Then write <workflow>/02_TECHNICAL_DESIGN.md as a workflow summary/control artifact with executive summary, recommended current delivery scope, non-goals, product review summary, engineering review summary, architecture, data model direction, state transitions, APIs/integrations, risk register, and QA/test matrix.
+If the review accepts, changes, defers, or rejects important requirements, update <workflow>/requirements/traceability.md, especially the design-decision column. Do not claim traceability was updated unless it actually was.
 Surface decisions for human approval.
 ```
 

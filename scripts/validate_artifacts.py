@@ -29,6 +29,14 @@ REQUIREMENTS_DETAIL_PATHS = [
     "requirements/traceability.md",
 ]
 
+REVIEW_DETAIL_PATHS = [
+    "reviews",
+    "reviews/product-review.md",
+    "reviews/engineering-review.md",
+    "reviews/security-risk-review.md",
+    "reviews/qa-review.md",
+]
+
 PROTOTYPE_OPTIONAL_PATHS = [
     "prototype/index.html",
     "prototype/css/style.css",
@@ -43,6 +51,11 @@ def main() -> int:
         "--require-requirements-details",
         action="store_true",
         help="Also require detailed requirements files under requirements/.",
+    )
+    parser.add_argument(
+        "--require-review-notes",
+        action="store_true",
+        help="Also require gstack-style review notes under reviews/.",
     )
     parser.add_argument(
         "--require-prototype-files",
@@ -72,6 +85,18 @@ def main() -> int:
 
     if args.require_requirements_details:
         for relative in REQUIREMENTS_DETAIL_PATHS:
+            path = workflow_dir / relative
+            if not path.exists():
+                print(f"MISSING {relative}")
+                failed = True
+            elif path.is_file() and not path.read_text(encoding="utf-8", errors="replace").strip():
+                print(f"EMPTY {relative}")
+                failed = True
+            else:
+                print(f"OK {relative}")
+
+    if args.require_review_notes:
+        for relative in REVIEW_DETAIL_PATHS:
             path = workflow_dir / relative
             if not path.exists():
                 print(f"MISSING {relative}")

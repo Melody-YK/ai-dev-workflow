@@ -37,19 +37,34 @@
 
 ## 02 阶段输出要求
 
-必须在 `02_TECHNICAL_DESIGN.md` 中形成：
+02 阶段必须采用“深度 review notes + workflow summary”的结构，避免把 gstack-style 能力压扁成模板填空。
 
+必须先生成或更新 provider-native review notes：
+
+```text
+reviews/
+├── product-review.md
+├── engineering-review.md
+├── security-risk-review.md
+└── qa-review.md
+```
+
+每个 review note 都应保持 reviewer stance：挑战、取舍、指出风险和人工决策，不只是复述需求。
+
+然后在 `02_TECHNICAL_DESIGN.md` 中形成摘要、决策和门禁：
+
+- Executive summary：5-8 条最重要判断、阻塞项和推荐下一步。
 - 推荐本轮交付范围。
 - 明确不做什么。
-- 产品评审结论。
-- 工程评审结论。
-- 安全/风险评审结论。
-- QA / 测试策略。
+- 产品评审摘要，并链接 `reviews/product-review.md`。
+- 工程评审摘要，并链接 `reviews/engineering-review.md`。
+- 安全/风险评审摘要，并链接 `reviews/security-risk-review.md`。
+- QA / 测试策略摘要，并链接 `reviews/qa-review.md`。
 - 架构、数据模型、状态流转、API / 集成设计。
 - 风险登记表：风险、影响、概率、缓解方式、负责人、状态。
 - 需要人工决策的问题。
 
-如果重要需求被接受、调整、延期或拒绝，必须更新 `requirements/traceability.md`，或在 `02_TECHNICAL_DESIGN.md` 中明确标记待更新。
+如果重要需求被接受、调整、延期或拒绝，必须真实更新 `requirements/traceability.md`，尤其是设计决策列；不能只在 `02_TECHNICAL_DESIGN.md` 中声称已更新。
 
 ## 05 阶段输出要求
 

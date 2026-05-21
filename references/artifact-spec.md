@@ -92,6 +92,28 @@ Rules:
 - `requirements/traceability.md` starts with PRD-to-requirement mapping and can be extended later with design, prototype, implementation, and verification links.
 - Additional files under `requirements/` are allowed if they improve handoff quality and are linked from `01_REQUIREMENTS.md`.
 
+## Review artifacts
+
+02 Product & Engineering Review uses a summary/control file plus provider-native review notes.
+
+Required files after 02 review:
+
+```text
+02_TECHNICAL_DESIGN.md
+reviews/
+├── product-review.md
+├── engineering-review.md
+├── security-risk-review.md
+└── qa-review.md
+```
+
+Rules:
+
+- `02_TECHNICAL_DESIGN.md` records the executive summary, recommended delivery scope, non-goals, key decisions, architecture/design summary, risk summary, QA strategy summary, traceability updates, human decisions, and approval gate.
+- Detailed gstack-style review output should live under `reviews/` instead of being compressed into `02_TECHNICAL_DESIGN.md`.
+- Review notes must challenge and decide; they should not merely restate requirements.
+- If 02 changes, defers, or rejects requirements, `requirements/traceability.md` must be updated truthfully.
+
 ## Prototype artifact
 
 Prototype is a first-class phase artifact, not an implementation shortcut.

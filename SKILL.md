@@ -199,6 +199,7 @@ Prototype 是 **decision artifact**，不是 shadow product。
 - 下一阶段有明确 handoff prompt。
 - `01_REQUIREMENTS.md` 只做摘要、索引和门禁；详细需求产物应保存在 `requirements/`，不要被压扁进单一文件。
 - `requirements/requirements.md` 必须是 provider-native 的完整需求分析文档，质量应接近直接运行 `requirements-analyst` 的输出；如果它只有几张简表，不得把 01 阶段标记为 DONE。
+- `02_TECHNICAL_DESIGN.md` 只做摘要、决策和门禁；gstack-style 多角色深度评审应保存在 `reviews/product-review.md`、`reviews/engineering-review.md`、`reviews/security-risk-review.md`、`reviews/qa-review.md`，不要被压扁进单一文件。
 - 进入 implementation 前，prototype 已被批准，或明确记录为 skipped。
 - 如果生成了 prototype，页面必须能直接打开，并且页面到 requirements / user stories 的映射完整。
 
