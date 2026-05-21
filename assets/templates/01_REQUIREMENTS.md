@@ -59,7 +59,7 @@ requirements/
 | `requirements/reverse.md` | 可选：当缺少可靠文档时，从现有代码反向提取需求 | 可选 |
 | `requirements/discovery.md` | 原始目标、相关方、约束和成功标准 | 计划中 |
 | `requirements/sort.md` | 价值排序、优先级、本轮交付适配和依赖说明 | 计划中 |
-| `requirements/requirements.md` | 详细角色、目标、用户故事、流程、功能/非功能需求 | 计划中 |
+| `requirements/requirements.md` | 完整 provider-native 需求分析：用户画像、活动流、故事地图、详细用户故事、验收条件、INVEST/质量检查、功能/非功能需求、角色权限、边界情况 | 计划中 |
 | `requirements/datamodel.md` | 领域实体、关系、关键字段、生命周期状态、权限相关数据 | 计划中 |
 | `requirements/clarification.md` | 歧义、假设、相关方决策和已澄清问题 | 计划中 |
 | `requirements/validation.md` | 验收标准、验证规则、可测试场景、边界情况和质量检查 | 计划中 |
@@ -111,6 +111,7 @@ _在需求分析过程中填写。请明确标注假设；不确定且需要人�
 ## 完成检查清单
 
 - [ ] `requirements/` 下已生成详细需求产物
+- [ ] `requirements/requirements.md` 达到直接运行 `requirements-analyst` 时的原生分析深度，而不是摘要表
 - [ ] 需求明确且可测试
 - [ ] 领域实体和生命周期状态已记录
 - [ ] 验证规则和验收标准已记录

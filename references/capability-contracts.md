@@ -18,7 +18,8 @@ A provider may use its own analysis method and may preserve richer provider-nati
 **Capability needed**
 - Discover actors, goals, constraints, entities, flows, states, permissions, edge cases, and acceptance criteria.
 - Identify ambiguity and ask/record clarification questions.
-- Produce detailed requirements artifacts without compressing useful structure into a single summary.
+- Produce a provider-native full requirements analysis under `requirements/requirements.md` without compressing useful structure into a short summary.
+- Preserve requirements-analyst-style depth: personas, activity flows, user story map, detailed user stories, acceptance criteria, INVEST or equivalent checks, diagrams when useful, functional/non-functional requirements, roles/permissions, and edge cases.
 
 **Default provider**
 - `requirements-analyst`
@@ -28,7 +29,7 @@ A provider may use its own analysis method and may preserve richer provider-nati
 - `requirements/reverse.md` for optional reverse requirements from existing code.
 - `requirements/discovery.md` for raw goals, stakeholders, constraints, and success criteria.
 - `requirements/sort.md` for value sorting, priority, delivery-scope fit, and dependency notes.
-- `requirements/requirements.md` for detailed requirements.
+- `requirements/requirements.md` for the full provider-native requirements analysis, comparable in depth to standalone `requirements-analyst` output.
 - `requirements/datamodel.md` for entities, relationships, states, and data constraints.
 - `requirements/clarification.md` for ambiguity resolution and stakeholder decisions.
 - `requirements/validation.md` for acceptance criteria, validation rules, scenarios, and edge cases.
@@ -40,8 +41,9 @@ Additional provider-native artifacts are allowed under `requirements/` if they i
 
 **Done when**
 - Detailed requirements artifacts exist under `requirements/`.
-- Actors, workflows, states, data entities, permissions, functional requirements, non-functional requirements, validation criteria, and open questions are explicit.
-- `01_REQUIREMENTS.md` summarizes the outcome and links the detailed artifacts.
+- `requirements/requirements.md` is a deep native requirements-analysis document, not a terse extracted summary.
+- Actors, personas, workflows, story map or equivalent flow breakdown, detailed user stories, acceptance criteria, states, data entities, permissions, functional requirements, non-functional requirements, validation criteria, and open questions are explicit.
+- `01_REQUIREMENTS.md` summarizes the outcome and links the detailed artifacts without replacing them.
 - Human approval or required changes are recorded.
 
 ## 02 Product & Engineering Review

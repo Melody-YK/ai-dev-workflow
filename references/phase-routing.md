@@ -21,14 +21,23 @@ Suggested handoff:
 ```text
 Read <workflow>/00_INTAKE.md and the linked source PRD.
 Use requirements-analyst as the analysis method, not as a competing output template.
+
+Important quality rule:
+<workflow>/requirements/requirements.md is the provider-native full requirements analysis document. It should be comparable in depth to running requirements-analyst directly, not a short summary table.
+
 Produce detailed requirements artifacts under <workflow>/requirements/:
-- requirements.md for actors, goals, flows, functional and non-functional requirements, roles, permissions, constraints, and edge cases.
+- discovery.md for stakeholder discovery, raw goals, constraints, success criteria, and initial scope.
+- sort.md for prioritization and delivery-scope reasoning.
+- requirements.md as the full native requirements-analysis document, including personas, activity/user-flow diagrams, story map, detailed user stories, acceptance criteria, INVEST or equivalent quality checks, functional/non-functional requirements, roles/permissions, edge cases, and constraints.
 - datamodel.md for entities, relationships, key fields, lifecycle states, and data constraints.
-- validation.md for acceptance criteria, validation rules, testable scenarios, and edge cases.
+- clarification.md for resolved ambiguities, assumptions, and stakeholder decisions.
+- validation.md for acceptance criteria, validation rules, testable scenarios, consistency checks, and requirement quality checks.
+- prd.md for the formalized specification distilled from the full analysis.
 - open-questions.md for ambiguities that require human confirmation.
 - traceability.md for mapping source PRD items to requirements.
-Then update <workflow>/01_REQUIREMENTS.md with an executive summary, links to the detailed artifacts, key assumptions, open question summary, and approval status.
+Then update <workflow>/01_REQUIREMENTS.md with only an executive summary, links to the detailed artifacts, key assumptions, open question summary, handoff notes, and approval status.
 Preserve open questions instead of guessing.
+Do not mark phase 01 DONE if requirements/requirements.md is much thinner than a direct requirements-analyst output.
 ```
 
 ## 02 Product & Engineering Review
