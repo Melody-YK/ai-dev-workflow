@@ -20,10 +20,10 @@ requirements-analyst → gstack-style review → prototype generation → superp
 |---|---|---|
 | 00 Intake | 收集原始需求、建立工作目录 | ai-dev-workflow |
 | 01 Requirements | 把 PRD 转成明确、可验证的需求规格 | requirements-analyst |
-| 02 Product & Engineering Review | 审范围、审架构、审风险、定本轮交付范围 | gstack-style review |
+| 02 Product & Engineering Review | 审范围、审架构、审安全/风险、审 QA 策略、定本轮交付范围 | gstack-style review |
 | 03 Prototype | 生成需求驱动的静态 HTML/CSS 原型，验证页面、流程、角色和状态 | requirements-analyst prototype approach |
-| 04 Implementation | 写实现计划、TDD 实现、记录验证 | superpowers |
-| 05 Verification & Review | 测试、review、QA、发布前确认 | superpowers + optional gstack |
+| 04 Implementation | 写实现计划、TDD/验证先行、小步执行、记录证据 | superpowers |
+| 05 Verification & Review | 完成前验证、代码/架构 review、QA/风险复查、发布前确认 | superpowers + optional gstack |
 
 ## 2. 目录结构
 
@@ -221,12 +221,12 @@ PRD.md
 
 这一阶段重点检查：
 
-- 是否建议收敛本轮交付范围
-- 哪些需求不做
-- 架构是否清楚
-- 数据模型方向是否合理
-- 状态流转是否闭环
-- 风险和测试策略是否明确
+- 产品评审是否收敛本轮交付范围
+- 哪些需求不做、延期或拒绝
+- 工程评审是否给出清楚架构、数据模型、状态流转和 API / 集成设计
+- 安全/风险评审是否覆盖权限、审计、数据安全、滥用场景和上线风险
+- QA / 测试策略是否覆盖核心验收标准
+- 需求变更是否写回 traceability 或开放问题
 
 ### Step 3：跑 Prototype
 
@@ -286,9 +286,10 @@ prototype/pages/*.html
 
 - 具体任务拆分
 - 具体文件路径
-- 测试优先步骤
-- 每步验证命令
+- 测试优先步骤或验证场景
+- 每步检查点和验证命令
 - 预期输出
+- 回滚 / 恢复说明
 - 是否需要人工确认
 
 建议先审计划，再决定是否执行。
@@ -303,10 +304,12 @@ prototype/pages/*.html
 
 执行时要求：
 
-- 优先 TDD
-- 每个任务有验证命令
-- 失败要记录 blocker
+- 优先 TDD 或先定义可验证场景
+- 每个任务有验证命令或检查点
+- 偏离计划要写入执行日志
+- 失败要记录 blocker 和处理方式
 - 修改的文件要写入执行日志
+- 必要时更新 `requirements/traceability.md`
 
 ### Step 6：跑 Verification & Review
 
@@ -325,12 +328,14 @@ prototype/pages/*.html
 这一阶段记录：
 
 - requirements coverage
+- prototype coverage（如适用）
 - 测试 / build / lint 证据
 - manual QA 证据
-- code review 问题
-- 已修复问题
+- code / architecture review 问题
+- security / risk review 问题
+- 已修复、接受、延期或阻塞的问题
 - 剩余风险
-- 是否建议交付
+- 发布就绪度：Ready / Ready with accepted risks / Blocked
 
 ## 7. 阶段推进规则
 

@@ -33,14 +33,14 @@ Preserve open questions instead of guessing.
 
 ## 02 Product & Engineering Review
 
-Use gstack-style review after requirements exist. Do not let it replace the requirements artifacts. Ask it to challenge and refine the build plan.
+Use gstack-style review after requirements exist. Do not let it replace the requirements artifacts. Ask it to act as product, engineering, security/risk, and QA reviewer. See `references/provider-contracts/gstack-review.md`.
 
 Suggested handoff:
 
 ```text
 Read <workflow>/01_REQUIREMENTS.md, all files under <workflow>/requirements/, and the source PRD.
-Perform product scope review and engineering review.
-Write <workflow>/02_TECHNICAL_DESIGN.md with recommended current delivery scope, non-goals, architecture, data model direction, state transitions, APIs/integrations, risks, and test matrix.
+Perform product review, engineering review, security/risk review, and QA review.
+Write <workflow>/02_TECHNICAL_DESIGN.md with recommended current delivery scope, non-goals, product review, engineering review, architecture, data model direction, state transitions, APIs/integrations, risk register, and QA/test matrix.
 If the review accepts, changes, defers, or rejects important requirements, update <workflow>/requirements/traceability.md or record the needed update in 02_TECHNICAL_DESIGN.md.
 Surface decisions for human approval.
 ```
@@ -73,25 +73,26 @@ Map pages back to requirements/user stories and update traceability when useful.
 
 ## 04 Implementation
 
-Use superpowers after design and prototype approval. First write a plan, then execute only after approval unless the user asks for unattended execution.
+Use superpowers after design and prototype approval. See `references/provider-contracts/superpowers-execution.md`. First write a plan, then execute only after approval unless the user asks for unattended execution.
 
 Suggested handoff:
 
 ```text
 Read <workflow>/02_TECHNICAL_DESIGN.md, <workflow>/03_PROTOTYPE.md, the approved prototype if present, and the detailed requirements artifacts under <workflow>/requirements/.
-Create an implementation plan in <workflow>/04_IMPLEMENTATION.md with small TDD-oriented tasks, exact files, commands, expected results, and checkpoints.
-Do not implement until approved.
+Create an implementation plan in <workflow>/04_IMPLEMENTATION.md with small TDD-oriented tasks, exact files, commands, expected results, checkpoints, rollback/recovery notes, and traceability updates.
+Do not implement until approved. If execution is approved, update execution log, changed files, verification commands, and blockers as work proceeds.
 ```
 
 ## 05 Verification
 
-Use superpowers verification and optional gstack review/qa depending on project type.
+Use superpowers verification and optional gstack review/QA/risk review depending on project type. See `references/provider-contracts/superpowers-execution.md` and `references/provider-contracts/gstack-review.md`.
 
 Suggested handoff:
 
 ```text
 Review the implementation against <workflow>/01_REQUIREMENTS.md, the detailed requirements artifacts under <workflow>/requirements/, <workflow>/02_TECHNICAL_DESIGN.md, and <workflow>/03_PROTOTYPE.md.
 Run available tests/build/lint/manual QA.
-Write evidence, issues, fixes, prototype coverage, and release readiness to <workflow>/05_REVIEW.md.
+Perform or request code/architecture review and risk/QA review when useful.
+Write evidence, issues, fixes, prototype coverage, risk classification, and release readiness to <workflow>/05_REVIEW.md.
 Update <workflow>/requirements/traceability.md with verification evidence when useful.
 ```

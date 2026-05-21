@@ -46,6 +46,8 @@ Additional provider-native artifacts are allowed under `requirements/` if they i
 
 ## 02 Product & Engineering Review
 
+Detailed provider contract: `references/provider-contracts/gstack-review.md`.
+
 **Input**
 - `01_REQUIREMENTS.md`
 - `requirements/discovery.md`
@@ -61,20 +63,22 @@ Additional provider-native artifacts are allowed under `requirements/` if they i
 - Existing codebase constraints
 
 **Capability needed**
-- Challenge scope and product wedge.
-- Recommend current delivery boundaries.
-- Produce architecture, data model direction, state machine, integration plan, risks, and test strategy.
+- Product review: challenge scope, user value, non-goals, and current delivery boundary.
+- Engineering review: produce architecture, data model direction, state machine, APIs/integrations, migrations, and maintainability notes.
+- Security/risk review: check permissions, auditability, data safety, abuse cases, compliance, and delivery risks.
+- QA review: define acceptance scenarios, regression paths, manual QA, and test matrix.
 
 **Default provider**
-- `gstack` review concepts: office-hours, plan-ceo-review, plan-eng-review.
+- `gstack` review concepts: office-hours, plan-ceo-review, plan-eng-review, QA/risk review.
 
 **Output**
 - `02_TECHNICAL_DESIGN.md`
 - Updates to `requirements/traceability.md` when requirements are accepted, changed, deferred, or rejected.
 
 **Done when**
-- Build scope, non-goals, architecture, interfaces, risks, test matrix, and human decisions are recorded.
+- Current delivery scope, non-goals, product review, engineering review, risk register, QA/test strategy, and human decisions are recorded.
 - Changes to requirements are reflected in traceability or open questions.
+- No blocking security, permission, audit, state-flow, or testing issue is left ownerless.
 
 ## 03 Prototype
 
@@ -112,17 +116,21 @@ Additional provider-native artifacts are allowed under `requirements/` if they i
 
 ## 04 Implementation Planning & Build
 
+Detailed provider contract: `references/provider-contracts/superpowers-execution.md`.
+
 **Input**
 - `02_TECHNICAL_DESIGN.md`
 - `03_PROTOTYPE.md`
 - Approved `prototype/` if generated
 - Requirements artifacts under `requirements/`
-- Codebase context
+- Codebase context and test framework
 
 **Capability needed**
-- Convert design and approved prototype into small implementation tasks.
-- Prefer TDD for behavior changes.
-- Execute with clear file paths, commands, and verification.
+- `writing-plans`: convert design and approved prototype into small implementation tasks with files, commands, dependencies, expected results, and checkpoints.
+- `test-driven-development`: define failing tests or verification scenarios before implementation when practical.
+- `executing-plans`: execute in small steps and record deviations, blockers, and results.
+- `subagent-driven-development`: optionally delegate isolated implementation sub-tasks while preserving the main workflow artifact contract.
+- `verification-before-completion`: run tests/build/lint/manual checks before claiming completion.
 
 **Default provider**
 - `superpowers`: writing-plans, test-driven-development, subagent-driven-development or executing-plans.
@@ -130,12 +138,20 @@ Additional provider-native artifacts are allowed under `requirements/` if they i
 **Output**
 - `04_IMPLEMENTATION.md`
 - Code changes
-- Test results
+- Test results and verification logs
+- Rollback/recovery notes when relevant
 
 **Done when**
-- Plan is executable, implementation is complete or blockers are explicit, and verification commands have been run.
+- Plan is executable and approved.
+- Implementation is complete or blockers are explicit.
+- Tests/verification have been run or exceptions are documented and approved.
+- Changed files and requirement traceability are recorded.
 
 ## 05 Verification & Review
+
+Detailed provider contracts:
+- `references/provider-contracts/superpowers-execution.md`
+- `references/provider-contracts/gstack-review.md`
 
 **Input**
 - Implementation diff
@@ -146,18 +162,20 @@ Additional provider-native artifacts are allowed under `requirements/` if they i
 - `04_IMPLEMENTATION.md`
 
 **Capability needed**
-- Verify requirements coverage.
-- Verify prototype coverage when applicable.
-- Run tests/lint/build/manual QA as applicable.
-- Review code quality and production readiness.
+- `superpowers` verification-before-completion: verify requirements coverage, prototype coverage, and test/build/lint/manual QA evidence.
+- `superpowers` requesting-code-review: request or simulate review, then record findings and fixes.
+- Optional `gstack` review: release readiness, QA review, engineering review, security/risk review.
 
 **Default provider**
 - `superpowers`: verification-before-completion, requesting-code-review.
-- Optional `gstack`: review, qa, cso.
+- Optional `gstack`: review, qa, cso/risk review.
 
 **Output**
 - `05_REVIEW.md`
 - Updates to `requirements/traceability.md` with verification evidence when useful.
 
 **Done when**
-- Evidence is recorded and remaining risks are classified as accepted, fixed, deferred, or blocked.
+- Evidence is recorded for requirements, prototype, tests/build/lint, manual QA when applicable, and code/risk review.
+- Remaining risks are classified as fixed, accepted, deferred, or blocked.
+- Release readiness is Ready / Ready with accepted risks / Blocked.
+- No blocking issue is marked as ready.

@@ -4,59 +4,110 @@
 
 挑战需求范围，收敛本轮交付范围，并形成可实现的技术设计。
 
+本阶段使用 gstack-style review 作为多角色评审能力：产品、工程、安全/风险、QA。评审结果必须合并到本文件，不替代 workflow artifact contract。
+
 ## 输入
 
 - `01_REQUIREMENTS.md`
+- `requirements/discovery.md`
+- `requirements/sort.md`
 - `requirements/requirements.md`
 - `requirements/datamodel.md`
+- `requirements/clarification.md`
 - `requirements/validation.md`
+- `requirements/prd.md`
 - `requirements/open-questions.md`
 - `requirements/traceability.md`
 - 来源 PRD：`{{SOURCE_PRD}}`
+- 现有代码结构 / 技术约束（如存在）
 
-## 推荐范围
+## Provider contract
 
-_由产品/工程评审填写。_
+- 默认 provider：gstack-style review。
+- 参考契约：`references/provider-contracts/gstack-review.md`。
+- gstack 只提供 review 能力；AI Dev Workflow 拥有阶段产物、状态和门禁。
 
-## 不做什么
+## 产品评审
 
-_由产品/工程评审填写。_
+_检查用户价值、业务目标、角色/流程完整性、范围是否过大，以及本轮交付边界。_
 
-## 架构设计
+### 推荐本轮交付范围
 
-_由产品/工程评审填写。_
+_由产品评审填写。_
 
-## 数据模型方向
+### 不做什么
 
-_由产品/工程评审填写。引用 `requirements/datamodel.md`，并说明必要调整或取舍。_
+_明确本轮不做、延期或拒绝的需求，并说明原因。_
 
-## 状态流转
+### 产品风险
 
-_由产品/工程评审填写。_
+_记录价值、体验、流程、角色、运营或 adoption 风险。_
 
-## API 与集成
+## 工程评审
 
-_由产品/工程评审填写。_
+_检查架构、数据模型、状态流转、接口、迁移、可维护性和实现复杂度。_
 
-## 风险与缓解措施
+### 架构设计
 
-_由产品/工程评审填写。_
+_由工程评审填写。_
 
-## 测试策略
+### 数据模型方向
 
-_由产品/工程评审填写。适用时引用 `requirements/validation.md`。_
+_引用 `requirements/datamodel.md`，并说明必要调整或取舍。_
+
+### 状态流转
+
+_记录关键状态、转换条件、异常路径和权限边界。_
+
+### API 与集成
+
+_记录接口、第三方依赖、内部服务、数据同步或事件机制。_
+
+### 工程取舍
+
+_记录为什么选择当前方案，以及被拒绝的备选方案。_
+
+## 安全 / 风险评审
+
+_检查权限、审计、数据安全、滥用场景、合规风险和上线风险。_
+
+| 风险 | 影响 | 概率 | 缓解方式 | 负责人 | 状态 |
+|---|---|---|---|---|---|
+|  |  |  |  |  | open |
+
+## QA / 测试策略
+
+_引用 `requirements/validation.md`，说明自动化测试、手工 QA、回归范围和关键验收路径。_
+
+| 场景 | 验收标准 | 测试方式 | 证据位置 | 状态 |
+|---|---|---|---|---|
+|  |  |  |  | planned |
 
 ## 追踪关系更新
 
 _记录重要需求在本评审中被接受、调整、延期或拒绝的情况。必要时更新 `requirements/traceability.md`。_
 
+| 需求 | 评审结论 | 影响 | traceability 更新状态 |
+|---|---|---|---|
+|  | accepted / changed / deferred / rejected |  | pending |
+
 ## 需要人工决策的问题
 
 - [ ] TBD
 
+## 审批决策
+
+- 状态：TBD
+- 审批人：
+- 决策说明：
+
 ## 完成检查清单
 
-- [ ] 范围已确认
-- [ ] 设计足够具体，可进入实现计划
-- [ ] 风险和测试策略已记录
+- [ ] 产品评审已完成，本轮交付范围明确
+- [ ] 不做什么已记录
+- [ ] 工程方案足够具体，可进入实现计划
+- [ ] 数据模型、状态流转、API / 集成已记录
+- [ ] 安全、权限、审计或合规风险已检查
+- [ ] QA / 测试策略覆盖核心验收标准
 - [ ] 对需求的任何变更已反映到需求产物或追踪说明中
+- [ ] 需要人工决策的问题已记录

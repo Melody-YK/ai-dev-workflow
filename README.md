@@ -134,6 +134,10 @@ python3 scripts/status.py "/path/to/project/.ai-workflow/<feature-slug>"
 ## 文档
 
 - [使用说明](USAGE.md)：详细说明如何初始化、推进阶段、检查 artifact。
+- [工作流总览](references/workflow-overview.md)：主流程与 requirements 子流程图。
+- [能力契约](references/capability-contracts.md)：各阶段 provider 输入、输出和完成条件。
+- [gstack Review Contract](references/provider-contracts/gstack-review.md)：产品/工程/安全风险/QA 多角色评审契约。
+- [superpowers Execution Contract](references/provider-contracts/superpowers-execution.md)：计划、TDD、执行和完成前验证契约。
 - [评估标准](EVALUATION.md)：说明如何判断这套流程是否真的比裸聊天更好。
 
 ## 仓库结构
