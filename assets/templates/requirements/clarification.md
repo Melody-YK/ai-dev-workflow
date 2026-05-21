@@ -1,15 +1,15 @@
-# Requirements Clarification — {{FEATURE_NAME}}
+# 需求澄清 — {{FEATURE_NAME}}
 
-## Purpose
+## 目的
 
-Resolve ambiguity, confirm assumptions, and record stakeholder decisions before validation/specification.
+在验证/规格化之前，解决歧义、确认假设，并记录相关方决策。
 
-## Clarification items
+## 澄清项
 
-| Question | Context | Owner | Decision | Status |
+| 问题 | 背景 | 负责人 | 决策 | 状态 |
 |---|---|---|---|---|
 |  |  |  |  | open |
 
-## Decision log
+## 决策日志
 
-_To be completed during clarification._
+_在澄清过程中填写。_

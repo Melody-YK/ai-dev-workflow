@@ -1,5 +1,5 @@
-# Open Questions — {{FEATURE_NAME}}
+# 开放问题 — {{FEATURE_NAME}}
 
-Questions here must be preserved instead of guessed. Move resolved questions into decisions or traceability notes.
+这里的问题必须被保留，不能靠猜测解决。已解决的问题应移动到决策记录或追踪说明中。
 
 - [ ] TBD

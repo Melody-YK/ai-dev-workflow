@@ -1,21 +1,21 @@
-# Validation — {{FEATURE_NAME}}
+# 需求验证 — {{FEATURE_NAME}}
 
-## Purpose
+## 目的
 
-Capture testable acceptance criteria, validation rules, scenarios, and edge cases.
+记录可测试的验收标准、验证规则、场景和边界情况。
 
-## Acceptance criteria
+## 验收标准
 
-_To be completed by requirements analysis._
+_由需求分析填写。_
 
-## Validation rules
+## 验证规则
 
-_To be completed by requirements analysis._
+_由需求分析填写。_
 
-## Scenario matrix
+## 场景矩阵
 
-_To be completed by requirements analysis._
+_由需求分析填写。_
 
-## Edge cases
+## 边界情况
 
-_To be completed by requirements analysis._
+_由需求分析填写。_

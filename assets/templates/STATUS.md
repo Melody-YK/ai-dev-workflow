@@ -1,30 +1,30 @@
-# Workflow Status — {{FEATURE_NAME}}
+# 工作流状态 — {{FEATURE_NAME}}
 
-- Feature: {{FEATURE_NAME}}
-- Workflow directory: `{{WORKFLOW_DIR}}`
-- Source PRD: `{{SOURCE_PRD}}`
-- Current phase: {{CURRENT_PHASE}}
-- Checkpoint status: {{CHECKPOINT_STATUS}}
-- Last updated: {{CREATED_AT}}
+- 功能：{{FEATURE_NAME}}
+- 工作流目录：`{{WORKFLOW_DIR}}`
+- 来源 PRD：`{{SOURCE_PRD}}`
+- 当前阶段：{{CURRENT_PHASE}}
+- 检查点状态：{{CHECKPOINT_STATUS}}
+- 最后更新：{{CREATED_AT}}
 
-## Contract principle
+## 契约原则
 
-AI Dev Workflow owns the phase contract, status, gates, and artifact locations. Capability providers such as `requirements-analyst`, gstack-style review, and `superpowers` provide methods and detailed outputs, but they do not replace the workflow contract.
+AI Dev Workflow 拥有阶段契约、状态、门禁和 artifact 位置。`requirements-analyst`、gstack-style review、`superpowers` 等能力提供者负责方法和详细产出，但不能替代 workflow contract。
 
-## Phases
+## 阶段
 
-| Phase | Artifact | Status | Provider |
+| 阶段 | Artifact | 状态 | Provider |
 |---|---|---|---|
-| 00 Intake | `00_INTAKE.md` | {{PHASE_00_STATUS}} | ai-dev-workflow |
-| 01 Requirements | `01_REQUIREMENTS.md` + `requirements/` | {{PHASE_01_STATUS}} | requirements-analyst |
-| 02 Product & Engineering Review | `02_TECHNICAL_DESIGN.md` | {{PHASE_02_STATUS}} | gstack-style review |
-| 03 Prototype | `03_PROTOTYPE.md` + `prototype/` | {{PHASE_03_STATUS}} | requirements-driven prototype generation |
-| 04 Implementation | `04_IMPLEMENTATION.md` | {{PHASE_04_STATUS}} | superpowers |
-| 05 Verification & Review | `05_REVIEW.md` | {{PHASE_05_STATUS}} | superpowers + optional gstack |
+| 00 输入整理 | `00_INTAKE.md` | {{PHASE_00_STATUS}} | ai-dev-workflow |
+| 01 需求工程 | `01_REQUIREMENTS.md` + `requirements/` | {{PHASE_01_STATUS}} | requirements-analyst |
+| 02 产品与工程评审 | `02_TECHNICAL_DESIGN.md` | {{PHASE_02_STATUS}} | gstack-style review |
+| 03 原型 | `03_PROTOTYPE.md` + `prototype/` | {{PHASE_03_STATUS}} | requirements-driven prototype generation |
+| 04 实现 | `04_IMPLEMENTATION.md` | {{PHASE_04_STATUS}} | superpowers |
+| 05 验证与评审 | `05_REVIEW.md` | {{PHASE_05_STATUS}} | superpowers + optional gstack |
 
-## Detailed artifacts
+## 详细产物
 
-### Requirements
+### 需求
 
 - `requirements/discovery.md`
 - `requirements/sort.md`
@@ -36,14 +36,14 @@ AI Dev Workflow owns the phase contract, status, gates, and artifact locations. 
 - `requirements/open-questions.md`
 - `requirements/traceability.md`
 
-## Decisions
+## 决策
 
-- None yet.
+- 暂无。
 
-## Open questions
+## 开放问题
 
-- [ ] Confirm whether to continue to 01 Requirements.
+- [ ] 确认是否继续进入 01 需求工程。
 
-## Next action
+## 下一步
 
 {{NEXT_ACTION}}

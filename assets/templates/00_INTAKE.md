@@ -1,35 +1,35 @@
-# 00 Intake — {{FEATURE_NAME}}
+# 00 输入整理 — {{FEATURE_NAME}}
 
-## Purpose
+## 目的
 
-Normalize the source request before downstream skill work begins.
+在下游 skill 开始工作前，整理原始需求来源、上下文和初始约束。
 
-## Source
+## 来源
 
-- Source PRD: `{{SOURCE_PRD}}`
-- Created: `{{CREATED_AT}}`
+- 来源 PRD：`{{SOURCE_PRD}}`
+- 创建时间：`{{CREATED_AT}}`
 
-## Raw request summary
+## 原始需求摘要
 
 {{RAW_SUMMARY}}
 
-## Known constraints
+## 已知约束
 
-- Artifact handoff is required between phases.
-- Human confirmation is required before moving to the next phase unless explicitly waived.
+- 阶段之间必须通过 artifact 文件交接。
+- 除非用户明确豁免，否则进入下一阶段前需要人工确认。
 
-## Initial assumptions
+## 初始假设
 
-- The PRD is treated as source material, not as final implementation scope.
-- Downstream phases may narrow the MVP.
+- PRD 是需求来源材料，不等于最终实现范围。
+- 后续阶段可以收敛 MVP 范围。
 
-## Open questions
+## 开放问题
 
-- [ ] Confirm whether the whole PRD should be implemented or narrowed to an MVP slice.
+- [ ] 确认是否实现完整 PRD，还是先收敛到一个 MVP 切片。
 
-## Completion checklist
+## 完成检查清单
 
-- [ ] Source PRD linked
-- [ ] Initial scope summarized
-- [ ] Open questions recorded
-- [ ] User confirmed moving to requirements analysis
+- [ ] 已链接来源 PRD
+- [ ] 已总结初始范围
+- [ ] 已记录开放问题
+- [ ] 用户已确认进入需求分析阶段

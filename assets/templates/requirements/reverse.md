@@ -1,19 +1,19 @@
-# Reverse Requirements — {{FEATURE_NAME}}
+# 反向需求提取 — {{FEATURE_NAME}}
 
-Optional entry point for extracting requirements from an existing codebase when reliable documentation is missing.
+当已有代码库但缺少可靠需求文档时，可选使用本入口从现有代码中提取需求。
 
-## Source code areas reviewed
+## 已审查的代码区域
 
-_To be completed when reverse analysis is used._
+_使用反向分析时填写。_
 
-## Extracted behavior
+## 已提取行为
 
-_To be completed when reverse analysis is used._
+_使用反向分析时填写。_
 
-## Inferred requirements
+## 推断需求
 
-_To be completed when reverse analysis is used. Mark uncertainty clearly._
+_使用反向分析时填写。必须明确标注不确定性。_
 
-## Gaps and risks
+## 缺口和风险
 
-_To be completed when reverse analysis is used._
+_使用反向分析时填写。_

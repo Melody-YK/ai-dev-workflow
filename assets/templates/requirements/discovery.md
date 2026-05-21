@@ -1,21 +1,21 @@
-# Requirements Discovery — {{FEATURE_NAME}}
+# 需求发现 — {{FEATURE_NAME}}
 
-## Purpose
+## 目的
 
-Collect raw goals, stakeholders, constraints, success criteria, and initial scope.
+收集原始目标、相关方、约束、成功标准和初始范围。
 
-## Stakeholders
+## 相关方
 
-_To be completed during discovery._
+_在 discovery 阶段填写。_
 
-## Goals
+## 目标
 
-_To be completed during discovery._
+_在 discovery 阶段填写。_
 
-## Success criteria
+## 成功标准
 
-_To be completed during discovery._
+_在 discovery 阶段填写。_
 
-## Scope notes
+## 范围说明
 
-_To be completed during discovery._
+_在 discovery 阶段填写。_

@@ -1,31 +1,31 @@
-# Requirements Detail — {{FEATURE_NAME}}
+# 详细需求 — {{FEATURE_NAME}}
 
-## Purpose
+## 目的
 
-Detailed requirements produced by the requirements analysis provider.
+记录需求分析 provider 产出的详细需求。
 
-This file may follow the richer native structure of `requirements-analyst` as long as it remains useful to downstream phases and traceable to the source PRD.
+只要对下游阶段有帮助，并且能追踪回来源 PRD，本文件可以保留 `requirements-analyst` 更丰富的原生结构。
 
-## Actors and goals
+## 角色和目标
 
-_To be completed by requirements analysis._
+_由需求分析填写。_
 
-## User stories / workflows
+## 用户故事 / 工作流
 
-_To be completed by requirements analysis._
+_由需求分析填写。_
 
-## Functional requirements
+## 功能需求
 
-_To be completed by requirements analysis._
+_由需求分析填写。_
 
-## Non-functional requirements
+## 非功能需求
 
-_To be completed by requirements analysis._
+_由需求分析填写。_
 
-## Roles and permissions
+## 角色与权限
 
-_To be completed by requirements analysis._
+_由需求分析填写。_
 
-## Edge cases and constraints
+## 边界情况和约束
 
-_To be completed by requirements analysis._
+_由需求分析填写。_

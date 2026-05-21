@@ -1,25 +1,25 @@
-# Data Model — {{FEATURE_NAME}}
+# 数据模型 — {{FEATURE_NAME}}
 
-## Purpose
+## 目的
 
-Capture domain entities, relationships, lifecycle states, and permissions-relevant data discovered during requirements analysis.
+记录需求分析中发现的领域实体、关系、生命周期状态，以及权限相关数据。
 
-## Domain entities
+## 领域实体
 
-_To be completed by requirements analysis._
+_由需求分析填写。_
 
-## Relationships
+## 实体关系
 
-_To be completed by requirements analysis._
+_由需求分析填写。_
 
-## Lifecycle states
+## 生命周期状态
 
-_To be completed by requirements analysis._
+_由需求分析填写。_
 
-## Data constraints
+## 数据约束
 
-_To be completed by requirements analysis._
+_由需求分析填写。_
 
-## Permissions-relevant data
+## 权限相关数据
 
-_To be completed by requirements analysis._
+_由需求分析填写。_

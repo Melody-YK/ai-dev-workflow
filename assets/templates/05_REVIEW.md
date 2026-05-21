@@ -1,10 +1,10 @@
-# 05 Verification & Review — {{FEATURE_NAME}}
+# 05 验证与评审 — {{FEATURE_NAME}}
 
-## Purpose
+## 目的
 
-Prove the implementation satisfies requirements and is ready for handoff.
+证明实现满足需求，并具备交付/交接条件。
 
-## Inputs
+## 输入
 
 - `01_REQUIREMENTS.md`
 - `requirements/requirements.md`
@@ -15,42 +15,42 @@ Prove the implementation satisfies requirements and is ready for handoff.
 - `02_TECHNICAL_DESIGN.md`
 - `03_PROTOTYPE.md`
 - `04_IMPLEMENTATION.md`
-- Implementation diff
+- 实现 diff
 
-## Requirements coverage
+## 需求覆盖情况
 
-_To be completed during review. Use the detailed requirements artifacts and update `requirements/traceability.md` with evidence when useful._
+_评审时填写。使用详细需求产物；必要时将证据更新到 `requirements/traceability.md`。_
 
-## Prototype coverage
+## 原型覆盖情况
 
-_To compare implemented behavior against approved prototype when applicable._
+_适用时，将实现行为与已批准原型进行对比。_
 
-## Test/build/lint evidence
+## 测试 / build / lint 证据
 
-_To be completed during review._
+_评审时填写。_
 
-## Manual QA evidence
+## 手工 QA 证据
 
-_To be completed when applicable._
+_适用时填写。_
 
-## Code review findings
+## 代码评审发现
 
-_To be completed during review._
+_评审时填写。_
 
-## Remaining risks
+## 剩余风险
 
-_To be completed during review._
+_评审时填写。_
 
-## Release readiness
+## 发布就绪度
 
-- Status: TBD
-- Recommendation: TBD
+- 状态：TBD
+- 建议：TBD
 
-## Completion checklist
+## 完成检查清单
 
-- [ ] Requirements coverage checked against detailed requirements artifacts
-- [ ] Prototype coverage checked or marked not applicable
-- [ ] Tests/build/lint evidence recorded
-- [ ] Issues fixed or accepted
-- [ ] Traceability updated with verification evidence when useful
-- [ ] Human accepted result
+- [ ] 已基于详细需求产物检查需求覆盖
+- [ ] 已检查原型覆盖，或标记为不适用
+- [ ] 已记录测试/build/lint 证据
+- [ ] 问题已修复或已接受
+- [ ] 必要时已将验证证据更新到 traceability
+- [ ] 用户已接受结果

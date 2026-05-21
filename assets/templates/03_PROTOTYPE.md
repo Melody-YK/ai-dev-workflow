@@ -1,66 +1,66 @@
-# 03 Prototype — {{FEATURE_NAME}}
+# 03 原型 — {{FEATURE_NAME}}
 
-## Purpose
+## 目的
 
-Create a requirements-driven static prototype to validate user flows, page structure, roles, permissions, and UX before formal implementation.
+在正式实现前，创建需求驱动的静态原型，用于验证用户流程、页面结构、角色、权限和核心体验。
 
-## Inputs
+## 输入
 
 - `01_REQUIREMENTS.md`
 - `requirements/requirements.md`
 - `requirements/datamodel.md`
 - `requirements/validation.md`
 - `02_TECHNICAL_DESIGN.md`
-- Source PRD: `{{SOURCE_PRD}}`
+- 来源 PRD：`{{SOURCE_PRD}}`
 
-## Prototype level
+## 原型级别
 
-Default: Level 1 static prototype.
+默认：Level 1 静态原型。
 
-- Level 1: HTML + CSS only, page navigation through links, no JavaScript.
-- Level 2: Optional interactive prototype with minimal vanilla JavaScript, only if explicitly approved.
+- Level 1：仅 HTML + CSS，通过链接进行页面跳转，不使用 JavaScript。
+- Level 2：可选交互原型，仅在用户明确批准时使用少量 vanilla JavaScript。
 
-## Prototype constraints
+## 原型约束
 
-Default constraints follow the `requirements-analyst` prototype approach:
+默认遵循 `requirements-analyst` 的原型方法：
 
-- Pure static files.
-- Open `prototype/index.html` directly in a browser.
-- Use relative links only.
-- Use local CSS only.
-- No CDN.
-- No backend.
-- No build tools.
-- No CSS frameworks.
-- No JavaScript unless Level 2 is explicitly approved.
+- 纯静态文件。
+- 可直接在浏览器打开 `prototype/index.html`。
+- 只使用相对链接。
+- 只使用本地 CSS。
+- 不使用 CDN。
+- 不接后端。
+- 不使用构建工具。
+- 不使用 CSS 框架。
+- 除非明确批准 Level 2，否则不使用 JavaScript。
 
-## Prototype boundary
+## 原型边界
 
-Prototype is a decision artifact, not a shadow product.
+Prototype 是决策产物，不是 shadow product。
 
-Prototype should validate page structure, user paths, information priority, key states, role/permission differences, empty/error states, and core UX decisions.
+原型应该验证页面结构、用户路径、信息优先级、关键状态、角色/权限差异、空/错状态和核心 UX 决策。
 
-Prototype should not implement real backend calls, full business logic, full permissions systems, full state management, production component abstractions, pixel-perfect visual design, or production-ready code structure.
+原型不应该实现真实后端调用、完整业务逻辑、完整权限系统、完整状态管理、生产级组件封装、像素级视觉还原或可上线代码结构。
 
-## Prototype plan
+## 原型计划
 
-_To be completed before generating pages._
+_生成页面前先填写。_
 
-| # | Page | Source requirement / flow | Description | Status |
+| # | 页面 | 来源需求 / 流程 | 说明 | 状态 |
 |---|---|---|---|---|
-| 1 | `index.html` | Navigation hub | Prototype entry and page map | Planned |
+| 1 | `index.html` | 导航入口 | 原型入口和页面地图 | 计划中 |
 
-## Page-to-requirement mapping
+## 页面到需求映射
 
-_To be completed during prototype planning/generation. Update `requirements/traceability.md` when useful._
+_在原型计划/生成过程中填写。必要时更新 `requirements/traceability.md`。_
 
-| Page | Requirement / user story | Flow covered | Notes |
+| 页面 | 需求 / 用户故事 | 覆盖流程 | 备注 |
 |---|---|---|---|
 |  |  |  |  |
 
-## Generated files
+## 生成文件
 
-Expected structure:
+预期结构：
 
 ```text
 prototype/
@@ -71,32 +71,32 @@ prototype/
     └── <flow-page>.html
 ```
 
-## Mock data
+## Mock 数据
 
-_To be documented during generation._
+_生成过程中填写。_
 
-## Out of prototype scope
+## 原型范围外
 
-_To be documented before generation._
+_生成前填写。_
 
-## Review feedback
+## 评审反馈
 
-_To be filled after stakeholder/user review._
+_相关方/用户评审后填写。_
 
-## Approval decision
+## 审批决策
 
-- Status: TBD
-- Approved by:
-- Decision notes:
+- 状态：TBD
+- 审批人：
+- 决策说明：
 
-## Completion checklist
+## 完成检查清单
 
-- [ ] Prototype plan reviewed before page generation
-- [ ] `prototype/index.html` exists
-- [ ] `prototype/css/style.css` exists
-- [ ] All non-index HTML pages are inside `prototype/pages/`
-- [ ] Pages use realistic mock data
-- [ ] Pages map back to requirements/user stories
-- [ ] Mock data, fake interactions, unavailable buttons, and uncovered capabilities are explicitly marked
-- [ ] Prototype can be opened without server/build step
-- [ ] User approved prototype before implementation planning
+- [ ] 生成页面前已评审原型计划
+- [ ] `prototype/index.html` 已存在
+- [ ] `prototype/css/style.css` 已存在
+- [ ] 非 index 页面都位于 `prototype/pages/`
+- [ ] 页面使用可信 mock 数据
+- [ ] 页面能映射回需求 / 用户故事
+- [ ] mock 数据、假交互、不可用按钮和未覆盖能力已显式标注
+- [ ] 原型无需 server/build step 即可打开
+- [ ] 进入实现计划前，用户已批准原型

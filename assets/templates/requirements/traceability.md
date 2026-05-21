@@ -1,7 +1,7 @@
-# Traceability — {{FEATURE_NAME}}
+# 追踪矩阵 — {{FEATURE_NAME}}
 
-Track source PRD items through requirements, design, prototype, implementation, and verification.
+追踪来源 PRD 条目如何进入需求、设计、原型、实现和验证。
 
-| Source item | Requirement | Design decision | Prototype page | Implementation task | Verification evidence | Status |
+| 来源条目 | 需求 | 设计决策 | 原型页面 | 实现任务 | 验证证据 | 状态 |
 |---|---|---|---|---|---|---|
 |  |  |  |  |  |  | pending |

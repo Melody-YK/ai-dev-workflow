@@ -1,25 +1,25 @@
-# Product Requirements Document — {{FEATURE_NAME}}
+# 产品需求文档 — {{FEATURE_NAME}}
 
-## Purpose
+## 目的
 
-Formalized PRD generated from the requirements engineering subflow.
+基于需求工程子流程生成正式 PRD / 规格说明。
 
-## Summary
+## 摘要
 
-_To be completed during specification._
+_在 specification 阶段填写。_
 
-## Scope
+## 范围
 
-_To be completed during specification._
+_在 specification 阶段填写。_
 
-## Requirements
+## 需求
 
-_To be completed during specification._
+_在 specification 阶段填写。_
 
-## Acceptance criteria
+## 验收标准
 
-_To be completed during specification._
+_在 specification 阶段填写。_
 
-## Out of scope
+## 范围外
 
-_To be completed during specification._
+_在 specification 阶段填写。_

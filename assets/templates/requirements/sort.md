@@ -1,15 +1,15 @@
-# Requirements Sorting — {{FEATURE_NAME}}
+# 需求排序 — {{FEATURE_NAME}}
 
-## Purpose
+## 目的
 
-Prioritize requirements by value, urgency, risk, dependency, and MVP fit.
+按价值、紧急程度、风险、依赖关系和 MVP 适配度对需求排序。
 
-## Prioritization method
+## 排序方法
 
-Default: MoSCoW or equivalent lightweight value sorting.
+默认：MoSCoW 或等价的轻量价值排序方法。
 
-## Sorted requirements
+## 排序后的需求
 
-| Requirement | Priority | Rationale | Dependencies | Notes |
+| 需求 | 优先级 | 理由 | 依赖 | 备注 |
 |---|---|---|---|---|
 |  |  |  |  |  |
