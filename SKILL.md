@@ -13,7 +13,7 @@ description: Orchestrate a lightweight, artifact-driven AI development workflow 
 
 **阶段之间只通过文件交接。**
 
-不要把聊天记录当成唯一事实来源。每个阶段的重要输入、输出、决策、开放问题和下一步，都必须写入 `.ai-workflow/<feature-slug>/` 里的 artifact。
+不要把聊天记录当成唯一事实来源。每个阶段的重要输入、输出、决策、开放问题和下一步，都必须写入 `.ai-workflow/<feature-slug>/` 里的 artifact。能力提供者可以替换，但 workflow artifact contract 保持稳定。
 
 默认工作目录：
 
@@ -21,6 +21,12 @@ description: Orchestrate a lightweight, artifact-driven AI development workflow 
 .ai-workflow/<feature-slug>/
 ├── 00_INTAKE.md
 ├── 01_REQUIREMENTS.md
+├── requirements/
+│   ├── requirements.md
+│   ├── datamodel.md
+│   ├── validation.md
+│   ├── open-questions.md
+│   └── traceability.md
 ├── 02_TECHNICAL_DESIGN.md
 ├── 03_PROTOTYPE.md
 ├── prototype/
@@ -69,7 +75,7 @@ description: Orchestrate a lightweight, artifact-driven AI development workflow 
 | Phase | 目标 | 主要能力 | 默认工具 / skill |
 |---|---|---|---|
 | 00 Intake | 捕获原始请求、上下文和约束 | Intake normalization | This orchestrator |
-| 01 Requirements | 将需求转成明确、可测试的规格 | Requirements analysis | `requirements-analyst` |
+| 01 Requirements | 生成需求阶段摘要，并保留详细 requirements artifacts | Requirements analysis | `requirements-analyst` |
 | 02 Product & Engineering Review | 挑战范围，形成产品 / 工程设计 | Product / architecture review | `gstack` concepts: office-hours, plan-ceo-review, plan-eng-review |
 | 03 Prototype | 生成需求驱动的静态原型 | Prototype planning + static HTML/CSS generation | `requirements-analyst` prototype approach |
 | 04 Implementation | 编写实现计划并纪律化执行 | TDD execution | `superpowers`: writing-plans, subagent-driven-development or executing-plans |
@@ -157,6 +163,7 @@ Prototype 是 **decision artifact**，不是 shadow product。
 - 关键 decisions 已记录在 `STATUS.md`。
 - 本阶段 consumed inputs 和 produced outputs 已写清楚。
 - 下一阶段有明确 handoff prompt。
+- `01_REQUIREMENTS.md` 只做摘要、索引和门禁；详细需求产物应保存在 `requirements/`，不要被压扁进单一文件。
 - 进入 implementation 前，prototype 已被批准，或明确记录为 skipped。
 - 如果生成了 prototype，页面必须能直接打开，并且页面到 requirements / user stories 的映射完整。
 

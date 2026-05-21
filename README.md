@@ -26,7 +26,8 @@ AI Dev Workflow 的做法是：
 ```text
 用固定 artifact 文件承载上下文，
 用阶段门禁控制节奏，
-用评估标准验证流程是否真的有效。
+用评估标准验证流程是否真的有效，
+同时保持能力提供者可替换、workflow artifact contract 稳定。
 ```
 
 ## 核心原则
@@ -34,7 +35,9 @@ AI Dev Workflow 的做法是：
 - **产物优先**：阶段输出必须写入文件，而不是只留在聊天记录里。
 - **人工门禁**：关键阶段默认暂停，等待人确认后再继续。
 - **能力编排**：按能力组织流程，而不是绑定某个固定工具。
+- **稳定契约**：AI Dev Workflow 定义阶段、门禁、产物位置和交接规则；外部 skill 只提供能力。
 - **可替换 skill**：`requirements-analyst`、gstack-style review、`superpowers` 是默认选择，但不是硬依赖。
+- **保留 provider 原生产物**：例如 requirements 阶段允许 `requirements-analyst` 在 `requirements/` 下保留更丰富的详细文档，`01_REQUIREMENTS.md` 只做摘要、索引和门禁。
 - **先原型后实现**：先用静态 HTML/CSS 验证页面、流程、角色和状态，再进入正式实现。
 - **先小后大**：第一版只做最小可用流程，不急着引入复杂状态机。
 
@@ -55,6 +58,12 @@ AI Dev Workflow 的做法是：
 .ai-workflow/<feature-slug>/
 ├── 00_INTAKE.md
 ├── 01_REQUIREMENTS.md
+├── requirements/
+│   ├── requirements.md
+│   ├── datamodel.md
+│   ├── validation.md
+│   ├── open-questions.md
+│   └── traceability.md
 ├── 02_TECHNICAL_DESIGN.md
 ├── 03_PROTOTYPE.md
 ├── prototype/

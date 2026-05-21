@@ -40,6 +40,11 @@
 PRD 或原始需求
 .ai-workflow/<feature>/00_INTAKE.md
 .ai-workflow/<feature>/01_REQUIREMENTS.md
+.ai-workflow/<feature>/requirements/requirements.md
+.ai-workflow/<feature>/requirements/datamodel.md
+.ai-workflow/<feature>/requirements/validation.md
+.ai-workflow/<feature>/requirements/open-questions.md
+.ai-workflow/<feature>/requirements/traceability.md
 .ai-workflow/<feature>/02_TECHNICAL_DESIGN.md
 .ai-workflow/<feature>/04_IMPLEMENTATION.md
 .ai-workflow/<feature>/05_REVIEW.md
@@ -73,7 +78,7 @@ MVP 通过：48+ 分，且没有关键门禁失败
 
 ### 1. 需求规格化
 
-评估文件：`01_REQUIREMENTS.md`
+评估文件：`01_REQUIREMENTS.md`、`requirements/`
 
 | 标准 | 分数 |
 |---|---|
@@ -84,16 +89,16 @@ MVP 通过：48+ 分，且没有关键门禁失败
 强信号：
 
 ```text
-原 PRD 是业务叙述；01_REQUIREMENTS.md 变成了设计和工程能直接使用的规格。
+原 PRD 是业务叙述；`requirements/` 下保留详细需求、数据模型和验证规则，`01_REQUIREMENTS.md` 提供清晰摘要、索引和交接门禁。
 ```
 
 ### 2. 可追踪性
 
-评估文件：`01_REQUIREMENTS.md`、`02_TECHNICAL_DESIGN.md`、`03_PROTOTYPE.md`、`04_IMPLEMENTATION.md`、`05_REVIEW.md`
+评估文件：`01_REQUIREMENTS.md`、`requirements/traceability.md`、`02_TECHNICAL_DESIGN.md`、`03_PROTOTYPE.md`、`04_IMPLEMENTATION.md`、`05_REVIEW.md`
 
 | 标准 | 分数 |
 |---|---|
-| 重要 PRD 需求是否能映射到需求、设计、实现、验证产物 | 0-3 |
+| 重要 PRD 需求是否能通过 `requirements/traceability.md` 映射到需求、设计、实现、验证产物 | 0-3 |
 | 不做什么、延期什么是否明确 | 0-3 |
 | 验证是否回看原需求，而不是只机械检查代码 | 0-3 |
 
@@ -207,7 +212,7 @@ MVP 通过：48+ 分，且没有关键门禁失败
 - 需要审批时，流程在需求/设计/原型确认前就开始写代码。
 - 能验证却没有做任何有意义验证，就声称完成。
 - 新 agent 无法从 artifact 判断当前阶段或下一步。
-- 重要 PRD 需求消失了，且没有标记为延期、拒绝或不在范围内。
+- 重要 PRD 需求消失了，且没有在 `requirements/traceability.md` 或后续 artifact 中标记为延期、拒绝或不在范围内。
 - 原型阶段声称完成，但没有页面映射、无法打开，或绕过了明确要求的静态约束。
 - 流程静默替用户做了产品、安全、合规、集成等需要人工确认的决策。
 
@@ -269,6 +274,11 @@ MVP 通过：48+ 分，且没有关键门禁失败
 ```text
 .ai-workflow/<feature>/STATUS.md
 .ai-workflow/<feature>/01_REQUIREMENTS.md
+.ai-workflow/<feature>/requirements/requirements.md
+.ai-workflow/<feature>/requirements/datamodel.md
+.ai-workflow/<feature>/requirements/validation.md
+.ai-workflow/<feature>/requirements/open-questions.md
+.ai-workflow/<feature>/requirements/traceability.md
 .ai-workflow/<feature>/02_TECHNICAL_DESIGN.md
 ```
 

@@ -7,6 +7,11 @@ Prove the implementation satisfies requirements and is ready for handoff.
 ## Inputs
 
 - `01_REQUIREMENTS.md`
+- `requirements/requirements.md`
+- `requirements/datamodel.md`
+- `requirements/validation.md`
+- `requirements/open-questions.md`
+- `requirements/traceability.md`
 - `02_TECHNICAL_DESIGN.md`
 - `03_PROTOTYPE.md`
 - `04_IMPLEMENTATION.md`
@@ -14,7 +19,7 @@ Prove the implementation satisfies requirements and is ready for handoff.
 
 ## Requirements coverage
 
-_To be completed during review._
+_To be completed during review. Use the detailed requirements artifacts and update `requirements/traceability.md` with evidence when useful._
 
 ## Prototype coverage
 
@@ -43,8 +48,9 @@ _To be completed during review._
 
 ## Completion checklist
 
-- [ ] Requirements coverage checked
+- [ ] Requirements coverage checked against detailed requirements artifacts
 - [ ] Prototype coverage checked or marked not applicable
 - [ ] Tests/build/lint evidence recorded
 - [ ] Issues fixed or accepted
+- [ ] Traceability updated with verification evidence when useful
 - [ ] Human accepted result

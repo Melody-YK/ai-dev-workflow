@@ -16,6 +16,15 @@ REQUIRED = [
     "STATUS.md",
 ]
 
+REQUIREMENTS_DETAIL_PATHS = [
+    "requirements",
+    "requirements/requirements.md",
+    "requirements/datamodel.md",
+    "requirements/validation.md",
+    "requirements/open-questions.md",
+    "requirements/traceability.md",
+]
+
 PROTOTYPE_OPTIONAL_PATHS = [
     "prototype/index.html",
     "prototype/css/style.css",
@@ -26,6 +35,11 @@ PROTOTYPE_OPTIONAL_PATHS = [
 def main() -> int:
     parser = argparse.ArgumentParser()
     parser.add_argument("workflow_dir", type=pathlib.Path)
+    parser.add_argument(
+        "--require-requirements-details",
+        action="store_true",
+        help="Also require detailed requirements files under requirements/.",
+    )
     parser.add_argument(
         "--require-prototype-files",
         action="store_true",
@@ -51,6 +65,18 @@ def main() -> int:
             failed = True
         else:
             print(f"OK {name}")
+
+    if args.require_requirements_details:
+        for relative in REQUIREMENTS_DETAIL_PATHS:
+            path = workflow_dir / relative
+            if not path.exists():
+                print(f"MISSING {relative}")
+                failed = True
+            elif path.is_file() and not path.read_text(encoding="utf-8", errors="replace").strip():
+                print(f"EMPTY {relative}")
+                failed = True
+            else:
+                print(f"OK {relative}")
 
     if args.require_prototype_files:
         for relative in PROTOTYPE_OPTIONAL_PATHS:

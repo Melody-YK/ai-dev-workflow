@@ -1,5 +1,11 @@
 # Artifact Spec
 
+## Core principle
+
+Capability providers may vary; workflow artifact contracts stay stable.
+
+AI Dev Workflow defines artifact locations, status fields, handoff rules, and gates. Provider-native rich outputs are allowed when useful, but they must live inside the workflow directory and be indexed by the relevant phase summary/control artifact.
+
 ## STATUS.md
 
 Required fields:
@@ -10,7 +16,9 @@ Required fields:
 - Current phase
 - Checkpoint status
 - Last updated
+- Contract principle
 - Phase table
+- Detailed artifacts
 - Decisions
 - Open questions
 - Next action
@@ -25,14 +33,17 @@ Checkpoint statuses:
 
 ## Phase files
 
-Every phase artifact should include:
+Every phase summary/control artifact should include:
 
 - Purpose
 - Inputs
 - Outputs or expected outputs
 - Summary/details appropriate to phase
 - Open questions or review feedback
+- Approval or completion decision when applicable
 - Completion checklist
+
+Phase files are not required to contain every detailed provider output. Prefer linking to detailed artifacts when a provider produces richer structure.
 
 ## Naming
 
@@ -50,6 +61,30 @@ Feature slug rules:
 - lowercase ASCII
 - words separated by hyphen
 - derived from product/feature name
+
+## Requirements artifacts
+
+Requirements use a summary/control file plus a detailed artifact directory.
+
+Required files after requirements analysis:
+
+```text
+01_REQUIREMENTS.md
+requirements/
+├── requirements.md
+├── datamodel.md
+├── validation.md
+├── open-questions.md
+└── traceability.md
+```
+
+Rules:
+
+- `01_REQUIREMENTS.md` records purpose, inputs, provider contract, detailed artifact index, executive summary, key decisions/assumptions, open questions summary, handoff, and approval decision.
+- Detailed provider-native requirements output should live under `requirements/` instead of being compressed into `01_REQUIREMENTS.md`.
+- `requirements/open-questions.md` preserves ambiguity instead of guessing.
+- `requirements/traceability.md` starts with PRD-to-requirement mapping and can be extended later with design, prototype, implementation, and verification links.
+- Additional files under `requirements/` are allowed if they improve handoff quality and are linked from `01_REQUIREMENTS.md`.
 
 ## Prototype artifact
 

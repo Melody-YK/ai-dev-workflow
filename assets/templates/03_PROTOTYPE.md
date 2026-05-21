@@ -7,6 +7,9 @@ Create a requirements-driven static prototype to validate user flows, page struc
 ## Inputs
 
 - `01_REQUIREMENTS.md`
+- `requirements/requirements.md`
+- `requirements/datamodel.md`
+- `requirements/validation.md`
 - `02_TECHNICAL_DESIGN.md`
 - Source PRD: `{{SOURCE_PRD}}`
 
@@ -31,6 +34,14 @@ Default constraints follow the `requirements-analyst` prototype approach:
 - No CSS frameworks.
 - No JavaScript unless Level 2 is explicitly approved.
 
+## Prototype boundary
+
+Prototype is a decision artifact, not a shadow product.
+
+Prototype should validate page structure, user paths, information priority, key states, role/permission differences, empty/error states, and core UX decisions.
+
+Prototype should not implement real backend calls, full business logic, full permissions systems, full state management, production component abstractions, pixel-perfect visual design, or production-ready code structure.
+
 ## Prototype plan
 
 _To be completed before generating pages._
@@ -41,7 +52,7 @@ _To be completed before generating pages._
 
 ## Page-to-requirement mapping
 
-_To be completed during prototype planning/generation._
+_To be completed during prototype planning/generation. Update `requirements/traceability.md` when useful._
 
 | Page | Requirement / user story | Flow covered | Notes |
 |---|---|---|---|
@@ -86,5 +97,6 @@ _To be filled after stakeholder/user review._
 - [ ] All non-index HTML pages are inside `prototype/pages/`
 - [ ] Pages use realistic mock data
 - [ ] Pages map back to requirements/user stories
+- [ ] Mock data, fake interactions, unavailable buttons, and uncovered capabilities are explicitly marked
 - [ ] Prototype can be opened without server/build step
 - [ ] User approved prototype before implementation planning

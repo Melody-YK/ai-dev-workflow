@@ -4,6 +4,8 @@
 
 核心目标不是“自动化一切”，而是让每一步都有明确输入、输出、人工确认点和质量门禁。
 
+AI Dev Workflow 定义稳定的阶段契约和 artifact 位置；`requirements-analyst`、gstack-style review、`superpowers` 等外部 skill 是能力提供者，可以保留有价值的原生产物，但必须写入 workflow 指定的位置。
+
 ## 1. 工作流定位
 
 默认编排三个能力：
@@ -31,6 +33,12 @@ requirements-analyst → gstack-style review → prototype generation → superp
 .ai-workflow/<feature-slug>/
 ├── 00_INTAKE.md
 ├── 01_REQUIREMENTS.md
+├── requirements/
+│   ├── requirements.md
+│   ├── datamodel.md
+│   ├── validation.md
+│   ├── open-questions.md
+│   └── traceability.md
 ├── 02_TECHNICAL_DESIGN.md
 ├── 03_PROTOTYPE.md
 ├── prototype/
@@ -152,7 +160,14 @@ PRD.md
 
 ```text
 .ai-workflow/<feature-slug>/01_REQUIREMENTS.md
+.ai-workflow/<feature-slug>/requirements/requirements.md
+.ai-workflow/<feature-slug>/requirements/datamodel.md
+.ai-workflow/<feature-slug>/requirements/validation.md
+.ai-workflow/<feature-slug>/requirements/open-questions.md
+.ai-workflow/<feature-slug>/requirements/traceability.md
 ```
+
+`01_REQUIREMENTS.md` 是阶段摘要、索引和门禁文件；详细需求文档保留在 `requirements/` 目录。使用 `requirements-analyst` 的分析方法和丰富产物，但不要让它替换 workflow 的产物位置和交接规则。
 
 这一阶段重点检查：
 
@@ -175,6 +190,11 @@ PRD.md
 
 ```text
 01_REQUIREMENTS.md
+requirements/requirements.md
+requirements/datamodel.md
+requirements/validation.md
+requirements/open-questions.md
+requirements/traceability.md
 PRD.md
 现有代码结构
 ```
@@ -206,6 +226,9 @@ PRD.md
 
 ```text
 01_REQUIREMENTS.md
+requirements/requirements.md
+requirements/datamodel.md
+requirements/validation.md
 02_TECHNICAL_DESIGN.md
 PRD.md
 ```
@@ -351,7 +374,7 @@ prototype/pages/*.html
 
 测试时主要看这些问题：
 
-1. `01_REQUIREMENTS.md` 是否比原 PRD 更清晰、更可测试？
+1. `requirements/` 下的详细产物是否比原 PRD 更清晰、更可测试，且 `01_REQUIREMENTS.md` 是否做好摘要、索引和门禁？
 2. `02_TECHNICAL_DESIGN.md` 是否能主动收敛范围，而不是照单全收？
 3. `03_PROTOTYPE.md` 和 `prototype/` 是否能提前验证页面、流程、角色和状态？
 4. `04_IMPLEMENTATION.md` 是否能让另一个 agent 不看聊天记录也能执行？

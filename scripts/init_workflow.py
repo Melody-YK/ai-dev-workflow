@@ -84,6 +84,21 @@ def main() -> int:
         target.write_text(render(template_path.read_text(encoding="utf-8"), values), encoding="utf-8")
         print(f"wrote {target}")
 
+    for template_path in sorted((TEMPLATES / "requirements").glob("*.md")):
+        relative = template_path.relative_to(TEMPLATES)
+        target = workflow_dir / relative
+        target.parent.mkdir(parents=True, exist_ok=True)
+        if target.exists() and not args.force:
+            print(f"skip existing {target}")
+            continue
+        target.write_text(render(template_path.read_text(encoding="utf-8"), values), encoding="utf-8")
+        print(f"wrote {target}")
+
+    for relative_dir in ["prototype/css", "prototype/pages"]:
+        directory = workflow_dir / relative_dir
+        directory.mkdir(parents=True, exist_ok=True)
+        print(f"ensured {directory}")
+
     return 0
 
 
