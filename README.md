@@ -108,6 +108,27 @@ flowchart TD
 └── STATUS.md
 ```
 
+## Claude Code 安装
+
+本仓库同时也是一个 Claude Code plugin。安装后，Claude Code 会扫描 `skills/ai-dev-workflow/SKILL.md`，因此可以直接用自然语言触发：
+
+```text
+使用 ai-dev-workflow，基于 PRD.md 初始化工作流。
+```
+
+本机已通过本地 marketplace 安装：
+
+```bash
+claude plugin marketplace add --scope user ~/.claude/local-marketplaces/ai-dev-workflow-marketplace
+claude plugin install --scope user ai-dev-workflow@melody-local
+```
+
+检查安装状态：
+
+```bash
+claude plugin list
+```
+
 ## 快速开始
 
 用一个 PRD 初始化工作流：
