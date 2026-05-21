@@ -65,16 +65,44 @@ description: Orchestrate a lightweight, artifact-driven AI development workflow 
 
 ## 启动工作流
 
-开始一个新 feature workflow 时：
+开始一个新 feature workflow 时，先完成 **00 Intake**，不要直接写需求分析、技术设计或实现计划。
+
+必须使用 workflow 定义的 artifact contract：
+
+```text
+.ai-workflow/<feature-slug>/
+├── 00_INTAKE.md
+├── 01_REQUIREMENTS.md
+├── requirements/
+├── 02_TECHNICAL_DESIGN.md
+├── 03_PROTOTYPE.md
+├── 04_IMPLEMENTATION.md
+├── 05_REVIEW.md
+└── STATUS.md
+```
+
+推荐直接运行初始化脚本：
+
+```bash
+python3 <skill-root>/scripts/init_workflow.py \
+  --project-root <project-root> \
+  --source-prd <source-prd> \
+  --feature <feature-name>
+```
+
+如果不能运行脚本，才手动从 `<skill-root>/assets/templates/` 复制模板；手动创建时也必须保持上述文件名和目录结构。
+
+启动步骤：
 
 1. 识别 source PRD 或 intake text。
 2. 从产品 / 功能名称生成 `feature-slug`。
-3. 从 `assets/templates/` 初始化 artifact。
-4. 将 source PRD 复制或摘要到 `00_INTAKE.md`，并保留原始文件路径或来源链接。
-5. 将 `STATUS.md` 设置为 phase `01_REQUIREMENTS`，checkpoint `WAITING_FOR_HUMAN_CONFIRMATION`。
-6. 询问用户是否继续运行下一阶段。
+3. 初始化 `.ai-workflow/<feature-slug>/` 下的标准 artifact。
+4. 只填写 `00_INTAKE.md` 和必要的 `STATUS.md` 初始化状态。
+5. 在 `00_INTAKE.md` 中保留原始 PRD 路径/来源、摘要、已知约束、初始假设和开放问题。
+6. 将 `STATUS.md` 设置为 phase `01_REQUIREMENTS`，checkpoint `WAITING_FOR_HUMAN_CONFIRMATION`。
+7. 暂停并询问用户是否继续运行 `01 Requirements`。
 
-如果用户明确要求 unattended / continuous run，可以继续推进；但每个阶段边界仍然必须更新 `STATUS.md`。
+除非用户明确要求 unattended / continuous run，否则不要在初始化后自动进入需求分析。即使用户要求连续推进，每个阶段边界仍然必须更新 `STATUS.md`。
 
 ## 阶段路由
 
