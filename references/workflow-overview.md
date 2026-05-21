@@ -29,7 +29,7 @@ flowchart TD
 
     R9 --> H{Human gate\nRequirements approved?}
     H -- Changes needed --> G
-    H -- Approved --> C[02 Product & Engineering Review\nScope, MVP, architecture, risks, test strategy]
+    H -- Approved --> C[02 Product & Engineering Review\nScope, delivery boundary, architecture, risks, test strategy]
 
     C --> I{Human gate\nDesign approved?}
     I -- Changes needed --> C

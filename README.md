@@ -151,7 +151,7 @@ ai-dev-workflow/
 
 ## 当前状态
 
-这是一个早期 MVP，目标是先通过真实 PRD 跑完整链路，验证这套 artifact-first、human-gated、capability-based 的 AI 研发流程是否真的比裸聊天更稳定。
+这是一个早期版本，目标是先通过真实 PRD 跑完整链路，验证这套 artifact-first、human-gated、capability-based 的 AI 研发流程是否真的比裸聊天更稳定。
 
 ## License
 

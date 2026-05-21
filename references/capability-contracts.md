@@ -27,7 +27,7 @@ A provider may use its own analysis method and may preserve richer provider-nati
 - `01_REQUIREMENTS.md` as the workflow-level summary, index, approval, and handoff artifact.
 - `requirements/reverse.md` for optional reverse requirements from existing code.
 - `requirements/discovery.md` for raw goals, stakeholders, constraints, and success criteria.
-- `requirements/sort.md` for value sorting, priority, MVP fit, and dependency notes.
+- `requirements/sort.md` for value sorting, priority, delivery-scope fit, and dependency notes.
 - `requirements/requirements.md` for detailed requirements.
 - `requirements/datamodel.md` for entities, relationships, states, and data constraints.
 - `requirements/clarification.md` for ambiguity resolution and stakeholder decisions.
@@ -62,7 +62,7 @@ Additional provider-native artifacts are allowed under `requirements/` if they i
 
 **Capability needed**
 - Challenge scope and product wedge.
-- Recommend MVP boundaries.
+- Recommend current delivery boundaries.
 - Produce architecture, data model direction, state machine, integration plan, risks, and test strategy.
 
 **Default provider**

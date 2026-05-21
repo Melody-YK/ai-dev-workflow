@@ -40,7 +40,7 @@ Suggested handoff:
 ```text
 Read <workflow>/01_REQUIREMENTS.md, all files under <workflow>/requirements/, and the source PRD.
 Perform product scope review and engineering review.
-Write <workflow>/02_TECHNICAL_DESIGN.md with recommended MVP, non-goals, architecture, data model direction, state transitions, APIs/integrations, risks, and test matrix.
+Write <workflow>/02_TECHNICAL_DESIGN.md with recommended current delivery scope, non-goals, architecture, data model direction, state transitions, APIs/integrations, risks, and test matrix.
 If the review accepts, changes, defers, or rejects important requirements, update <workflow>/requirements/traceability.md or record the needed update in 02_TECHNICAL_DESIGN.md.
 Surface decisions for human approval.
 ```

@@ -58,7 +58,7 @@ requirements/
 |---|---|---|
 | `requirements/reverse.md` | 可选：当缺少可靠文档时，从现有代码反向提取需求 | 可选 |
 | `requirements/discovery.md` | 原始目标、相关方、约束和成功标准 | 计划中 |
-| `requirements/sort.md` | 价值排序、优先级、MVP 适配和依赖说明 | 计划中 |
+| `requirements/sort.md` | 价值排序、优先级、本轮交付适配和依赖说明 | 计划中 |
 | `requirements/requirements.md` | 详细角色、目标、用户故事、流程、功能/非功能需求 | 计划中 |
 | `requirements/datamodel.md` | 领域实体、关系、关键字段、生命周期状态、权限相关数据 | 计划中 |
 | `requirements/clarification.md` | 歧义、假设、相关方决策和已澄清问题 | 计划中 |

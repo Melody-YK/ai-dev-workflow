@@ -20,7 +20,7 @@ requirements-analyst → gstack-style review → prototype generation → superp
 |---|---|---|
 | 00 Intake | 收集原始需求、建立工作目录 | ai-dev-workflow |
 | 01 Requirements | 把 PRD 转成明确、可验证的需求规格 | requirements-analyst |
-| 02 Product & Engineering Review | 审范围、审架构、审风险、定 MVP | gstack-style review |
+| 02 Product & Engineering Review | 审范围、审架构、审风险、定本轮交付范围 | gstack-style review |
 | 03 Prototype | 生成需求驱动的静态 HTML/CSS 原型，验证页面、流程、角色和状态 | requirements-analyst prototype approach |
 | 04 Implementation | 写实现计划、TDD 实现、记录验证 | superpowers |
 | 05 Verification & Review | 测试、review、QA、发布前确认 | superpowers + optional gstack |
@@ -182,7 +182,7 @@ PRD.md
 这一阶段重点检查：
 
 - discovery 是否收集到角色、目标、约束和成功标准
-- sort 是否给出优先级和 MVP 取舍
+- sort 是否给出优先级和本轮范围取舍
 - analysis 是否覆盖角色、流程、实体、状态和权限
 - clarification 是否保留/解决歧义，而不是瞎猜
 - validation 是否给出可测试验收标准
@@ -221,7 +221,7 @@ PRD.md
 
 这一阶段重点检查：
 
-- 是否建议缩小 MVP
+- 是否建议收敛本轮交付范围
 - 哪些需求不做
 - 架构是否清楚
 - 数据模型方向是否合理
