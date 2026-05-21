@@ -188,6 +188,8 @@ Prototype 是 **decision artifact**，不是 shadow product。
 
 不要静默替用户做产品、安全、合规、集成、商业取舍等需要人工确认的决策。
 
+当需要用户选择方案时，必须生成 decision brief，而不是只列选项。每个选项都必须有说明：适用场景、优点、缺点/代价、对后续阶段的影响。推荐项可以额外写推荐理由，但非推荐项不能留空或显示 `No preview available`。
+
 ## Quality gates
 
 进入下一阶段前检查：
