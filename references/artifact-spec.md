@@ -71,16 +71,22 @@ Required files after requirements analysis:
 ```text
 01_REQUIREMENTS.md
 requirements/
+├── reverse.md              # optional
+├── discovery.md
+├── sort.md
 ├── requirements.md
 ├── datamodel.md
+├── clarification.md
 ├── validation.md
+├── prd.md
+├── api.yaml                # optional
 ├── open-questions.md
 └── traceability.md
 ```
 
 Rules:
 
-- `01_REQUIREMENTS.md` records purpose, inputs, provider contract, detailed artifact index, executive summary, key decisions/assumptions, open questions summary, handoff, and approval decision.
+- `01_REQUIREMENTS.md` records purpose, inputs, provider contract, requirements sub-phase status, detailed artifact index, executive summary, key decisions/assumptions, open questions summary, handoff, and approval decision.
 - Detailed provider-native requirements output should live under `requirements/` instead of being compressed into `01_REQUIREMENTS.md`.
 - `requirements/open-questions.md` preserves ambiguity instead of guessing.
 - `requirements/traceability.md` starts with PRD-to-requirement mapping and can be extended later with design, prototype, implementation, and verification links.

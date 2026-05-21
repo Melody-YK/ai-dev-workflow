@@ -26,9 +26,13 @@ AI Dev Workflow owns the phase contract, status, gates, and artifact locations. 
 
 ### Requirements
 
+- `requirements/discovery.md`
+- `requirements/sort.md`
 - `requirements/requirements.md`
 - `requirements/datamodel.md`
+- `requirements/clarification.md`
 - `requirements/validation.md`
+- `requirements/prd.md`
 - `requirements/open-questions.md`
 - `requirements/traceability.md`
 

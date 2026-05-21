@@ -45,11 +45,37 @@ AI Dev Workflow 的做法是：
 
 ```text
 00 Intake
-01 Requirements
+01 Requirements Engineering
+   ├─ Reverse optional
+   ├─ Discovery
+   ├─ Sort
+   ├─ Analysis
+   ├─ Clarification
+   ├─ Validation
+   └─ Specification
 02 Product & Engineering Review
 03 Prototype
 04 Implementation Planning & Build
 05 Verification & Review
+```
+
+完整流程图见：[Workflow Overview](references/workflow-overview.md)。
+
+```mermaid
+flowchart TD
+    A[PRD / 用户需求 / 现有代码] --> B[00 Intake]
+    B --> C[01 Requirements Engineering]
+    C --> C1[Reverse optional]
+    C --> C2[Discovery]
+    C2 --> C3[Sort]
+    C3 --> C4[Analysis]
+    C4 --> C5[Clarification]
+    C5 --> C6[Validation]
+    C6 --> C7[Specification]
+    C7 --> D[02 Product & Engineering Review]
+    D --> E[03 Prototype]
+    E --> F[04 Implementation]
+    F --> G[05 Verification & Review]
 ```
 
 默认生成的工作目录：
@@ -59,9 +85,15 @@ AI Dev Workflow 的做法是：
 ├── 00_INTAKE.md
 ├── 01_REQUIREMENTS.md
 ├── requirements/
+│   ├── reverse.md              # optional
+│   ├── discovery.md
+│   ├── sort.md
 │   ├── requirements.md
 │   ├── datamodel.md
+│   ├── clarification.md
 │   ├── validation.md
+│   ├── prd.md
+│   ├── api.yaml                # optional
 │   ├── open-questions.md
 │   └── traceability.md
 ├── 02_TECHNICAL_DESIGN.md

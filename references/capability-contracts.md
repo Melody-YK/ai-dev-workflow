@@ -25,9 +25,14 @@ A provider may use its own analysis method and may preserve richer provider-nati
 
 **Output**
 - `01_REQUIREMENTS.md` as the workflow-level summary, index, approval, and handoff artifact.
+- `requirements/reverse.md` for optional reverse requirements from existing code.
+- `requirements/discovery.md` for raw goals, stakeholders, constraints, and success criteria.
+- `requirements/sort.md` for value sorting, priority, MVP fit, and dependency notes.
 - `requirements/requirements.md` for detailed requirements.
 - `requirements/datamodel.md` for entities, relationships, states, and data constraints.
+- `requirements/clarification.md` for ambiguity resolution and stakeholder decisions.
 - `requirements/validation.md` for acceptance criteria, validation rules, scenarios, and edge cases.
+- `requirements/prd.md` for the formalized PRD/specification.
 - `requirements/open-questions.md` for unresolved questions.
 - `requirements/traceability.md` for PRD-to-requirement mapping and later design/prototype/implementation/verification links.
 
@@ -43,9 +48,13 @@ Additional provider-native artifacts are allowed under `requirements/` if they i
 
 **Input**
 - `01_REQUIREMENTS.md`
+- `requirements/discovery.md`
+- `requirements/sort.md`
 - `requirements/requirements.md`
 - `requirements/datamodel.md`
+- `requirements/clarification.md`
 - `requirements/validation.md`
+- `requirements/prd.md`
 - `requirements/open-questions.md`
 - `requirements/traceability.md`
 - Source PRD

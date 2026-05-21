@@ -63,7 +63,7 @@ Use Level 2 interactive prototype only if the user explicitly approves it.
 Suggested handoff:
 
 ```text
-Read <workflow>/01_REQUIREMENTS.md, <workflow>/requirements/requirements.md, <workflow>/requirements/datamodel.md, <workflow>/requirements/validation.md, <workflow>/02_TECHNICAL_DESIGN.md, and the source PRD.
+Read <workflow>/01_REQUIREMENTS.md, <workflow>/requirements/requirements.md, <workflow>/requirements/datamodel.md, <workflow>/requirements/clarification.md, <workflow>/requirements/validation.md, <workflow>/requirements/prd.md, <workflow>/02_TECHNICAL_DESIGN.md, and the source PRD.
 First write a prototype plan into <workflow>/03_PROTOTYPE.md with pages, source requirements, user flows, mock data, and out-of-scope items.
 Wait for approval before generating pages.
 After approval, create <workflow>/prototype/index.html, <workflow>/prototype/css/style.css, and one HTML file per flow under <workflow>/prototype/pages/.

@@ -18,9 +18,13 @@ REQUIRED = [
 
 REQUIREMENTS_DETAIL_PATHS = [
     "requirements",
+    "requirements/discovery.md",
+    "requirements/sort.md",
     "requirements/requirements.md",
     "requirements/datamodel.md",
+    "requirements/clarification.md",
     "requirements/validation.md",
+    "requirements/prd.md",
     "requirements/open-questions.md",
     "requirements/traceability.md",
 ]

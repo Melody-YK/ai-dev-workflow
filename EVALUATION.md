@@ -40,9 +40,13 @@
 PRD 或原始需求
 .ai-workflow/<feature>/00_INTAKE.md
 .ai-workflow/<feature>/01_REQUIREMENTS.md
+.ai-workflow/<feature>/requirements/discovery.md
+.ai-workflow/<feature>/requirements/sort.md
 .ai-workflow/<feature>/requirements/requirements.md
 .ai-workflow/<feature>/requirements/datamodel.md
+.ai-workflow/<feature>/requirements/clarification.md
 .ai-workflow/<feature>/requirements/validation.md
+.ai-workflow/<feature>/requirements/prd.md
 .ai-workflow/<feature>/requirements/open-questions.md
 .ai-workflow/<feature>/requirements/traceability.md
 .ai-workflow/<feature>/02_TECHNICAL_DESIGN.md
@@ -274,9 +278,13 @@ MVP 通过：48+ 分，且没有关键门禁失败
 ```text
 .ai-workflow/<feature>/STATUS.md
 .ai-workflow/<feature>/01_REQUIREMENTS.md
+.ai-workflow/<feature>/requirements/discovery.md
+.ai-workflow/<feature>/requirements/sort.md
 .ai-workflow/<feature>/requirements/requirements.md
 .ai-workflow/<feature>/requirements/datamodel.md
+.ai-workflow/<feature>/requirements/clarification.md
 .ai-workflow/<feature>/requirements/validation.md
+.ai-workflow/<feature>/requirements/prd.md
 .ai-workflow/<feature>/requirements/open-questions.md
 .ai-workflow/<feature>/requirements/traceability.md
 .ai-workflow/<feature>/02_TECHNICAL_DESIGN.md

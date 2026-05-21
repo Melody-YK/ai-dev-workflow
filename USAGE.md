@@ -34,9 +34,15 @@ requirements-analyst → gstack-style review → prototype generation → superp
 ├── 00_INTAKE.md
 ├── 01_REQUIREMENTS.md
 ├── requirements/
+│   ├── reverse.md              # optional
+│   ├── discovery.md
+│   ├── sort.md
 │   ├── requirements.md
 │   ├── datamodel.md
+│   ├── clarification.md
 │   ├── validation.md
+│   ├── prd.md
+│   ├── api.yaml                # optional
 │   ├── open-questions.md
 │   └── traceability.md
 ├── 02_TECHNICAL_DESIGN.md
@@ -160,9 +166,13 @@ PRD.md
 
 ```text
 .ai-workflow/<feature-slug>/01_REQUIREMENTS.md
+.ai-workflow/<feature-slug>/requirements/discovery.md
+.ai-workflow/<feature-slug>/requirements/sort.md
 .ai-workflow/<feature-slug>/requirements/requirements.md
 .ai-workflow/<feature-slug>/requirements/datamodel.md
+.ai-workflow/<feature-slug>/requirements/clarification.md
 .ai-workflow/<feature-slug>/requirements/validation.md
+.ai-workflow/<feature-slug>/requirements/prd.md
 .ai-workflow/<feature-slug>/requirements/open-questions.md
 .ai-workflow/<feature-slug>/requirements/traceability.md
 ```
@@ -171,12 +181,12 @@ PRD.md
 
 这一阶段重点检查：
 
-- 角色是否完整
-- 实体是否完整
-- 状态机是否清晰
-- 权限边界是否明确
-- 验收标准是否可测试
-- 开放问题是否记录，而不是瞎猜
+- discovery 是否收集到角色、目标、约束和成功标准
+- sort 是否给出优先级和 MVP 取舍
+- analysis 是否覆盖角色、流程、实体、状态和权限
+- clarification 是否保留/解决歧义，而不是瞎猜
+- validation 是否给出可测试验收标准
+- specification 是否形成正式 PRD 和 traceability
 
 ### Step 2：跑 Product & Engineering Review
 
@@ -190,9 +200,13 @@ PRD.md
 
 ```text
 01_REQUIREMENTS.md
+requirements/discovery.md
+requirements/sort.md
 requirements/requirements.md
 requirements/datamodel.md
+requirements/clarification.md
 requirements/validation.md
+requirements/prd.md
 requirements/open-questions.md
 requirements/traceability.md
 PRD.md
@@ -228,7 +242,9 @@ PRD.md
 01_REQUIREMENTS.md
 requirements/requirements.md
 requirements/datamodel.md
+requirements/clarification.md
 requirements/validation.md
+requirements/prd.md
 02_TECHNICAL_DESIGN.md
 PRD.md
 ```

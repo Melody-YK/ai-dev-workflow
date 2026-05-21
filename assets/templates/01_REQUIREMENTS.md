@@ -25,9 +25,15 @@ Create or update these files during phase 01:
 
 ```text
 requirements/
+├── reverse.md              # optional, for existing codebases
+├── discovery.md
+├── sort.md
 ├── requirements.md
 ├── datamodel.md
+├── clarification.md
 ├── validation.md
+├── prd.md
+├── api.yaml                # optional
 ├── open-questions.md
 └── traceability.md
 ```
@@ -36,9 +42,15 @@ Minimum expectations:
 
 | Artifact | Purpose | Status |
 |---|---|---|
+| `requirements/reverse.md` | Optional reverse analysis from existing code when docs are missing | Optional |
+| `requirements/discovery.md` | Raw goals, stakeholders, constraints, and success criteria | Planned |
+| `requirements/sort.md` | Value sorting, priority, MVP fit, and dependency notes | Planned |
 | `requirements/requirements.md` | Detailed actors, goals, user stories, flows, functional and non-functional requirements | Planned |
 | `requirements/datamodel.md` | Domain entities, relationships, key fields, lifecycle states, permissions-relevant data | Planned |
-| `requirements/validation.md` | Acceptance criteria, validation rules, testable scenarios, edge cases | Planned |
+| `requirements/clarification.md` | Ambiguities, assumptions, stakeholder decisions, and resolved questions | Planned |
+| `requirements/validation.md` | Acceptance criteria, validation rules, testable scenarios, edge cases, and quality checks | Planned |
+| `requirements/prd.md` | Formalized PRD/specification after validation | Planned |
+| `requirements/api.yaml` | Optional OpenAPI/API sketch when useful | Optional |
 | `requirements/open-questions.md` | Ambiguities and decisions that require human confirmation | Planned |
 | `requirements/traceability.md` | Mapping from source PRD items to requirements, prototype pages, implementation tasks, and verification evidence | Planned |
 
@@ -65,9 +77,13 @@ Downstream phases must read this file plus the detailed artifacts under `require
 Required handoff inputs for phase 02:
 
 - `01_REQUIREMENTS.md`
+- `requirements/discovery.md`
+- `requirements/sort.md`
 - `requirements/requirements.md`
 - `requirements/datamodel.md`
+- `requirements/clarification.md`
 - `requirements/validation.md`
+- `requirements/prd.md`
 - `requirements/open-questions.md`
 - `requirements/traceability.md`
 - Source PRD: `{{SOURCE_PRD}}`

@@ -22,9 +22,15 @@ description: Orchestrate a lightweight, artifact-driven AI development workflow 
 ├── 00_INTAKE.md
 ├── 01_REQUIREMENTS.md
 ├── requirements/
+│   ├── reverse.md              # optional
+│   ├── discovery.md
+│   ├── sort.md
 │   ├── requirements.md
 │   ├── datamodel.md
+│   ├── clarification.md
 │   ├── validation.md
+│   ├── prd.md
+│   ├── api.yaml                # optional
 │   ├── open-questions.md
 │   └── traceability.md
 ├── 02_TECHNICAL_DESIGN.md
