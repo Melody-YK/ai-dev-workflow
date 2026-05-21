@@ -5,13 +5,17 @@ description: Orchestrate a lightweight, artifact-driven AI development workflow 
 
 # AI Dev Workflow
 
-Run a controlled, artifact-driven software development workflow. This skill is an orchestrator: it does not copy the work of `requirements-analyst`, `gstack`, or `superpowers`; it routes phases, manages artifacts, and enforces human checkpoints.
+运行一套轻量、可控、以 artifact 为核心的 AI 研发工作流。
 
-## Core rule
+这个 skill 是一个编排器：它不替代 `requirements-analyst`、`gstack` 或 `superpowers` 的能力，而是负责阶段路由、产物管理、上下文交接和人工门禁。
 
-Use files as the interface between phases. Do not rely on chat history as the source of truth.
+## 核心规则
 
-Default workspace for a feature:
+**阶段之间只通过文件交接。**
+
+不要把聊天记录当成唯一事实来源。每个阶段的重要输入、输出、决策、开放问题和下一步，都必须写入 `.ai-workflow/<feature-slug>/` 里的 artifact。
+
+默认工作目录：
 
 ```text
 .ai-workflow/<feature-slug>/
@@ -29,71 +33,152 @@ Default workspace for a feature:
 └── STATUS.md
 ```
 
-## When starting a workflow
+## 何时使用
 
-1. Identify the source PRD or intake text.
-2. Create a feature slug from the product/feature name.
-3. Initialize artifacts from `assets/templates/`.
-4. Copy or summarize the source PRD into `00_INTAKE.md` with a pointer to the original file.
-5. Set `STATUS.md` to phase `01_REQUIREMENTS` and checkpoint `WAITING_FOR_HUMAN_CONFIRMATION`.
-6. Ask the user whether to run the next phase.
+当用户提供 PRD、原始需求、功能想法，或想验证一套 AI 辅助研发流程时使用。
 
-If the user explicitly asks to continue without stopping, proceed, but still update `STATUS.md` at each phase boundary.
+适合的场景：
 
-## Phase routing
+- 把 PRD 拆成可执行、可验证的研发阶段。
+- 先做 requirements analysis，再做 product / engineering review。
+- 先生成静态 prototype 验证页面、流程、角色和状态，再进入 implementation。
+- 让后续 agent 只靠 artifact 接手，不依赖隐藏聊天上下文。
+- 比较 artifact-first workflow 和裸聊天实现的效果差异。
 
-| Phase | Purpose | Primary capability | Default tool/skill |
+不适合的场景：
+
+- 用户只想快速问答，不需要持久化 artifact。
+- 用户明确要求直接改一个很小的 bug，不需要完整流程。
+- 项目没有 PRD / 需求上下文，且用户也不想补充 intake。
+
+## 启动工作流
+
+开始一个新 feature workflow 时：
+
+1. 识别 source PRD 或 intake text。
+2. 从产品 / 功能名称生成 `feature-slug`。
+3. 从 `assets/templates/` 初始化 artifact。
+4. 将 source PRD 复制或摘要到 `00_INTAKE.md`，并保留原始文件路径或来源链接。
+5. 将 `STATUS.md` 设置为 phase `01_REQUIREMENTS`，checkpoint `WAITING_FOR_HUMAN_CONFIRMATION`。
+6. 询问用户是否继续运行下一阶段。
+
+如果用户明确要求 unattended / continuous run，可以继续推进；但每个阶段边界仍然必须更新 `STATUS.md`。
+
+## 阶段路由
+
+| Phase | 目标 | 主要能力 | 默认工具 / skill |
 |---|---|---|---|
-| 00 Intake | Capture source request and constraints | Intake normalization | This orchestrator |
-| 01 Requirements | Turn request into explicit requirements/spec | Requirements analysis | `requirements-analyst` |
-| 02 Product & Engineering Review | Challenge scope and produce technical design | Product/architecture review | `gstack` concepts: office-hours, plan-ceo-review, plan-eng-review |
-| 03 Prototype | Generate a requirements-driven static prototype | Prototype planning and static HTML/CSS generation | `requirements-analyst` prototype approach |
-| 04 Implementation | Write plan and build with discipline | TDD execution | `superpowers`: writing-plans, subagent-driven-development or executing-plans |
-| 05 Verification & Review | Prove the result works | Verification/review/QA | `superpowers` verification + optional `gstack` review/qa |
+| 00 Intake | 捕获原始请求、上下文和约束 | Intake normalization | This orchestrator |
+| 01 Requirements | 将需求转成明确、可测试的规格 | Requirements analysis | `requirements-analyst` |
+| 02 Product & Engineering Review | 挑战范围，形成产品 / 工程设计 | Product / architecture review | `gstack` concepts: office-hours, plan-ceo-review, plan-eng-review |
+| 03 Prototype | 生成需求驱动的静态原型 | Prototype planning + static HTML/CSS generation | `requirements-analyst` prototype approach |
+| 04 Implementation | 编写实现计划并纪律化执行 | TDD execution | `superpowers`: writing-plans, subagent-driven-development or executing-plans |
+| 05 Verification & Review | 用证据证明结果可用 | Verification / review / QA | `superpowers` verification + optional `gstack` review/qa |
 
-Read `references/phase-routing.md` when deciding which capability to invoke. Read `references/capability-contracts.md` when writing handoff prompts. Read `references/artifact-spec.md` when creating or validating artifacts.
+决策使用哪个能力时，读取：
+
+- `references/phase-routing.md`
+- `references/capability-contracts.md`
+- `references/artifact-spec.md`
+
+相对路径都以本 skill 目录为根目录解析。
 
 ## Prototype rules
 
-Default Prototype is Level 1:
+默认 Prototype 是 **Level 1 static prototype**。
 
-- Pure static HTML + CSS.
-- Open `prototype/index.html` directly in a browser.
-- No JavaScript unless the user explicitly approves Level 2 interactive prototype.
-- No CDN, backend, build tools, or CSS frameworks.
-- Generate a prototype plan first, then pages one at a time.
-- `prototype/index.html` is the navigation hub.
-- All other HTML files go under `prototype/pages/`.
-- Map every page back to requirements/user stories.
+### Level 1：默认原型
+
+- 只使用静态 HTML + CSS。
+- 直接用浏览器打开 `prototype/index.html`，不需要 server。
+- 不使用 JavaScript。
+- 不使用 CDN。
+- 不接 backend / API。
+- 不使用 build tools。
+- 不使用 CSS frameworks。
+- 先写 `Prototype Plan`，再逐页生成。
+- `prototype/index.html` 是导航入口和页面地图。
+- 其他 HTML 页面统一放在 `prototype/pages/`。
+- 每个页面都必须映射到 requirements / user stories。
+
+### Level 2：可选交互原型
+
+只有在用户明确批准时，才允许升级到 Level 2。
+
+Level 2 也只能使用少量 vanilla JavaScript 来模拟关键交互，不允许演变成生产级前端实现。
+
+### 原型边界
+
+Prototype 是 **decision artifact**，不是 shadow product。
+
+原型阶段应该验证：
+
+- 页面结构
+- 用户路径
+- 信息优先级
+- 关键状态
+- 角色 / 权限差异
+- 主要异常、空状态和边界情况
+
+原型阶段不应该实现：
+
+- 真实后端 API 调用
+- 完整业务逻辑
+- 完整权限系统
+- 完整状态管理
+- 生产级组件封装
+- 像素级视觉还原
+- 可上线代码结构
+
+如果某个能力主要服务“上线运行”，默认不进入 prototype 核心。
+如果某个能力主要服务“产品 / 交互 / 工程决策”，才允许进入 prototype。
+
+所有 mock data、假交互、不可用按钮和未覆盖能力，都必须在 `03_PROTOTYPE.md` 或页面中明确标注。
 
 ## Human gates
 
-Pause after each phase unless the user says to run unattended:
+除非用户明确要求 unattended run，否则每个阶段结束后都要暂停并等待确认：
 
-- After 00: confirm the normalized intake.
-- After 01: confirm requirements and unresolved questions.
-- After 02: confirm design decisions and prototype scope.
-- After 03: confirm prototype approval or requested changes.
-- After 04 planning: confirm whether to execute.
-- After 05: confirm accept/rework/retro.
+- 00 之后：确认 normalized intake。
+- 01 之后：确认 requirements 和 unresolved questions。
+- 02 之后：确认 design decisions 和 prototype scope。
+- 03 之后：确认 prototype approval 或修改意见。
+- 04 planning 之后：确认是否执行实现。
+- 05 之后：确认 accept / rework / retro。
+
+不要静默替用户做产品、安全、合规、集成、商业取舍等需要人工确认的决策。
 
 ## Quality gates
 
-Before moving to the next phase, check:
+进入下一阶段前检查：
 
-- Required artifact exists and has no unresolved `TBD` unless listed in Open Questions.
-- Decisions are recorded in `STATUS.md`.
-- Inputs consumed and outputs produced are listed.
-- The next phase has a clear handoff prompt.
-- Prototype approval is recorded before implementation unless explicitly skipped.
+- 必需 artifact 已存在。
+- artifact 中没有未处理的 `TBD`，除非已列入 Open Questions。
+- 关键 decisions 已记录在 `STATUS.md`。
+- 本阶段 consumed inputs 和 produced outputs 已写清楚。
+- 下一阶段有明确 handoff prompt。
+- 进入 implementation 前，prototype 已被批准，或明确记录为 skipped。
+- 如果生成了 prototype，页面必须能直接打开，并且页面到 requirements / user stories 的映射完整。
 
-Use `scripts/validate_artifacts.py <workflow-dir>` for a basic structural check. Use `--require-prototype-files` after prototype generation.
+基础结构检查：
+
+```bash
+scripts/validate_artifacts.py <workflow-dir>
+```
+
+prototype 生成后使用：
+
+```bash
+scripts/validate_artifacts.py <workflow-dir> --require-prototype-files
+```
 
 ## Output style
 
-Report concisely:
+汇报要简洁，默认包括：
 
-- Created/updated files
-- Current phase
-- Blockers or open decisions
-- Exact next action the user can approve
+- 创建 / 更新了哪些文件
+- 当前 phase
+- blockers 或 open decisions
+- 用户可以批准的明确 next action
+
+不要把大量中间推理塞进回复；把可恢复上下文写进 artifact。
