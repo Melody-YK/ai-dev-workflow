@@ -25,6 +25,8 @@ Use `requirements-analyst` when the source is a PRD, business process, product i
 
 Do not force all requirements output into one file. Preserve useful `requirements-analyst`-style detailed outputs under `requirements/`, and use `01_REQUIREMENTS.md` as the summary, index, approval, and handoff artifact.
 
+Full-fidelity gate: before marking 01 clean `DONE`, run `scripts/validate_artifacts.py <workflow> --gate 01-full`. If it fails, keep 01 as `NEEDS_REQUIREMENTS_DEPTH` / `DONE_DEGRADED` and either expand the provider-native artifacts or ask the user to accept degraded output. `EXTERNAL_FULL` means the real provider is available and used; it does not waive the output-depth gate.
+
 Suggested handoff:
 
 ```text
@@ -49,11 +51,14 @@ Then update <workflow>/01_REQUIREMENTS.md with only an executive summary, links 
 Preserve open questions instead of guessing.
 For guided-auto mode, do not merely list blocking open questions and wait for a separate phase-confirmation. Ask the user with a decision brief immediately: dynamic option count, recommended option with rationale when useful, and an “Other / custom” free-text option for every decision. Persist answers to clarification.md, open-questions.md, STATUS.md, and traceability.md when relevant. After the user answers, continue 01 automatically unless new blocking questions remain.
 Do not mark phase 01 DONE if requirements/requirements.md is much thinner than a direct requirements-analyst output.
+Run `scripts/validate_artifacts.py <workflow> --gate 01-full` before marking 01 DONE.
 ```
 
 ## 02 Product & Engineering Review
 
 Use `gstack-adapter` after requirements exist when real external `garrytan/gstack` is installed. Invoke/map the relevant gstack slices (`/plan-ceo-review`, `/plan-eng-review`, optional `/plan-design-review`, `/plan-devex-review`, `/cso`, `/qa`) into workflow artifacts. If gstack is missing, `review-pack` may be used only as `COMPACT_FALLBACK`; do not mark the phase clean `DONE` unless the user explicitly accepts degraded depth. See `providers/gstack-adapter/references/gstack-mapping.md` and `references/provider-contracts/review-pack.md`.
+
+Full-fidelity gate: before marking 02 clean `DONE`, run `scripts/validate_artifacts.py <workflow> --gate 02-full`. If it fails, do not claim full gstack quality. Keep the phase as `NEEDS_GSTACK_DEPTH`, `DONE_DEGRADED`, or `PROVIDER_DEGRADED` until full review notes and traceability updates exist.
 
 Suggested handoff:
 
@@ -68,11 +73,14 @@ First write provider-native review notes:
 Then write <workflow>/02_TECHNICAL_DESIGN.md as a workflow summary/control artifact with executive summary, recommended current delivery scope, non-goals, product review summary, engineering review summary, architecture, data model direction, state transitions, APIs/integrations, API contract review, risk register, and QA/test matrix. If an API boundary exists, review/update/freeze <workflow>/requirements/api.yaml; do not claim API alignment from prose alone.
 If the review accepts, changes, defers, or rejects important requirements, update <workflow>/requirements/traceability.md, especially the design-decision column. Do not claim traceability was updated unless it actually was.
 Surface decisions for human approval.
+Run `scripts/validate_artifacts.py <workflow> --gate 02-full` before marking 02 DONE.
 ```
 
 ## 03 Prototype
 
 Use prototype generation after requirements and product/engineering review exist. Follow the `requirements-analyst` prototype discipline: static files, prototype plan first, page generation one at a time, and page-to-requirement mapping.
+
+Full-fidelity gate: before entering 04, run `scripts/validate_artifacts.py <workflow> --gate 03-full`. If it fails, do not treat the prototype as approved/complete; update approval, actual page filenames, and traceability first.
 
 Default Level 1 prototype:
 
@@ -94,6 +102,7 @@ Wait for approval before generating pages.
 After approval, create <workflow>/prototype/index.html, <workflow>/prototype/css/style.css, and one HTML file per flow under <workflow>/prototype/pages/.
 Keep it pure static HTML/CSS unless Level 2 is explicitly approved.
 Map pages back to requirements/user stories and update traceability when useful.
+Run `scripts/validate_artifacts.py <workflow> --gate 03-full` before entering 04.
 ```
 
 ## 04 Implementation

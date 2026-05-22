@@ -38,6 +38,25 @@ REVIEW_DETAIL_PATHS = [
     "reviews/qa-review.md",
 ]
 
+FULL_REQUIREMENTS_FILES = {
+    "requirements/discovery.md": 5000,
+    "requirements/sort.md": 4000,
+    "requirements/requirements.md": 20000,
+    "requirements/datamodel.md": 10000,
+    "requirements/clarification.md": 3000,
+    "requirements/validation.md": 6000,
+    "requirements/prd.md": 12000,
+    "requirements/traceability.md": 6000,
+    "requirements/api.yaml": 12000,
+}
+
+FULL_REVIEW_FILES = {
+    "reviews/product-review.md": 7000,
+    "reviews/engineering-review.md": 9000,
+    "reviews/security-risk-review.md": 7000,
+    "reviews/qa-review.md": 7000,
+}
+
 PROTOTYPE_OPTIONAL_PATHS = [
     "prototype/index.html",
     "prototype/css/style.css",
@@ -66,6 +85,23 @@ def fail(message: str) -> bool:
 
 def contains_required_markers(text: str, markers: list[str]) -> list[str]:
     return [marker for marker in markers if marker not in text]
+
+
+def count_matches(text: str, pattern: str) -> int:
+    return len(re.findall(pattern, text, re.M | re.I))
+
+
+def validate_min_size(workflow_dir: pathlib.Path, files: dict[str, int], gate_name: str) -> bool:
+    failed = False
+    for relative, min_chars in files.items():
+        path = workflow_dir / relative
+        if not path.exists():
+            failed |= fail(f"{gate_name} missing {relative}")
+            continue
+        size = len(read_text(path).strip())
+        if size < min_chars:
+            failed |= fail(f"{gate_name} {relative} too thin ({size} chars < {min_chars})")
+    return failed
 
 
 def has_non_placeholder_table_row(text: str, header: str) -> bool:
@@ -116,6 +152,107 @@ def validate_04_plan(workflow_dir: pathlib.Path) -> bool:
         failed |= fail(f"04-plan missing required execution-unit markers: {', '.join(missing)}")
     if not re.search(r"^###\s+Step\s+\d+", text, re.M):
         failed |= fail("04-plan missing `### Step <n>` execution units")
+    return failed
+
+
+def validate_01_full(workflow_dir: pathlib.Path) -> bool:
+    """Require provider-native requirements-analyst depth, not summary output."""
+    failed = validate_min_size(workflow_dir, FULL_REQUIREMENTS_FILES, "01-full")
+    req = read_text(workflow_dir / "requirements" / "requirements.md") if (workflow_dir / "requirements" / "requirements.md").exists() else ""
+    discovery = read_text(workflow_dir / "requirements" / "discovery.md") if (workflow_dir / "requirements" / "discovery.md").exists() else ""
+    validation = read_text(workflow_dir / "requirements" / "validation.md") if (workflow_dir / "requirements" / "validation.md").exists() else ""
+    traceability = read_text(workflow_dir / "requirements" / "traceability.md") if (workflow_dir / "requirements" / "traceability.md").exists() else ""
+    api = read_text(workflow_dir / "requirements" / "api.yaml") if (workflow_dir / "requirements" / "api.yaml").exists() else ""
+
+    required_req_markers = [
+        "用户角色",
+        "用户故事地图",
+        "验收条件",
+        "gherkin",
+        "INVEST",
+        "非功能需求",
+        "角色与权限",
+        "状态机",
+        "边界情况",
+    ]
+    missing = contains_required_markers(req, required_req_markers)
+    if missing:
+        failed |= fail(f"01-full requirements.md missing full-analysis markers: {', '.join(missing)}")
+    story_count = count_matches(req, r"^###\s+US-\d+")
+    if story_count < 12:
+        failed |= fail(f"01-full requirements.md has too few user stories ({story_count} < 12)")
+    scenario_count = count_matches(req, r"^Scenario:")
+    if scenario_count < 20:
+        failed |= fail(f"01-full requirements.md has too few Gherkin scenarios ({scenario_count} < 20)")
+    if "规则同" in req or "同 US-" in req:
+        failed |= fail("01-full requirements.md contains shortcut wording like `规则同` / `同 US-*`; each story must be independently testable")
+
+    for marker in ["Power-Interest", "用户旅程", "竞品", "关键洞察"]:
+        if marker not in discovery:
+            failed |= fail(f"01-full discovery.md missing marker: {marker}")
+    for marker in ["Authenticity", "Completeness", "Consistency", "Feasibility", "Verifiability", "Traceability"]:
+        if marker not in validation:
+            failed |= fail(f"01-full validation.md missing validation dimension: {marker}")
+    for marker in ["设计", "原型", "实现", "验证"]:
+        if marker not in traceability:
+            failed |= fail(f"01-full traceability.md must include lifecycle column/coverage for: {marker}")
+    if count_matches(traceability, r"\|[^\n]*\|") < 30:
+        failed |= fail("01-full traceability.md is too sparse for full lifecycle traceability")
+    operation_count = count_matches(api, r"^\s+operationId:")
+    if operation_count < 20 and "not-applicable" not in api.lower():
+        failed |= fail(f"01-full api.yaml has too few operationId entries ({operation_count} < 20) for API-bearing project")
+    for marker in ["security:", "requestBody:", "responses:", "x-traceability", "status:"]:
+        if marker not in api and "not-applicable" not in api.lower():
+            failed |= fail(f"01-full api.yaml missing API contract marker: {marker}")
+    return failed
+
+
+def validate_02_full(workflow_dir: pathlib.Path) -> bool:
+    """Require full gstack-adapter depth and provenance, not compact review notes."""
+    failed = validate_01_full(workflow_dir)
+    failed |= validate_min_size(workflow_dir, FULL_REVIEW_FILES, "02-full")
+    design = read_text(workflow_dir / "02_TECHNICAL_DESIGN.md") if (workflow_dir / "02_TECHNICAL_DESIGN.md").exists() else ""
+    traceability = read_text(workflow_dir / "requirements" / "traceability.md") if (workflow_dir / "requirements" / "traceability.md").exists() else ""
+    reviews = "\n".join(read_text(workflow_dir / rel) for rel in FULL_REVIEW_FILES if (workflow_dir / rel).exists())
+
+    if "ADAPTER_FULL" in design:
+        for marker in ["plan-ceo-review", "plan-eng-review"]:
+            if marker not in design and marker not in reviews:
+                failed |= fail(f"02-full claims ADAPTER_FULL but lacks gstack slice provenance: {marker}")
+    for marker in ["Assumptions", "Tradeoffs", "Alternatives", "Non-goals", "Risk", "Decision", "Implementation", "Test"]:
+        if marker not in reviews and marker.lower() not in reviews.lower():
+            failed |= fail(f"02-full review notes missing full-gstack review marker: {marker}")
+    for marker in ["accepted", "deferred", "rejected", "changed", "评审结论", "设计决策"]:
+        if marker not in traceability:
+            failed |= fail(f"02-full traceability.md missing review-decision marker: {marker}")
+    if "COMPACT_FALLBACK" in design and "DONE" in design:
+        failed |= fail("02-full cannot be clean DONE when only COMPACT_FALLBACK review-pack ran")
+    return failed
+
+
+def validate_03_full(workflow_dir: pathlib.Path) -> bool:
+    """Require requirements-analyst-style prototype closure and traceability."""
+    failed = validate_02_full(workflow_dir)
+    proto = workflow_dir / "03_PROTOTYPE.md"
+    text = read_text(proto) if proto.exists() else ""
+    if len(text.strip()) < 6000:
+        failed |= fail(f"03-full 03_PROTOTYPE.md too thin ({len(text.strip())} chars < 6000)")
+    for marker in ["原型计划", "页面到需求映射", "Mock 数据", "原型范围外", "评审反馈", "审批决策"]:
+        if marker not in text:
+            failed |= fail(f"03-full 03_PROTOTYPE.md missing marker: {marker}")
+    if re.search(r"状态：\s*TBD", text) or "进入实现计划前，用户已批准原型" in text and "[ ] 进入实现计划前，用户已批准原型" in text:
+        failed |= fail("03-full prototype approval is still TBD/unchecked")
+    pages_dir = workflow_dir / "prototype" / "pages"
+    pages = sorted(p.name for p in pages_dir.glob("*.html")) if pages_dir.exists() else []
+    if len(pages) < 8:
+        failed |= fail(f"03-full too few prototype pages ({len(pages)} < 8)")
+    traceability = read_text(workflow_dir / "requirements" / "traceability.md") if (workflow_dir / "requirements" / "traceability.md").exists() else ""
+    missing_pages = [page for page in pages if page not in traceability and f"prototype/pages/{page}" not in traceability]
+    if missing_pages:
+        failed |= fail(f"03-full traceability.md missing actual prototype page filenames: {', '.join(missing_pages[:8])}")
+    for stale in ["create-ticket.html", "review-ticket.html", "execute-ticket.html", "suspend-ticket.html", "verify-ticket.html", "query-tickets.html"]:
+        if stale in traceability and not (workflow_dir / "prototype" / "pages" / stale).exists():
+            failed |= fail(f"03-full traceability.md references stale/nonexistent prototype page: {stale}")
     return failed
 
 
@@ -198,7 +335,7 @@ def main() -> int:
     )
     parser.add_argument(
         "--gate",
-        choices=["04-plan", "04-complete", "05-complete"],
+        choices=["01-full", "02-full", "03-full", "04-plan", "04-complete", "05-complete"],
         help="Run stricter phase gate validation before claiming a phase is complete.",
     )
     args = parser.parse_args()
@@ -255,7 +392,13 @@ def main() -> int:
             else:
                 print(f"OK {relative}")
 
-    if args.gate == "04-plan":
+    if args.gate == "01-full":
+        failed |= validate_01_full(workflow_dir)
+    elif args.gate == "02-full":
+        failed |= validate_02_full(workflow_dir)
+    elif args.gate == "03-full":
+        failed |= validate_03_full(workflow_dir)
+    elif args.gate == "04-plan":
         failed |= validate_04_plan(workflow_dir)
     elif args.gate == "04-complete":
         failed |= validate_04_complete(workflow_dir)

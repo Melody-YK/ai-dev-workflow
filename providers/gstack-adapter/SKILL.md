@@ -71,6 +71,7 @@ Write or map results to:
 - If external gstack is missing but `review-pack` is used: record `COMPACT_FALLBACK`, not gstack.
 - If only some gstack slices run, record exactly which slices ran and which did not.
 - Do not claim “gstack review passed” unless the corresponding external gstack command skill actually ran or was explicitly loaded and followed.
+- Full gstack quality is output-gated, not just availability-gated. Before marking phase 02 full `DONE`, run `scripts/validate_artifacts.py <workflow-dir> --gate 02-full`; if it fails, record `NEEDS_GSTACK_DEPTH` or `DONE_DEGRADED` and expand the provider-native review notes.
 
 ## Installation note
 

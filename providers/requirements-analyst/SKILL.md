@@ -66,3 +66,5 @@ Original source format is preserved at `references/POWER.md` for compatibility a
 ## Quality bar
 
 Do not compress the provider output into short tables. Preserve requirements-analyst depth: personas, activities, story map or equivalent flow breakdown, detailed user stories, acceptance criteria, INVEST/equivalent checks, entities, state transitions, permissions, edge cases, non-functional requirements, and validation scenarios.
+
+Full requirements-analyst quality is output-gated, not just provider-availability-gated. Before marking phase 01 full `DONE`, run `scripts/validate_artifacts.py <workflow-dir> --gate 01-full`. Before entering implementation from prototype, run `scripts/validate_artifacts.py <workflow-dir> --gate 03-full`. If either gate fails, expand the source-derived artifacts or mark the phase `DONE_DEGRADED` / `NEEDS_REQUIREMENTS_DEPTH` instead of claiming full requirements-analyst fidelity.

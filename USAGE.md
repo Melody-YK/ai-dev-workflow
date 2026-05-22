@@ -182,6 +182,15 @@ PRD.md
 
 `01_REQUIREMENTS.md` 是阶段摘要、索引和门禁文件；详细需求文档保留在 `requirements/` 目录。使用 `requirements-analyst` 的分析方法和丰富产物，但不要让它替换 workflow 的产物位置和交接规则。
 
+01 要求满血 requirements-analyst 深度，而不是“摘要够用”。完成前 agent 必须运行并记录：
+
+```bash
+python3 /Users/melody/.openclaw/workspace/ai-dev-workflow/scripts/validate_artifacts.py \
+  .ai-workflow/<feature-slug> --gate 01-full
+```
+
+如果失败，01 不能标记 clean DONE；应继续扩展 provider-native artifacts，或明确标记 `DONE_DEGRADED`。
+
 这一阶段重点检查：
 
 - discovery 是否收集到角色、目标、约束和成功标准
@@ -221,6 +230,15 @@ PRD.md
 ```text
 02_TECHNICAL_DESIGN.md
 ```
+
+02 要求满血 gstack-adapter 深度。完成前 agent 必须运行并记录：
+
+```bash
+python3 /Users/melody/.openclaw/workspace/ai-dev-workflow/scripts/validate_artifacts.py \
+  .ai-workflow/<feature-slug> --gate 02-full
+```
+
+如果失败，不能宣称“完整 gstack 评审已通过”；应继续调用/映射真实 gstack slice，或标记 `NEEDS_GSTACK_DEPTH` / `DONE_DEGRADED`。
 
 这一阶段重点检查：
 
@@ -271,6 +289,15 @@ prototype/pages/*.html
 - 原型是否能直接用浏览器打开
 
 默认只允许 HTML + CSS，不使用 JS、CDN、后端或构建工具。
+
+进入 04 前必须运行并记录：
+
+```bash
+python3 /Users/melody/.openclaw/workspace/ai-dev-workflow/scripts/validate_artifacts.py \
+  .ai-workflow/<feature-slug> --gate 03-full
+```
+
+如果失败，先修 prototype approval、实际页面文件名和 traceability，不要进入 implementation。
 
 ### Step 4：跑 Implementation Planning
 
