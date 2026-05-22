@@ -11,6 +11,16 @@
 
 AI Dev Workflow 拥有阶段契约、状态、门禁和 artifact 位置。`requirements-analyst`、gstack-style review、`superpowers` 等能力提供者负责方法和详细产出，但不能替代 workflow contract。
 
+## Provider health
+
+_进入依赖外部能力的阶段前填写。若首选 provider 不可用，必须标记 degraded/blocker，并说明 fallback。_
+
+| Capability | Preferred provider | Availability | Actual provider / fallback | Impact |
+|---|---|---|---|---|
+| Requirements analysis | requirements-analyst | unknown |  |  |
+| Product/engineering review | gstack-style review | unknown |  |  |
+| Implementation / verification | superpowers | unknown |  |  |
+
 ## 阶段
 
 | 阶段 | Artifact | 状态 | Provider |

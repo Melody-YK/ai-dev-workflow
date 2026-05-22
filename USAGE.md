@@ -346,6 +346,24 @@ implementation/IMPLEMENTATION_PLAN.md
 - 剩余风险
 - 发布就绪度：Ready / Ready with accepted risks / Blocked
 
+## Provider 不可用时怎么办
+
+首选 provider（如 `requirements-analyst`、gstack、superpowers）不是 workflow 自带保证可用的能力。运行每个阶段前应先做 provider availability preflight。
+
+如果 provider 不可用：
+
+1. 优先暂停，让用户安装/启用对应 skill/provider；或
+2. 明确进入 `PROVIDER_DEGRADED` fallback mode。
+
+fallback 时必须更新 `STATUS.md`：
+
+- Provider health
+- 当前阶段状态
+- 实际执行者 / fallback
+- 质量风险和补偿检查
+
+不要让 `STATUS.md` 继续显示不可用 provider，好像它真的执行过。
+
 ## 7. 阶段推进规则
 
 默认每个阶段结束后都暂停。

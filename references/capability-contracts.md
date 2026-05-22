@@ -8,6 +8,16 @@ Core principle:
 
 A provider may use its own analysis method and may preserve richer provider-native outputs, but it must write them into the workflow-defined locations and update the phase summary/control artifact.
 
+## Provider availability and fallback
+
+Before starting a phase, check whether the preferred provider is actually available in the current runtime. If not available:
+
+- Record the unavailable provider in `STATUS.md` Provider health.
+- Do not keep the Provider column as if the unavailable provider executed the phase.
+- Either stop for user action, or explicitly enter `PROVIDER_DEGRADED` fallback mode.
+- In fallback mode, document the fallback provider, quality risk, missing method-specific capabilities, and compensating checks.
+- Do not mark a phase `DONE` if fallback output is shallower than the provider-native quality bar; use `DONE_DEGRADED`, `NEEDS_REVIEW`, or `BLOCKED`.
+
 ## 01 Requirements Analysis
 
 **Input**

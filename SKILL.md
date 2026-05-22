@@ -123,6 +123,21 @@ python3 <skill-root>/scripts/init_workflow.py \
 
 相对路径都以本 skill 目录为根目录解析。
 
+## Provider availability preflight
+
+进入任何依赖外部能力的阶段前，必须先确认首选 provider 是否可用，并把结果写入 `STATUS.md` 的 Provider health / 阶段状态。
+
+规则：
+
+- 01 首选 `requirements-analyst`；02 首选 gstack-style review；04/05 首选 superpowers。
+- 如果首选 provider 可用，使用它，并保留 provider-native 深度产物。
+- 如果首选 provider 不可用，不能只在正文里随口说明后继续；必须二选一：
+  1. 停下来提示用户安装/启用 provider；或
+  2. 明确进入 `PROVIDER_DEGRADED` fallback mode，说明 fallback provider、能力差异、质量风险和额外检查。
+- fallback mode 仍必须满足 workflow artifact contract；如果达不到同等深度，不得把阶段标记为 DONE，只能标记为 `DONE_DEGRADED` / `NEEDS_REVIEW` / `BLOCKED`。
+- `STATUS.md` 中的 Provider 列必须反映真实执行者，例如 `ai-dev-workflow fallback (requirements-analyst unavailable)`，不得继续写首选 provider 造成误导。
+- 如果用户要求 guided-auto，provider 不可用属于需要确认的运行条件；除非 fallback policy 已明确允许，否则应暂停询问。
+
 ## Prototype rules
 
 默认 Prototype 是 **Level 1 static prototype**。
