@@ -7,6 +7,11 @@ description: Adapter/fallback provider for ai-dev-workflow implementation planni
 
 Prefer the external official `superpowers` plugin when available. This adapter exists to map superpowers-style discipline onto `ai-dev-workflow` artifacts and to provide degraded fallback behavior when the external provider is unavailable.
 
+
+## Language mapping
+
+When mapping superpowers-style planning/execution/verification into ai-dev-workflow, use the user's primary language for workflow artifacts and user-visible summaries. For Chinese PRDs or Chinese user instructions, write implementation plans, verification notes, blockers, and phase summaries in Chinese, while keeping code symbols, commands, file paths, and API identifiers unchanged.
+
 ## Use in ai-dev-workflow
 
 - Phase 04 planning: use writing-plans discipline to create `implementation/IMPLEMENTATION_PLAN.md`.

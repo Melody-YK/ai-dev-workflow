@@ -9,6 +9,21 @@ description: Orchestrate a lightweight, artifact-driven AI development workflow 
 
 这个 skill 是一个编排器：它不替代 `requirements-analyst`、外部 `garrytan/gstack` 或 `superpowers` 的能力；内置 `review-pack` 只是紧凑评审 provider，不等同完整 gstack，而是负责阶段路由、产物管理、上下文交接和人工门禁。
 
+
+## Language and user-visible output
+
+Auto-detect the primary language from the user's request and source PRD. Use that language for **all** user-visible replies and generated artifact content unless the user explicitly asks otherwise.
+
+For Chinese PRDs or Chinese user instructions:
+
+- final phase summaries must be in Chinese;
+- checkpoint / clarification questions must be in Chinese;
+- artifact headings, labels, table headers, status notes, and handoff prompts must be in Chinese;
+- do not switch to English just because provider skills, templates, filenames, or examples are English;
+- English technical identifiers such as file paths, API operation IDs, enum values, and command names may remain English.
+
+Before replying to the user at a phase boundary, check the reply language. If it does not match the user's language, rewrite it before sending.
+
 ## 核心规则
 
 **阶段之间只通过文件交接。**
@@ -252,6 +267,8 @@ scripts/validate_artifacts.py <workflow-dir> --require-prototype-files
 ```
 
 ## Output style
+
+用户可见汇报必须使用用户的主要语言；中文 PRD / 中文指令场景下，阶段完成摘要、阻塞问题和下一步都必须用中文输出。
 
 汇报要简洁，默认包括：
 

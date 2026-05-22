@@ -1,5 +1,10 @@
 # Phase Routing
 
+
+## Language rule
+
+The orchestrator owns user-visible language consistency. Detect the primary language from the user request and source PRD, then keep all phase summaries, decision briefs, checkpoint prompts, and artifact prose in that language. Provider-native skills may contain English instructions, but their mapped workflow outputs and assistant replies must be localized. Technical identifiers, file paths, commands, API operation IDs, and enum values may remain English.
+
 Core routing rule:
 
 > Use provider skills as capability providers, not as owners of the workflow format.

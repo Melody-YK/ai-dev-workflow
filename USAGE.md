@@ -480,3 +480,9 @@ D. 其他 / 自定义：你可以直接描述希望的首批范围。
 - artifact validator：检查 TBD、遗漏字段、状态不一致
 - provider registry：把 requirements/review/superpowers 替换成任意同能力 skill
 - retro 阶段：每次实现后沉淀工作流改进
+
+
+### 语言一致性
+
+Workflow 会根据用户输入和来源 PRD 自动判断主语言。中文 PRD 或中文指令场景下，阶段总结、澄清问题、下一步提示和 artifact 正文都应使用中文。Provider 内部说明或上游技能是英文时，也必须在映射到 workflow artifact 和最终回复时本地化；文件路径、命令、API operationId、枚举值等技术标识可以保留英文。
+

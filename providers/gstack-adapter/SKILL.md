@@ -24,6 +24,11 @@ Optional but useful when present:
 - `~/.claude/skills/gstack/cso/SKILL.md`
 - `~/.claude/skills/gstack/ship/SKILL.md`
 
+
+## Language mapping
+
+When mapping gstack outputs into ai-dev-workflow, preserve the user's primary language for workflow artifacts and final replies. For Chinese PRDs or Chinese user instructions, write review findings, summaries, decision briefs, and handoff notes in Chinese even if the upstream gstack skill content is English. Keep only technical identifiers, commands, paths, API operation IDs, and enum values in English when appropriate.
+
 ## Phase 02 mapping
 
 Use gstack as the reviewer, not as the workflow owner.
