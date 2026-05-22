@@ -89,14 +89,21 @@ implementation/IMPLEMENTATION_PLAN.md  # superpowers writing-plans 的权威深�
 
 ## 05 阶段输出要求
 
+05 阶段必须自己从 workflow artifacts 推导验证范围，不要求用户在提示词里重复验证清单。必须读取 01/02/03/04 产物、`implementation/IMPLEMENTATION_PLAN.md`、实现 diff 和当前代码。
+
 必须在 `05_REVIEW.md` 中形成：
 
-- 需求覆盖证据。
-- 原型覆盖证据（适用时）。
-- 测试/build/lint 证据。
+- 需求覆盖证据：对照 `requirements/`、验收标准、延期项和 traceability。
+- 原型覆盖证据：对照 `03_PROTOTYPE.md` 和 `prototype/`，检查页面、流程、角色权限、状态和异常场景。
+- 测试/build/lint/typecheck 证据：运行所有可用命令；无法运行时记录原因、影响和替代验证。
+- 核心路径与异常路径验证：至少覆盖建票、提交、三级审核、下令、执行、校验归档、驳回、作废、中止、越权访问；如不适用必须说明。
 - 手工 QA 证据（适用时）。
-- 代码评审发现和处理结果。
-- 剩余风险和发布建议。
+- 代码/架构评审发现和处理结果。
+- 安全/风险复查发现和处理结果。
+- 问题清单：严重度、复现方式、影响范围、建议修复方案、处理状态。
+- 剩余风险和发布建议：Ready / Ready with accepted risks / Blocked。
+
+05 不应新增大功能；只允许验证、评审、证据记录和必要的小修复建议。
 
 ## 失败条件
 
@@ -106,6 +113,8 @@ implementation/IMPLEMENTATION_PLAN.md  # superpowers writing-plans 的权威深�
 - 没有 `implementation/IMPLEMENTATION_PLAN.md` 深度计划就直接改代码，且事后无法还原计划和证据。
 - 将 superpowers writing-plans 的深度内容压缩成 `04_IMPLEMENTATION.md` 的摘要表格，导致小步执行单元、测试优先顺序、文件级计划、命令、检查点、风险或追踪关系缺失。
 - `implementation/IMPLEMENTATION_PLAN.md` 只有模块大纲，没有每个执行单元的 test/verification-first 步骤、命令、通过标准和失败处理。
+- 05 阶段没有主动运行可用的 test / build / lint / typecheck，也没有说明无法运行的原因和影响。
+- 05 阶段没有对照需求、原型和实现计划做覆盖检查。
 - 核心行为没有测试或验证证据，且没有明确例外批准。
 - 测试/build/lint 失败但未记录原因和处理方式。
 - 代码变更无法追踪回需求或设计决策。

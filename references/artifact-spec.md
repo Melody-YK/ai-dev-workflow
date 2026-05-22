@@ -163,3 +163,16 @@ Rules:
 - `04_IMPLEMENTATION.md` is the workflow summary/control artifact: it indexes the deep plan, records gates, status, execution log, verification evidence, changed files, blockers, and approval decisions.
 - Do not compress provider-native deep planning output into `04_IMPLEMENTATION.md` tables. Summaries are allowed only if they link to the full plan.
 - A module outline alone is not sufficient. Each implementation unit should state traceability, files, test/verification-first step, expected initial result, implementation action, commands, pass criteria, and failure handling.
+
+## Verification artifacts
+
+05 Verification & Review is evidence-driven. The agent must infer the verification checklist from workflow artifacts, not from a long user prompt.
+
+Rules:
+
+- Read 01/02/03/04 artifacts, `implementation/IMPLEMENTATION_PLAN.md`, approved prototype files, implementation diff, and current code.
+- Run available test / build / lint / typecheck commands; record unavailable commands with reason and impact.
+- Check requirements coverage, prototype coverage, role/permission coverage, state transitions, core paths, exception paths, and release readiness.
+- At minimum, validate or explicitly mark not-applicable: create ticket, submit, three-level audit, dispatch, execute, verify/archive, reject, cancel, suspend, unauthorized access.
+- `05_REVIEW.md` must include evidence, issues, severity, reproduction or inspection basis, suggested fix or disposition, remaining risk, and release recommendation.
+- Do not add major new features in 05. If feature gaps are found, record them as issues or blockers unless the user explicitly approves implementation work.

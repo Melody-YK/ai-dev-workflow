@@ -115,9 +115,10 @@ Use superpowers verification and optional gstack review/QA/risk review depending
 Suggested handoff:
 
 ```text
-Review the implementation against <workflow>/01_REQUIREMENTS.md, the detailed requirements artifacts under <workflow>/requirements/, <workflow>/02_TECHNICAL_DESIGN.md, and <workflow>/03_PROTOTYPE.md.
-Run available tests/build/lint/manual QA.
-Perform or request code/architecture review and risk/QA review when useful.
-Write evidence, issues, fixes, prototype coverage, risk classification, and release readiness to <workflow>/05_REVIEW.md.
+Enter 05 Verification & Review using the workflow contract. Do not rely on the user prompt to enumerate checks.
+Read <workflow>/01_REQUIREMENTS.md, detailed artifacts under <workflow>/requirements/, <workflow>/02_TECHNICAL_DESIGN.md, <workflow>/03_PROTOTYPE.md, approved <workflow>/prototype/, <workflow>/04_IMPLEMENTATION.md, <workflow>/implementation/IMPLEMENTATION_PLAN.md, and the current implementation code.
+Run available test/build/lint/typecheck/manual QA. If a command cannot run, record why and the impact.
+Check requirement coverage, prototype/page/role/state coverage, core paths, exception paths, permissions, code/architecture risks, and release readiness.
+Write evidence, issues, fixes or recommendations, risk classification, and release readiness to <workflow>/05_REVIEW.md.
 Update <workflow>/requirements/traceability.md with verification evidence when useful.
 ```
