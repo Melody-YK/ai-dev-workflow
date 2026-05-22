@@ -188,6 +188,20 @@ Prototype 是 **decision artifact**，不是 shadow product。
 
 不要静默替用户做产品、安全、合规、集成、商业取舍等需要人工确认的决策。
 
+### Guided-auto clarification protocol
+
+如果用户要求 `guided-auto` / 连续推进模式，agent 可以在阶段门禁通过后自动进入下一阶段；但遇到需要人确认的开放问题时，必须主动提问，而不是把问题只写进 artifact 后继续推进。
+
+提问规则：
+
+- 将相关开放问题合并成一组 decision brief，避免一问一答打断过多。
+- 每个问题必须给出**动态生成**的可选项；选项数量按问题复杂度决定，不固定为 2/3/4 个。
+- 每个问题必须包含一个自由表达选项，例如“其他 / 自定义：请直接描述你的规则或偏好”。
+- 对每个选项说明适用场景、优点、代价/风险和对后续阶段的影响。
+- 可以给推荐项，但必须说明推荐理由；不得把推荐项当成人工确认。
+- 用户回复后，必须把选择和自由文本写入 `requirements/clarification.md`、`requirements/open-questions.md`、`STATUS.md`，并在需要时同步 `requirements/traceability.md`。
+- 如果用户一次性回答多个问题，按回答继续；如果只回答部分问题，只追问仍阻塞下一阶段的问题。
+
 当需要用户选择方案时，必须生成 decision brief，而不是只列选项。每个选项都必须有说明：适用场景、优点、缺点/代价、对后续阶段的影响。推荐项可以额外写推荐理由，但非推荐项不能留空或显示 `No preview available`。
 
 ## Quality gates

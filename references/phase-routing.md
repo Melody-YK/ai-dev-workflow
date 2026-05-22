@@ -38,6 +38,7 @@ Produce detailed requirements artifacts under <workflow>/requirements/:
 - traceability.md for mapping source PRD items to requirements.
 Then update <workflow>/01_REQUIREMENTS.md with only an executive summary, links to the detailed artifacts, key assumptions, open question summary, handoff notes, and approval status.
 Preserve open questions instead of guessing.
+For guided-auto mode, do not merely list blocking open questions and continue. Ask the user with a decision brief: dynamic option count, recommended option with rationale when useful, and an “Other / custom” free-text option for every decision. Persist answers to clarification.md, open-questions.md, STATUS.md, and traceability.md when relevant.
 Do not mark phase 01 DONE if requirements/requirements.md is much thinner than a direct requirements-analyst output.
 ```
 
