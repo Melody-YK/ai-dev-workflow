@@ -7,6 +7,17 @@ description: Bundled product, engineering, security-risk, QA, and release review
 
 This provider gives `ai-dev-workflow` an internal review capability. It borrows the idea of multi-role review, but it is not a full garrytan/gstack installation or substitute for gstack commands like /office-hours, /plan-ceo-review, /review, /qa, or /ship.
 
+
+## Fidelity tier
+
+`review-pack` is `COMPACT_FALLBACK` by default. It is useful when no external review provider is available, but it must not be presented as full `garrytan/gstack` capability.
+
+When used instead of external `garrytan/gstack`, record:
+
+- missing upstream commands/capabilities, such as `/office-hours`, `/plan-ceo-review`, `/plan-eng-review`, `/review`, `/qa`, `/ship`, browser/deploy/gbrain integrations where relevant;
+- compensating checks performed inside ai-dev-workflow;
+- whether the phase result is `DONE_DEGRADED`, `NEEDS_REVIEW`, or explicitly accepted by the user.
+
 ## Roles
 
 Run reviews with distinct stances. Do not merge them into generic summaries too early.

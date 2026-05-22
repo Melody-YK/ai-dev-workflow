@@ -13,9 +13,11 @@ Prefer the external official `superpowers` plugin when available. This adapter e
 - Phase 04 execution: execute approved plan in small verifiable steps.
 - Phase 05 verification: use verification-before-completion and requesting-code-review discipline.
 
-## Fallback status
+## Fidelity tier
 
-If the external `superpowers` plugin is unavailable, mark provider health as `PROVIDER_DEGRADED` unless the output can meet the full contract with equivalent evidence. Record missing external capability and compensating checks in `STATUS.md` and phase artifacts.
+When external `superpowers` is installed and actually used, this adapter is `ADAPTER_FULL`: it maps superpowers discipline into ai-dev-workflow artifacts.
+
+If external `superpowers` is unavailable, this adapter is only degraded fallback. Mark provider health as `PROVIDER_DEGRADED` unless the output can meet the full contract with equivalent evidence. Record missing external capability and compensating checks in `STATUS.md` and phase artifacts.
 
 ## Contract reference
 

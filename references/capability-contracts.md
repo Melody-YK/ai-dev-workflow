@@ -8,6 +8,27 @@ Core principle:
 
 A provider may use its own analysis method and may preserve richer provider-native outputs, but it must write them into the workflow-defined locations and update the phase summary/control artifact.
 
+
+## Provider fidelity tiers
+
+Provider availability is not enough. The workflow must record whether the provider can deliver the intended method depth.
+
+| Tier | Meaning | May mark phase clean `DONE`? |
+| --- | --- | --- |
+| `EXTERNAL_FULL` | The real upstream provider/skill/plugin is installed and invoked for the phase. | Yes, if artifacts/evidence pass. |
+| `BUNDLED_SOURCE_SLICE` | The workflow bundles source-derived instructions/resources for the exact subset used by this phase, and the phase loads those resources directly. | Yes for that subset only, if the subset contract is met. |
+| `ADAPTER_FULL` | Adapter invokes/maps an external full provider while preserving workflow artifacts. | Yes, if the external provider actually ran. |
+| `COMPACT_FALLBACK` | Lightweight internal approximation/checklist. Useful as safety net, but not equivalent to the upstream skill. | No by default. Use `DONE_DEGRADED`, `NEEDS_REVIEW`, or `PROVIDER_DEGRADED` unless user explicitly accepts the reduced depth. |
+| `MISSING` | No usable provider. | No; phase is `BLOCKED`. |
+
+Rules:
+
+- Do not confuse capability names with actual capability depth.
+- If the workflow needs only part of a provider, that part must still be sourced from the provider's real method, references, commands, or agent prompts where licensing/maintenance permits.
+- If a bundled provider is only a compact reimplementation, label it `COMPACT_FALLBACK`; never present it as equivalent to the upstream provider.
+- `STATUS.md` Provider health must record both provider name and fidelity tier, e.g. `review-pack (COMPACT_FALLBACK; not full garrytan/gstack)`.
+- A phase using `COMPACT_FALLBACK` must list missing upstream capabilities and compensating checks.
+
 ## Provider availability and fallback
 
 Before starting a phase, check whether the preferred provider is actually available in the current runtime. If not available:

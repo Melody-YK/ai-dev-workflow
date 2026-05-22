@@ -46,6 +46,7 @@ def main() -> int:
         "bundledAvailable": req_bundled,
         "bundledPath": req_bundled_path,
         "recommendedProvider": "external requirements-analyst" if req_external else ("bundled requirements-analyst" if req_bundled else "none"),
+        "fidelityTier": "EXTERNAL_FULL" if req_external else ("BUNDLED_SOURCE_SLICE" if req_bundled else "MISSING"),
         "status": "available" if (req_external or req_bundled) else "missing",
     })
 
@@ -63,8 +64,9 @@ def main() -> int:
         "externalPath": gstack_external_path,
         "bundledAvailable": gstack_bundled,
         "bundledPath": gstack_bundled_path,
-        "recommendedProvider": "external garrytan/gstack or review-pack" if gstack_external else ("bundled review-pack" if gstack_bundled else "none"),
-        "status": "available" if (gstack_external or gstack_bundled) else "missing",
+        "recommendedProvider": "external garrytan/gstack" if gstack_external else ("bundled review-pack" if gstack_bundled else "none"),
+        "fidelityTier": "EXTERNAL_FULL" if gstack_external else ("COMPACT_FALLBACK" if gstack_bundled else "MISSING"),
+        "status": "available" if gstack_external else ("degraded" if gstack_bundled else "missing"),
     })
 
     super_external, super_external_path = exists_any([
@@ -82,6 +84,7 @@ def main() -> int:
         "bundledAvailable": super_adapter,
         "bundledPath": super_adapter_path,
         "recommendedProvider": "external superpowers" if super_external else ("superpowers-adapter PROVIDER_DEGRADED" if super_adapter else "none"),
+        "fidelityTier": "ADAPTER_FULL" if super_external else ("COMPACT_FALLBACK" if super_adapter else "MISSING"),
         "status": "available" if super_external else ("degraded" if super_adapter else "missing"),
     })
 
@@ -90,7 +93,7 @@ def main() -> int:
         print(json.dumps(result, ensure_ascii=False, indent=2))
     else:
         for item in checks:
-            print(f"{item['capability']}: {item['status']} -> {item['recommendedProvider']}")
+            print(f"{item['capability']}: {item['status']} [{item.get('fidelityTier', 'unknown')}] -> {item['recommendedProvider']}")
             if item.get("externalPath"):
                 print(f"  external: {item['externalPath']}")
             if item.get("bundledPath"):

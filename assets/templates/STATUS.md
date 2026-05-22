@@ -17,9 +17,9 @@ _进入依赖外部能力的阶段前填写。若首选 provider 不可用，必
 
 | Capability | Preferred provider | Availability | Actual provider / fallback | Impact |
 |---|---|---|---|---|
-| Requirements analysis | requirements-analyst | unknown |  |  |
-| Product/engineering review | review-pack | unknown |  |  |
-| Implementation / verification | superpowers | unknown |  |  |
+| Requirements analysis | requirements-analyst | unknown |  | record `EXTERNAL_FULL` or `BUNDLED_SOURCE_SLICE`; must load real steering/templates |
+| Product/engineering review | external garrytan/gstack or review-pack | unknown |  | record `EXTERNAL_FULL` or `COMPACT_FALLBACK`; review-pack is not full gstack |
+| Implementation / verification | superpowers | unknown |  | record `EXTERNAL_FULL`, `ADAPTER_FULL`, or degraded fallback |
 
 ## 阶段
 

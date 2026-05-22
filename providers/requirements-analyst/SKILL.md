@@ -7,6 +7,13 @@ description: Bundled provider for requirements engineering inside ai-dev-workflo
 
 This provider is bundled with `ai-dev-workflow` so phase 01 and phase 03 do not depend on a separately installed `requirements-analyst` power.
 
+
+## Fidelity tier
+
+This provider is intended to be `BUNDLED_SOURCE_SLICE`, not a loose rewrite. To claim requirements-analyst capability for a phase, load and use the relevant source-derived steering/templates under `references/steering/`.
+
+If the agent only follows the short summary in this file and does not load the required steering/template files for the active subtask, record the run as `COMPACT_FALLBACK` / `DONE_DEGRADED` instead of full requirements-analyst output.
+
 ## When used by ai-dev-workflow
 
 - Phase 01 Requirements: produce deep provider-native requirements artifacts under `.ai-workflow/<feature>/requirements/`.
