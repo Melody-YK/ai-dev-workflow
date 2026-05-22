@@ -24,7 +24,7 @@ requirements-analyst → gstack-style review → prototype generation → superp
 | 03 Prototype | 生成需求驱动的静态 HTML/CSS 原型，验证页面、流程、角色和状态 | requirements-analyst prototype approach |
 | 04 Implementation | 写实现计划、TDD/验证先行、小步执行、记录证据 | superpowers |
 | 05 Verification & Review | 完成前验证、代码/架构 review、QA/风险复查、发布前确认 | superpowers + optional gstack |
-| API Contract Gate | `requirements/api.yaml`、后端 route、前端 client 三方对账；有前端时必须 browser smoke | workflow contract |
+| API Contract Gate | `requirements/api.yaml`、后端 route、前端 client 三方对账；含必填字段/枚举/request-response schema；有前端时按等级记录 browser smoke | workflow contract |
 
 ## 2. 目录结构
 
@@ -409,8 +409,9 @@ implementation/IMPLEMENTATION_PLAN.md
 3. `03_PROTOTYPE.md` 和 `prototype/` 是否能提前验证页面、流程、角色和状态？
 4. `implementation/IMPLEMENTATION_PLAN.md` 是否保留了 superpowers writing-plans 的深度，能让另一个 agent 不看聊天记录也能执行？
 5. `05_REVIEW.md` 是否有真实证据，而不是“看起来完成了”？
-6. 若有前后端，是否完成 `api.yaml` ↔ backend routes ↔ frontend client calls 对账和 browser smoke？
-6. `STATUS.md` 是否能让中途换 agent 也知道项目在哪里？
+6. 若有前后端，是否完成 `api.yaml` ↔ backend routes ↔ frontend client calls 对账、schema/枚举/必填字段检查和分级 browser smoke？
+7. 若缺 `api.yaml`，是否标记 `API_CONTRACT_DEGRADED` 且避免完整 contract parity 通过措辞？
+8. `STATUS.md` 是否能让中途换 agent 也知道项目在哪里？
 
 如果这些点成立，第一版流程就算跑通。
 

@@ -167,6 +167,9 @@ Rules:
 - Do not compress provider-native deep planning output into `04_IMPLEMENTATION.md` tables. Summaries are allowed only if they link to the full plan.
 - A module outline alone is not sufficient. Each implementation unit should state traceability, files, test/verification-first step, expected initial result, implementation action, commands, pass criteria, and failure handling.
 - If an API boundary exists, implementation must keep backend routes and frontend/client calls aligned with `requirements/api.yaml`. 04 must record a route/client/contract parity check before claiming implementation done.
+- If `requirements/api.yaml` is missing or empty for an API-bearing project, 04 must enter `API_CONTRACT_DEGRADED`: either backfill a baseline API contract before implementation, or explicitly limit the work and use degraded terminology such as “API Route Parity（无独立 api.yaml 契约）”.
+- API parity must include method/path, request and response shape, required fields, enum values, auth/role, and state-transition side effects. A path-only inventory is not enough.
+- Fixes that change required fields, permissions, state machines, approval ownership, or external integration behavior must record residual business semantics risk and any decision needed.
 
 ## Verification artifacts
 
@@ -178,7 +181,9 @@ Rules:
 - Run available test / build / lint / typecheck commands; record unavailable commands with reason and impact.
 - Check requirements coverage, prototype coverage, role/permission coverage, state transitions, core paths, exception paths, API contract consistency, and release readiness.
 - If an API boundary exists, compare `requirements/api.yaml` with backend route inventory and frontend/client API calls. Any mismatch must be recorded as an issue; mismatches blocking core pages or flows prevent a Ready conclusion.
-- If a frontend exists, run browser smoke/manual QA and record network/console evidence. Backend-only scripts cannot prove frontend usability.
+- If `requirements/api.yaml` is missing in an API-bearing project, 05 must mark `API_CONTRACT_DEGRADED`, record the missing contract as a workflow artifact issue, and avoid complete-contract pass language.
+- If a frontend exists, run browser smoke/manual QA and record network/console evidence using evidence levels: `app-load-smoke`, `authenticated-page-smoke`, and `core-flow-browser-smoke`. Backend-only scripts cannot prove frontend usability.
+- Before finishing 05, run a cross-artifact consistency pass over `05_REVIEW.md`, `STATUS.md`, and `requirements/traceability.md` to remove stale optimistic terms such as “Ready”, “全流程通过”, “可正常使用”, “API 合同一致”, or “API Contract Parity” when evidence is degraded.
 - At minimum, validate or explicitly mark not-applicable: create ticket, submit, three-level audit, dispatch, execute, verify/archive, reject, cancel, suspend, unauthorized access.
 - `05_REVIEW.md` must include evidence, issues, severity, reproduction or inspection basis, suggested fix or disposition, remaining risk, and release recommendation.
 - Do not add major new features in 05. If feature gaps are found, record them as issues or blockers unless the user explicitly approves implementation work.

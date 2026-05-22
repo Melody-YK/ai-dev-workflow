@@ -105,7 +105,7 @@ Suggested handoff:
 
 ```text
 Read <workflow>/02_TECHNICAL_DESIGN.md, <workflow>/03_PROTOTYPE.md, the approved prototype if present, and the detailed requirements artifacts under <workflow>/requirements/.
-Do a short pre-plan sanity check in <workflow>/04_IMPLEMENTATION.md, including whether <workflow>/requirements/api.yaml is present/applicable when an API boundary exists. If there are no implementation-planning blockers, create the authoritative deep implementation plan in <workflow>/implementation/IMPLEMENTATION_PLAN.md with small TDD-oriented tasks, exact files, commands, expected results, checkpoints, rollback/recovery notes, API contract parity checks, and traceability updates. Keep <workflow>/04_IMPLEMENTATION.md as the workflow summary/gate/evidence index.
+Do a short pre-plan sanity check in <workflow>/04_IMPLEMENTATION.md, including whether <workflow>/requirements/api.yaml is present/applicable when an API boundary exists. If api.yaml is missing for an API-bearing project, enter API_CONTRACT_DEGRADED and either backfill a baseline contract before implementation or explicitly limit the work and use degraded terminology. If there are no implementation-planning blockers, create the authoritative deep implementation plan in <workflow>/implementation/IMPLEMENTATION_PLAN.md with small TDD-oriented tasks, exact files, commands, expected results, checkpoints, rollback/recovery notes, API contract parity checks including request/response schema, enum/required-field checks, semantic-risk notes, and traceability updates. Keep <workflow>/04_IMPLEMENTATION.md as the workflow summary/gate/evidence index.
 Do not implement until approved. If execution is approved, update execution log, changed files, verification commands, and blockers as work proceeds.
 ```
 
@@ -119,7 +119,7 @@ Suggested handoff:
 Enter 05 Verification & Review using the workflow contract. Do not rely on the user prompt to enumerate checks.
 Read <workflow>/01_REQUIREMENTS.md, detailed artifacts under <workflow>/requirements/, <workflow>/02_TECHNICAL_DESIGN.md, <workflow>/03_PROTOTYPE.md, approved <workflow>/prototype/, <workflow>/04_IMPLEMENTATION.md, <workflow>/implementation/IMPLEMENTATION_PLAN.md, and the current implementation code.
 Run available test/build/lint/typecheck/manual QA. If a command cannot run, record why and the impact.
-Check requirement coverage, prototype/page/role/state coverage, core paths, exception paths, permissions, API contract/backend route/frontend client parity, browser smoke evidence where applicable, code/architecture risks, and release readiness.
+Check requirement coverage, prototype/page/role/state coverage, core paths, exception paths, permissions, API contract/backend route/frontend client parity, browser smoke evidence levels where applicable, code/architecture risks, semantic side effects of fixes, and release readiness. If api.yaml is missing for an API-bearing project, mark API_CONTRACT_DEGRADED and perform route parity only without claiming complete contract parity. Before finishing, run a cross-artifact consistency scan over 05_REVIEW, STATUS, and traceability.
 Write evidence, issues, fixes or recommendations, risk classification, and release readiness to <workflow>/05_REVIEW.md.
 Update <workflow>/requirements/traceability.md with verification evidence when useful.
 ```

@@ -48,6 +48,7 @@ _只检查是否存在阻塞 implementation planning 的未决事项；不要重
 | 技术栈/架构关键决策是否足够进入计划 |  |  |
 | 原型是否提供页面/流程实现依据 |  |  |
 | 若存在 API 边界，`requirements/api.yaml` 是否可作为前后端实现合同 |  |  |
+| 若缺少 `requirements/api.yaml`，是否已进入 `API_CONTRACT_DEGRADED` 并先回填 baseline contract |  |  |
 | 是否存在必须先问用户的 blocker |  |  |
 
 ## 实现计划
@@ -62,12 +63,23 @@ _摘要索引。完整计划必须写入 `implementation/IMPLEMENTATION_PLAN.md`
 
 _适用于任何前后端、client/server、服务间或外部 HTTP API。实现不得让前端和后端各自猜接口。_
 
+### API contract degraded mode
+
+如果存在 API 边界但 `requirements/api.yaml` 缺失或仍是空草案，04 不得直接宣称 API contract 可执行。必须二选一：
+
+1. 先从 01/02/03/现有代码回填 baseline `requirements/api.yaml`，并把它作为后续实现合同；或
+2. 标记 `API_CONTRACT_DEGRADED`，只允许做有限实现/修复，并在 04/05/STATUS 中统一使用 “API Route Parity（无独立 api.yaml 契约）” 等降级措辞。
+
+降级模式下不得使用 “API Contract Parity passed / API 合同一致 / 前后端合同已对齐” 等完整合同通过措辞。
+
 | API 合同项 | 实现方式 | 验证方式 | 状态 |
 |---|---|---|---|
 | `requirements/api.yaml` operation → 后端 route |  | route inventory / tests | pending |
 | `requirements/api.yaml` operation → 前端 client call |  | client call inventory / browser smoke | pending |
 | 未实现 / 延期 / mock operation |  | 标记 status 与原因 | pending |
 | route/client/API contract parity check |  | 可复现命令或脚本 | pending |
+| request/response schema parity |  | 必填字段、枚举值、响应字段比对 | pending |
+| semantic-risk review |  | 若修复改变必填、权限、状态机或审批语义，记录 residual risk / decision needed | pending |
 
 ## 测试计划
 
@@ -135,9 +147,10 @@ _记录实现任务如何对应到需求。必要时更新 `requirements/traceab
 - [ ] 实现计划已批准
 - [ ] 已阅读需求详细产物
 - [ ] 已先定义测试/验证场景，或例外已获批准
-- [ ] 若存在 API 边界，已按 `requirements/api.yaml` 完成前端 client、后端 route 和合同三方对账
+- [ ] 若存在 API 边界，已按 `requirements/api.yaml` 完成前端 client、后端 route 和合同三方对账；若缺失 `api.yaml`，已标记 `API_CONTRACT_DEGRADED` 并回填或记录阻塞
 - [ ] 实现按计划完成，偏差已记录
 - [ ] 验证命令已运行并记录结果
 - [ ] 变更文件清单已填写
 - [ ] 回滚/恢复说明已填写
 - [ ] traceability 已按需更新
+- [ ] 若实现/修复改变必填字段、权限归属、状态机或审批语义，已记录业务语义风险和待人工决策

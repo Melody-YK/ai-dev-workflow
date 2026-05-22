@@ -63,6 +63,9 @@ implementation/IMPLEMENTATION_PLAN.md  # superpowers writing-plans 的权威深�
 - 风险与回滚/恢复说明：如何撤销或降级风险变更。
 - 追踪关系：每个执行单元对应哪些需求 / AC、设计决策和原型页面。
 - API 合同一致性：如果存在 API 边界，每个相关执行单元必须说明对应的 `requirements/api.yaml` operation，以及后端 route、前端/client call 和验证方式。
+- 降级模式：如果 API-bearing 项目缺少 `requirements/api.yaml`，必须进入 `API_CONTRACT_DEGRADED`，先回填 baseline contract 或明确限制为 route parity；不得宣称完整 API contract parity。
+- schema parity：API 检查必须覆盖 method/path、required fields、enum values、request/response shape、auth/role 和状态副作用。
+- 语义风险：如果修复改变必填字段、权限归属、状态机或审批语义，必须记录 residual risk / decision needed。
 
 推荐执行单元格式：
 
@@ -99,14 +102,15 @@ implementation/IMPLEMENTATION_PLAN.md  # superpowers writing-plans 的权威深�
 - 需求覆盖证据：对照 `requirements/`、验收标准、延期项和 traceability。
 - 原型覆盖证据：对照 `03_PROTOTYPE.md` 和 `prototype/`，检查页面、流程、角色权限、状态和异常场景。
 - 测试/build/lint/typecheck 证据：运行所有可用命令；无法运行时记录原因、影响和替代验证。
-- API 合同一致性证据：若存在 API 边界，必须比较 `requirements/api.yaml`、后端 route inventory 和前端/client API calls。任何 mismatch 都要记录；阻塞核心页面/流程的 mismatch 不能标记 Ready。
-- Browser / 前端 smoke 证据：若存在前端，必须打开核心页面/流程并记录 network/console 结果。仅后端脚本通过不能证明前端可用。
+- API 合同一致性证据：若存在 API 边界，必须比较 `requirements/api.yaml`、后端 route inventory 和前端/client API calls。任何 mismatch 都要记录；阻塞核心页面/流程的 mismatch 不能标记 Ready。缺少 `api.yaml` 时必须标记 `API_CONTRACT_DEGRADED`，只能称为 API Route Parity。
+- Browser / 前端 smoke 证据：若存在前端，必须按 `app-load-smoke`、`authenticated-page-smoke`、`core-flow-browser-smoke` 分级记录 network/console 结果。仅后端脚本通过不能证明前端可用。
 - 核心路径与异常路径验证：至少覆盖建票、提交、三级审核、下令、执行、校验归档、驳回、作废、中止、越权访问；如不适用必须说明。
 - 手工 QA 证据（适用时）。
 - 代码/架构评审发现和处理结果。
 - 安全/风险复查发现和处理结果。
 - 问题清单：严重度、复现方式、影响范围、建议修复方案、处理状态。
 - 剩余风险和发布建议：Ready / Ready with accepted risks / Blocked。
+- 最终一致性扫描：完成前必须检查 `05_REVIEW.md`、`STATUS.md`、`requirements/traceability.md` 中是否残留与证据不匹配的 “Ready / 全流程通过 / 可正常使用 / API 合同一致 / API Contract Parity / TBD” 等措辞。
 
 05 不应新增大功能；只允许验证、评审、证据记录和必要的小修复建议。
 
@@ -121,6 +125,8 @@ implementation/IMPLEMENTATION_PLAN.md  # superpowers writing-plans 的权威深�
 - 05 阶段没有主动运行可用的 test / build / lint / typecheck，也没有说明无法运行的原因和影响。
 - 05 阶段没有对照需求、原型和实现计划做覆盖检查。
 - 存在 API 边界但没有做 API contract/backend route/frontend client 三方对账。
+- API-bearing 项目缺少 `requirements/api.yaml`，但没有标记 `API_CONTRACT_DEGRADED` 或仍宣称完整 contract parity。
+- API parity 只检查 path，不检查 request/response shape、required fields、enum values、auth/role 和状态副作用。
 - 存在前端但只验证后端 API 脚本，没有 browser smoke / network / console 证据，却声明前端全流程可用。
 - 核心行为没有测试或验证证据，且没有明确例外批准。
 - 测试/build/lint 失败但未记录原因和处理方式。
