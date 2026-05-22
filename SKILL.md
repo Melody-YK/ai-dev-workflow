@@ -253,6 +253,8 @@ Prototype 是 **decision artifact**，不是 shadow product。
 - `02_TECHNICAL_DESIGN.md` 只做摘要、决策和门禁；review-pack 多角色深度评审应保存在 `reviews/product-review.md`、`reviews/engineering-review.md`、`reviews/security-risk-review.md`、`reviews/qa-review.md`，不要被压扁进单一文件。
 - 进入 implementation 前，prototype 已被批准，或明确记录为 skipped。
 - 如果生成了 prototype，页面必须能直接打开，并且页面到 requirements / user stories 的映射完整。
+- 04 进入执行前必须通过 `scripts/validate_artifacts.py <workflow-dir> --gate 04-plan`；04 进入 05 前必须通过 `--gate 04-complete`。如果代码已改但 04 artifact 仍是模板、空表或 `TBD`，标记 `BLOCKED_ARTIFACT_DRIFT`，不要继续。
+- 05 完成前必须通过 `scripts/validate_artifacts.py <workflow-dir> --gate 05-complete`。如果证据缺失或命令失败未处理，发布建议必须是 `Blocked`，不能输出 Ready / 全流程通过。
 
 基础结构检查：
 
@@ -264,6 +266,14 @@ prototype 生成后使用：
 
 ```bash
 scripts/validate_artifacts.py <workflow-dir> --require-prototype-files
+```
+
+04/05 阶段完成门禁：
+
+```bash
+scripts/validate_artifacts.py <workflow-dir> --gate 04-plan
+scripts/validate_artifacts.py <workflow-dir> --gate 04-complete
+scripts/validate_artifacts.py <workflow-dir> --gate 05-complete
 ```
 
 ## Output style

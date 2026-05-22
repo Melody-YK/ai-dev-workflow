@@ -6,6 +6,8 @@
 
 本阶段结合 superpowers verification-before-completion 和可选真实外部 garrytan/gstack review/QA/risk review。若只使用 review-pack fallback，必须标记 degraded。所有结论必须有证据或明确标记为阻塞/例外。
 
+硬门禁：05 不能保持模板空表后声称完成。若测试/build/lint、API parity、browser smoke、需求/原型覆盖、风险复查或最终一致性扫描缺失，发布建议必须是 `Blocked`，或者明确记录不可运行原因和影响。进入 05 前必须先通过 `04-complete` gate。
+
 ## 输入
 
 - `01_REQUIREMENTS.md`
@@ -132,6 +134,16 @@ _评审时填写。所有剩余风险必须是 accepted / deferred / blocked 之
 - 状态：TBD
 - 建议：TBD
 - 可选值：Ready / Ready with accepted risks / Blocked
+
+## Gate validation
+
+完成前必须运行并记录：
+
+```bash
+scripts/validate_artifacts.py <workflow-dir> --gate 05-complete
+```
+
+若 gate 失败，不得输出 `Ready`、`全流程通过`、`可正常使用` 或类似结论；必须先补证据或将发布建议标记为 `Blocked`。
 
 ## 最终一致性扫描
 

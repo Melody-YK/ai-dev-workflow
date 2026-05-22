@@ -93,6 +93,30 @@ implementation/IMPLEMENTATION_PLAN.md  # superpowers writing-plans 的权威深�
 
 默认门禁：只写计划，不直接实现；除非用户明确批准或要求无人值守执行。
 
+### 04 gate enforcement
+
+04 不允许出现“代码已经生成，但 `04_IMPLEMENTATION.md` 仍是模板”的状态。任何产品代码变更发生后，必须同步回填：
+
+- 执行日志：实际做了什么、结果、偏差。
+- 验证命令：运行了哪些命令、结果是什么、失败如何处理。
+- 变更文件：创建/修改的关键文件和对应需求/设计。
+- 回滚/恢复说明。
+- 审批决策：计划审批和执行审批必须是明确状态，不得保留 `TBD`。
+
+进入执行前必须能通过：
+
+```bash
+scripts/validate_artifacts.py <workflow-dir> --gate 04-plan
+```
+
+进入 05 前必须能通过：
+
+```bash
+scripts/validate_artifacts.py <workflow-dir> --gate 04-complete
+```
+
+如果 gate 失败，必须修正 artifact 或将 `STATUS.md` 标记为 `BLOCKED_ARTIFACT_DRIFT`，不能继续声称 04 完成。
+
 ## 05 阶段输出要求
 
 05 阶段必须自己从 workflow artifacts 推导验证范围，不要求用户在提示词里重复验证清单。必须读取 01/02/03/04 产物、`implementation/IMPLEMENTATION_PLAN.md`、实现 diff 和当前代码。
@@ -114,12 +138,21 @@ implementation/IMPLEMENTATION_PLAN.md  # superpowers writing-plans 的权威深�
 
 05 不应新增大功能；只允许验证、评审、证据记录和必要的小修复建议。
 
+05 完成前必须能通过：
+
+```bash
+scripts/validate_artifacts.py <workflow-dir> --gate 05-complete
+```
+
+如果 gate 失败，不得给出 `Ready` 或“全流程通过”结论；发布建议必须是 `Blocked`，或者先补齐证据和一致性扫描。
+
 ## 失败条件
 
 出现以下任一情况，不应声明完成：
 
 - 04 阶段重新展开完整 brainstorming，覆盖或推翻已批准的 01/02/03 决策，但没有明确人工要求。
 - 没有 `implementation/IMPLEMENTATION_PLAN.md` 深度计划就直接改代码，且事后无法还原计划和证据。
+- 代码已经改动，但 `04_IMPLEMENTATION.md` 的执行日志、验证命令、变更文件或审批决策仍是空表 / `TBD`。
 - 将 superpowers writing-plans 的深度内容压缩成 `04_IMPLEMENTATION.md` 的摘要表格，导致小步执行单元、测试优先顺序、文件级计划、命令、检查点、风险或追踪关系缺失。
 - `implementation/IMPLEMENTATION_PLAN.md` 只有模块大纲，没有每个执行单元的 test/verification-first 步骤、命令、通过标准和失败处理。
 - 05 阶段没有主动运行可用的 test / build / lint / typecheck，也没有说明无法运行的原因和影响。

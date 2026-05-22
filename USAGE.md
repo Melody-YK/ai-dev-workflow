@@ -303,6 +303,13 @@ implementation/IMPLEMENTATION_PLAN.md
 
 建议先审 `implementation/IMPLEMENTATION_PLAN.md`，再决定是否执行。
 
+进入执行前，agent 必须运行并记录：
+
+```bash
+python3 /Users/melody/.openclaw/workspace/ai-dev-workflow/scripts/validate_artifacts.py \
+  .ai-workflow/<feature-slug> --gate 04-plan
+```
+
 ### Step 5：执行实现
 
 确认计划后，对 agent 说：
@@ -319,6 +326,7 @@ implementation/IMPLEMENTATION_PLAN.md
 - 失败要记录 blocker 和处理方式
 - 修改的文件要写入执行日志
 - 必要时更新 `requirements/traceability.md`
+- 进入 05 前必须通过 `--gate 04-complete`；如果代码已改但 04 仍是模板空表 / `TBD`，状态应标记 `BLOCKED_ARTIFACT_DRIFT`
 
 ### Step 6：跑 Verification & Review
 
@@ -345,6 +353,15 @@ implementation/IMPLEMENTATION_PLAN.md
 - 已修复、接受、延期或阻塞的问题
 - 剩余风险
 - 发布就绪度：Ready / Ready with accepted risks / Blocked
+
+完成前必须运行并记录：
+
+```bash
+python3 /Users/melody/.openclaw/workspace/ai-dev-workflow/scripts/validate_artifacts.py \
+  .ai-workflow/<feature-slug> --gate 05-complete
+```
+
+如果 gate 失败，不能输出 Ready / 全流程通过；发布就绪度必须是 `Blocked`，或者先补齐缺失证据。
 
 ## Provider 不可用时怎么办
 
@@ -485,4 +502,3 @@ D. 其他 / 自定义：你可以直接描述希望的首批范围。
 ### 语言一致性
 
 Workflow 会根据用户输入和来源 PRD 自动判断主语言。中文 PRD 或中文指令场景下，阶段总结、澄清问题、下一步提示和 artifact 正文都应使用中文。Provider 内部说明或上游技能是英文时，也必须在映射到 workflow artifact 和最终回复时本地化；文件路径、命令、API operationId、枚举值等技术标识可以保留英文。
-

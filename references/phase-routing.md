@@ -100,6 +100,13 @@ Map pages back to requirements/user stories and update traceability when useful.
 
 Use superpowers after design and prototype approval. See `references/provider-contracts/superpowers-execution.md`. First write a plan, then execute only after approval unless the user asks for unattended execution.
 
+04 has two separate gates:
+
+1. **Planning gate**: create/update `implementation/IMPLEMENTATION_PLAN.md` and `04_IMPLEMENTATION.md`; do not write product code yet.
+2. **Execution gate**: only after explicit user approval or an explicit unattended-execution request may product code be changed. During execution, keep `04_IMPLEMENTATION.md` current; do not leave it as the template while code changes exist.
+
+If code has already been changed but `04_IMPLEMENTATION.md` still has template rows, `TBD` approvals, empty execution logs, empty verification commands, or empty changed-file lists, the phase must be marked `BLOCKED_ARTIFACT_DRIFT` / not complete. Backfill evidence before entering 05; do not silently proceed.
+
 Do not rerun full brainstorming by default. 01/02/03 already cover requirements clarification, option review, decision confirmation, and prototype validation. In 04, perform only a short pre-plan sanity check for blockers; if none exist, go directly to superpowers writing-plans.
 
 Keep the provider-native deep plan separate from the workflow summary:
@@ -116,7 +123,7 @@ Suggested handoff:
 ```text
 Read <workflow>/02_TECHNICAL_DESIGN.md, <workflow>/03_PROTOTYPE.md, the approved prototype if present, and the detailed requirements artifacts under <workflow>/requirements/.
 Do a short pre-plan sanity check in <workflow>/04_IMPLEMENTATION.md, including whether <workflow>/requirements/api.yaml is present/applicable when an API boundary exists. If api.yaml is missing for an API-bearing project, enter API_CONTRACT_DEGRADED and either backfill a baseline contract before implementation or explicitly limit the work and use degraded terminology. If there are no implementation-planning blockers, create the authoritative deep implementation plan in <workflow>/implementation/IMPLEMENTATION_PLAN.md with small TDD-oriented tasks, exact files, commands, expected results, checkpoints, rollback/recovery notes, API contract parity checks including request/response schema, enum/required-field checks, semantic-risk notes, and traceability updates. Keep <workflow>/04_IMPLEMENTATION.md as the workflow summary/gate/evidence index.
-Do not implement until approved. If execution is approved, update execution log, changed files, verification commands, and blockers as work proceeds.
+Run `scripts/validate_artifacts.py <workflow> --gate 04-plan` before asking for implementation approval. Do not implement until approved. If execution is approved, update execution log, changed files, verification commands, and blockers as work proceeds. Before marking 04 complete or entering 05, run `scripts/validate_artifacts.py <workflow> --gate 04-complete`; if it fails, fix the artifacts or mark the phase blocked.
 ```
 
 ## 05 Verification
@@ -132,4 +139,5 @@ Run available test/build/lint/typecheck/manual QA. If a command cannot run, reco
 Check requirement coverage, prototype/page/role/state coverage, core paths, exception paths, permissions, API contract/backend route/frontend client parity, browser smoke evidence levels where applicable, code/architecture risks, semantic side effects of fixes, and release readiness. If api.yaml is missing for an API-bearing project, mark API_CONTRACT_DEGRADED and perform route parity only without claiming complete contract parity. Before finishing, run a cross-artifact consistency scan over 05_REVIEW, STATUS, and traceability.
 Write evidence, issues, fixes or recommendations, risk classification, and release readiness to <workflow>/05_REVIEW.md.
 Update <workflow>/requirements/traceability.md with verification evidence when useful.
+Before claiming verification complete, run `scripts/validate_artifacts.py <workflow> --gate 05-complete`. If the gate fails, the release recommendation must be `Blocked` or the missing evidence must be filled.
 ```

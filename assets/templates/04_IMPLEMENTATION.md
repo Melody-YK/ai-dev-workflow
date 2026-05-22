@@ -6,6 +6,8 @@
 
 默认门禁：先写计划，不直接实现；除非用户明确批准或要求无人值守执行。
 
+硬门禁：04 分为 Planning gate 和 Execution gate。Planning gate 只允许写计划与 artifact；Execution gate 只有在用户明确批准实现或明确要求无人值守执行后才能改产品代码。若代码已改动但本文件仍存在空执行日志、空验证命令、空变更文件、`TBD` 审批状态或模板 `pending` 行，必须标记 `BLOCKED_ARTIFACT_DRIFT`，不得进入 05。
+
 ## 输入
 
 - `02_TECHNICAL_DESIGN.md`
@@ -139,6 +141,22 @@ _记录实现任务如何对应到需求。必要时更新 `requirements/traceab
 - 执行审批状态：TBD
 - 审批人：
 - 决策说明：
+
+## Gate validation
+
+进入执行前必须运行并记录：
+
+```bash
+scripts/validate_artifacts.py <workflow-dir> --gate 04-plan
+```
+
+进入 05 前必须运行并记录：
+
+```bash
+scripts/validate_artifacts.py <workflow-dir> --gate 04-complete
+```
+
+若 `04-complete` 失败，当前阶段状态必须是 `BLOCKED_ARTIFACT_DRIFT` 或 `BLOCKED_VERIFICATION`，不能标记完成。
 
 ## 完成检查清单
 
