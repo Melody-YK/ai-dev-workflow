@@ -44,7 +44,7 @@ Do not mark phase 01 DONE if requirements/requirements.md is much thinner than a
 
 ## 02 Product & Engineering Review
 
-Use gstack-style review after requirements exist. Do not let it replace the requirements artifacts. Ask it to act as product, engineering, security/risk, and QA reviewer. See `references/provider-contracts/gstack-review.md`.
+Use review-pack after requirements exist. Do not let it replace the requirements artifacts. Ask it to act as product, engineering, security/risk, and QA reviewer. See `references/provider-contracts/review-pack.md`.
 
 Suggested handoff:
 
@@ -112,7 +112,7 @@ Do not implement until approved. If execution is approved, update execution log,
 
 ## 05 Verification
 
-Use superpowers verification and optional gstack review/QA/risk review depending on project type. See `references/provider-contracts/superpowers-execution.md` and `references/provider-contracts/gstack-review.md`.
+Use superpowers verification and optional review-pack review/QA/risk review depending on project type. See `references/provider-contracts/superpowers-execution.md` and `references/provider-contracts/review-pack.md`.
 
 Suggested handoff:
 

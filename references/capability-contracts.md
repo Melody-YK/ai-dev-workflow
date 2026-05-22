@@ -59,7 +59,7 @@ Additional provider-native artifacts are allowed under `requirements/` if they i
 
 ## 02 Product & Engineering Review
 
-Detailed provider contract: `references/provider-contracts/gstack-review.md`.
+Detailed provider contract: `references/provider-contracts/review-pack.md`.
 
 **Input**
 - `01_REQUIREMENTS.md`
@@ -82,7 +82,7 @@ Detailed provider contract: `references/provider-contracts/gstack-review.md`.
 - QA review: define acceptance scenarios, regression paths, manual QA, and test matrix.
 
 **Default provider**
-- `gstack` review concepts: office-hours, plan-ceo-review, plan-eng-review, QA/risk review.
+- `review-pack` internal concepts: product, engineering, security/risk, QA, and release review. External `garrytan/gstack` may be used only when installed and explicitly selected.
 
 **Output**
 - `02_TECHNICAL_DESIGN.md`
@@ -164,7 +164,7 @@ Detailed provider contract: `references/provider-contracts/superpowers-execution
 
 Detailed provider contracts:
 - `references/provider-contracts/superpowers-execution.md`
-- `references/provider-contracts/gstack-review.md`
+- `references/provider-contracts/review-pack.md`
 
 **Input**
 - Implementation diff
@@ -177,11 +177,11 @@ Detailed provider contracts:
 **Capability needed**
 - `superpowers` verification-before-completion: verify requirements coverage, prototype coverage, and test/build/lint/manual QA evidence.
 - `superpowers` requesting-code-review: request or simulate review, then record findings and fixes.
-- Optional `gstack` review: release readiness, QA review, engineering review, security/risk review.
+- Optional external `garrytan/gstack` review: release readiness, QA review, engineering review, security/risk review.
 
 **Default provider**
 - `superpowers`: verification-before-completion, requesting-code-review.
-- Optional `gstack`: review, qa, cso/risk review.
+- Optional external `garrytan/gstack`: review, qa, cso/risk review.
 
 **Output**
 - `05_REVIEW.md`

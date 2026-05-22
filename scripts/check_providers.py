@@ -50,20 +50,20 @@ def main() -> int:
     })
 
     gstack_external, gstack_external_path = exists_any([
-        home / ".claude" / "skills" / "gstack" / "SKILL.md",
-        home / ".claude" / "skills" / "gstack-style-review" / "SKILL.md",
+        home / ".claude" / "skills" / "gstack",
+        home / ".claude" / "skills" / "review-pack" / "SKILL.md",
     ])
     gstack_bundled, gstack_bundled_path = exists_any([
-        repo / "providers" / "gstack-style-review" / "SKILL.md",
+        repo / "providers" / "review-pack" / "SKILL.md",
     ])
     checks.append({
         "capability": "product-engineering-review",
-        "preferred": "gstack-style-review",
+        "preferred": "review-pack",
         "externalAvailable": gstack_external,
         "externalPath": gstack_external_path,
         "bundledAvailable": gstack_bundled,
         "bundledPath": gstack_bundled_path,
-        "recommendedProvider": "external gstack-style-review" if gstack_external else ("bundled gstack-style-review" if gstack_bundled else "none"),
+        "recommendedProvider": "external garrytan/gstack or review-pack" if gstack_external else ("bundled review-pack" if gstack_bundled else "none"),
         "status": "available" if (gstack_external or gstack_bundled) else "missing",
     })
 

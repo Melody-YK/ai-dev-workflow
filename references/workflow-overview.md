@@ -106,7 +106,7 @@ Raw PRD / user request / existing codebase
 4. Human checkpoints: phase transitions stop for approval by default.
 5. Prototype before implementation: validate user flows and UI structure before coding production behavior.
 6. Minimal automation first: scripts initialize and validate, agents perform judgment work.
-7. Replaceable skills: `requirements-analyst`, `gstack`, and `superpowers` are defaults, not hard dependencies.
+7. Replaceable skills: `requirements-analyst`, `review-pack` / optional external `garrytan/gstack`, and `superpowers` are defaults, not hard dependencies.
 
 ## Prototype philosophy
 

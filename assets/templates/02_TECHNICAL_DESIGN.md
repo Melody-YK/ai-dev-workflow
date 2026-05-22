@@ -4,7 +4,7 @@
 
 挑战需求范围，收敛本轮交付范围，并形成可实现的技术设计。
 
-本阶段使用 gstack-style review 作为多角色评审能力：产品、工程、安全/风险、QA。
+本阶段使用 review-pack 作为多角色评审能力：产品、工程、安全/风险、QA。
 
 本文件是 02 阶段的 workflow 级摘要、决策和门禁 artifact；不要把多角色评审压扁在本文件里。深度评审必须先写入 `reviews/`，再汇总到本文件。
 
@@ -26,9 +26,9 @@
 
 ## Provider contract
 
-- 默认 provider：gstack-style review。
-- 参考契约：`references/provider-contracts/gstack-review.md`。
-- gstack 只提供 review 能力；AI Dev Workflow 拥有阶段产物、状态和门禁。
+- 默认 provider：review-pack（compact internal provider；不等同完整 garrytan/gstack）。
+- 参考契约：`references/provider-contracts/review-pack.md`。
+- review-pack 只提供 review 能力；AI Dev Workflow 拥有阶段产物、状态和门禁。外部 garrytan/gstack 仅在已安装并明确选择时作为增强 provider。
 
 ## 评审产物索引
 

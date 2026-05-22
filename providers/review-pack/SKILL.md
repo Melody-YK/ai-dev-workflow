@@ -1,11 +1,11 @@
 ---
-name: gstack-style-review
-description: Bundled product, engineering, security-risk, QA, and release review provider for ai-dev-workflow. Use when phase 02 or phase 05 needs gstack-style multi-role challenge/review and no external gstack provider is available.
+name: review-pack
+description: Bundled product, engineering, security-risk, QA, and release review provider for ai-dev-workflow. Use when phase 02 or phase 05 needs multi-role challenge/review. This is a compact internal provider, not a full vendored copy of garrytan/gstack.
 ---
 
-# Bundled gstack-style Review Provider
+# Bundled Review Pack Provider
 
-This provider gives `ai-dev-workflow` an internal review capability instead of depending on an external `gstack` installation.
+This provider gives `ai-dev-workflow` an internal review capability. It borrows the idea of multi-role review, but it is not a full garrytan/gstack installation or substitute for gstack commands like /office-hours, /plan-ceo-review, /review, /qa, or /ship.
 
 ## Roles
 
@@ -46,4 +46,4 @@ When a human decision is needed, provide context-specific options plus a custom/
 
 ## Contract reference
 
-For detailed output contract, read `references/gstack-review.md`.
+For detailed output contract, read `references/review-pack.md`.

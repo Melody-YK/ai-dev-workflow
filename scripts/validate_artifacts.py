@@ -55,7 +55,7 @@ def main() -> int:
     parser.add_argument(
         "--require-review-notes",
         action="store_true",
-        help="Also require gstack-style review notes under reviews/.",
+        help="Also require review-pack notes under reviews/.",
     )
     parser.add_argument(
         "--require-prototype-files",

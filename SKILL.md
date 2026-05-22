@@ -1,13 +1,13 @@
 ---
 name: run
-description: Orchestrate a lightweight, artifact-driven AI development workflow from PRD/intake through requirements analysis, product/engineering review, static prototype generation, implementation planning, build, and verification. Use when the user wants to run requirements-analyst, gstack, and superpowers together in a controlled workflow, create .ai-workflow artifacts, generate a requirements-driven prototype, or test an AI development process on a PRD.
+description: Orchestrate a lightweight, artifact-driven AI development workflow from PRD/intake through requirements analysis, product/engineering review, static prototype generation, implementation planning, build, and verification. Use when the user wants to run requirements-analyst, review-pack or optional external garrytan/gstack review, and superpowers together in a controlled workflow, create .ai-workflow artifacts, generate a requirements-driven prototype, or test an AI development process on a PRD.
 ---
 
 # AI Dev Workflow
 
 运行一套轻量、可控、以 artifact 为核心的 AI 研发工作流。
 
-这个 skill 是一个编排器：它不替代 `requirements-analyst`、`gstack` 或 `superpowers` 的能力，而是负责阶段路由、产物管理、上下文交接和人工门禁。
+这个 skill 是一个编排器：它不替代 `requirements-analyst`、外部 `garrytan/gstack` 或 `superpowers` 的能力；内置 `review-pack` 只是紧凑评审 provider，不等同完整 gstack，而是负责阶段路由、产物管理、上下文交接和人工门禁。
 
 ## 核心规则
 
@@ -110,10 +110,10 @@ python3 <skill-root>/scripts/init_workflow.py \
 |---|---|---|---|
 | 00 Intake | 捕获原始请求、上下文和约束 | Intake normalization | This orchestrator |
 | 01 Requirements | 生成需求阶段摘要，并保留详细 requirements artifacts | Requirements analysis | `requirements-analyst` |
-| 02 Product & Engineering Review | 挑战范围，形成产品 / 工程设计 | Product / architecture review | `gstack` concepts: office-hours, plan-ceo-review, plan-eng-review |
+| 02 Product & Engineering Review | 挑战范围，形成产品 / 工程设计 | Product / architecture review | `review-pack` bundled provider; optional external `garrytan/gstack` |
 | 03 Prototype | 生成需求驱动的静态原型 | Prototype planning + static HTML/CSS generation | `requirements-analyst` prototype approach |
 | 04 Implementation | 编写实现计划并纪律化执行 | TDD execution | `superpowers`: writing-plans, subagent-driven-development or executing-plans |
-| 05 Verification & Review | 用证据证明结果可用 | Verification / review / QA | `superpowers` verification + optional `gstack` review/qa |
+| 05 Verification & Review | 用证据证明结果可用 | Verification / review / QA | `superpowers` verification + optional `review-pack` / external `garrytan/gstack` review |
 
 决策使用哪个能力时，读取：
 
@@ -129,12 +129,12 @@ python3 <skill-root>/scripts/init_workflow.py \
 
 规则：
 
-- 01 首选 `requirements-analyst`；02 首选 gstack-style review；04/05 首选 superpowers。
+- 01 首选 `requirements-analyst`；02 首选 review-pack；04/05 首选 superpowers。
 - 先运行或等价执行 `scripts/check_providers.py`，将结果写入 `STATUS.md` Provider health。
 - 如果首选 provider 可用，使用它，并保留 provider-native 深度产物。
 - 如果首选 provider 不可用，优先使用 bundled provider：
   - `providers/requirements-analyst/SKILL.md`
-  - `providers/gstack-style-review/SKILL.md`
+  - `providers/review-pack/SKILL.md`
   - `providers/superpowers-adapter/SKILL.md`（仅 adapter/fallback；外部 superpowers 仍优先）
 - 如果既没有首选 provider，也没有 bundled provider，不能只在正文里随口说明后继续；必须暂停提示用户安装/启用 provider。
 - fallback/adapter mode 仍必须满足 workflow artifact contract；如果达不到同等深度，不得把阶段标记为 DONE，只能标记为 `DONE_DEGRADED` / `NEEDS_REVIEW` / `BLOCKED`。
@@ -233,7 +233,7 @@ Prototype 是 **decision artifact**，不是 shadow product。
 - 下一阶段有明确 handoff prompt。
 - `01_REQUIREMENTS.md` 只做摘要、索引和门禁；详细需求产物应保存在 `requirements/`，不要被压扁进单一文件。
 - `requirements/requirements.md` 必须是 provider-native 的完整需求分析文档，质量应接近直接运行 `requirements-analyst` 的输出；如果它只有几张简表，不得把 01 阶段标记为 DONE。
-- `02_TECHNICAL_DESIGN.md` 只做摘要、决策和门禁；gstack-style 多角色深度评审应保存在 `reviews/product-review.md`、`reviews/engineering-review.md`、`reviews/security-risk-review.md`、`reviews/qa-review.md`，不要被压扁进单一文件。
+- `02_TECHNICAL_DESIGN.md` 只做摘要、决策和门禁；review-pack 多角色深度评审应保存在 `reviews/product-review.md`、`reviews/engineering-review.md`、`reviews/security-risk-review.md`、`reviews/qa-review.md`，不要被压扁进单一文件。
 - 进入 implementation 前，prototype 已被批准，或明确记录为 skipped。
 - 如果生成了 prototype，页面必须能直接打开，并且页面到 requirements / user stories 的映射完整。
 

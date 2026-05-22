@@ -113,7 +113,7 @@ Rules:
 
 - `02_TECHNICAL_DESIGN.md` records the executive summary, recommended delivery scope, non-goals, key decisions, architecture/design summary, risk summary, QA strategy summary, traceability updates, human decisions, and approval gate.
 - Human decisions must be written as comparable decision briefs. Every option must include applicability, benefits, costs/tradeoffs, and downstream impact. Recommended options may have extra rationale, but non-recommended options must not be blank.
-- Detailed gstack-style review output should live under `reviews/` instead of being compressed into `02_TECHNICAL_DESIGN.md`.
+- Detailed review-pack output should live under `reviews/` instead of being compressed into `02_TECHNICAL_DESIGN.md`.
 - Review notes must challenge and decide; they should not merely restate requirements.
 - If an API boundary exists, 02 must review and freeze/update `requirements/api.yaml`; a prose statement such as “API aligned” is insufficient without operation-level contract evidence.
 - If 02 changes, defers, or rejects requirements, `requirements/traceability.md` must be updated truthfully.

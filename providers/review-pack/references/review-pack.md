@@ -1,6 +1,6 @@
-# gstack Review Contract
+# Review Pack Contract
 
-`gstack` 在本 workflow 中不是独立流程 owner，而是 02 / 05 阶段的多角色评审能力提供者。
+`review-pack` 是 ai-dev-workflow 内置的紧凑多角色评审 provider；它不等同于完整 `garrytan/gstack`。如果外部 `garrytan/gstack` 已安装，可作为可选增强 provider。
 
 ## 适用阶段
 
@@ -37,7 +37,7 @@
 
 ## 02 阶段输出要求
 
-02 阶段必须采用“深度 review notes + workflow summary”的结构，避免把 gstack-style 能力压扁成模板填空。
+02 阶段必须采用“深度 review notes + workflow summary”的结构，避免把 review-pack 能力压扁成模板填空。
 
 必须先生成或更新 provider-native review notes：
 
@@ -90,4 +90,4 @@ reviews/
 
 ## 使用提示
 
-调用 gstack-style review 时，明确要求它作为 reviewer，而不是重写 workflow artifact 格式。它可以输出分角色意见，但最终必须合并进 workflow 指定文件。
+调用 review-pack 时，明确要求它作为 reviewer，而不是重写 workflow artifact 格式。它可以输出分角色意见，但最终必须合并进 workflow 指定文件。
