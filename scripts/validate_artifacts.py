@@ -235,6 +235,7 @@ def validate_03_full(workflow_dir: pathlib.Path) -> bool:
     failed = validate_02_full(workflow_dir)
     proto = workflow_dir / "03_PROTOTYPE.md"
     text = read_text(proto) if proto.exists() else ""
+    status_text = read_text(workflow_dir / "STATUS.md") if (workflow_dir / "STATUS.md").exists() else ""
     if len(text.strip()) < 6000:
         failed |= fail(f"03-full 03_PROTOTYPE.md too thin ({len(text.strip())} chars < 6000)")
     for marker in ["原型计划", "页面到需求映射", "Mock 数据", "原型范围外", "评审反馈", "审批决策"]:
@@ -242,6 +243,20 @@ def validate_03_full(workflow_dir: pathlib.Path) -> bool:
             failed |= fail(f"03-full 03_PROTOTYPE.md missing marker: {marker}")
     if re.search(r"状态：\s*TBD", text) or "进入实现计划前，用户已批准原型" in text and "[ ] 进入实现计划前，用户已批准原型" in text:
         failed |= fail("03-full prototype approval is still TBD/unchecked")
+    approval_pending_patterns = [
+        r"awaiting\s+human\s+approval",
+        r"awaiting\s+approval",
+        r"waiting\s+for\s+approval",
+        r"待人工确认",
+        r"等待.*确认",
+        r"等待.*审批",
+        r"待确认",
+        r"待审批",
+    ]
+    combined_approval_text = f"{text}\n{status_text}"
+    for pattern in approval_pending_patterns:
+        if re.search(pattern, combined_approval_text, re.I):
+            failed |= fail(f"03-full cannot pass while prototype approval is still pending: {pattern}")
     pages_dir = workflow_dir / "prototype" / "pages"
     pages = sorted(p.name for p in pages_dir.glob("*.html")) if pages_dir.exists() else []
     if len(pages) < 8:

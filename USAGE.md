@@ -299,6 +299,8 @@ python3 /Users/melody/.openclaw/workspace/ai-dev-workflow/scripts/validate_artif
 
 如果失败，先修 prototype approval、实际页面文件名和 traceability，不要进入 implementation。
 
+注意：agent 不能自我批准原型。如果 `03_PROTOTYPE.md` 或 `STATUS.md` 仍写着 `awaiting human approval`、`待确认`、`待人工确认`，`03-full` 应失败并停在 03，等待用户明确批准或要求修改。
+
 ### Step 4：跑 Implementation Planning
 
 对 agent 说：

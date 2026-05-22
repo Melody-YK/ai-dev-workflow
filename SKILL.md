@@ -254,6 +254,7 @@ Prototype 是 **decision artifact**，不是 shadow product。
 - 进入 implementation 前，prototype 已被批准，或明确记录为 skipped。
 - 如果生成了 prototype，页面必须能直接打开，并且页面到 requirements / user stories 的映射完整。
 - 01/02/03 要求 full-fidelity，不只看 provider availability。01 完成前必须通过 `--gate 01-full`；02 完成前必须通过 `--gate 02-full`；03 进入 04 前必须通过 `--gate 03-full`。如果 gate 失败，不能宣称“满血 requirements-analyst / gstack / prototype”，应标记 `NEEDS_*_DEPTH` 或 `DONE_DEGRADED`。
+- 不得自我批准 prototype。`03-full` 可以证明原型产物完整，但如果状态仍写着 `awaiting human approval`、`待确认`、`待人工确认` 等，必须停在 03 等用户确认，不能把“用户已批准原型”勾上后进入 04。
 - 04 进入执行前必须通过 `scripts/validate_artifacts.py <workflow-dir> --gate 04-plan`；04 进入 05 前必须通过 `--gate 04-complete`。如果代码已改但 04 artifact 仍是模板、空表或 `TBD`，标记 `BLOCKED_ARTIFACT_DRIFT`，不要继续。
 - 05 完成前必须通过 `scripts/validate_artifacts.py <workflow-dir> --gate 05-complete`。如果证据缺失或命令失败未处理，发布建议必须是 `Blocked`，不能输出 Ready / 全流程通过。
 

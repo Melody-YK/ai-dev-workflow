@@ -82,6 +82,8 @@ Use prototype generation after requirements and product/engineering review exist
 
 Full-fidelity gate: before entering 04, run `scripts/validate_artifacts.py <workflow> --gate 03-full`. If it fails, do not treat the prototype as approved/complete; update approval, actual page filenames, and traceability first.
 
+Do not self-approve the prototype. In guided-auto, generating a complete prototype is not the same as receiving human approval to enter 04. If the artifact says `awaiting human approval`, `待确认`, or equivalent, keep 03 as waiting for approval and do not check “user approved prototype”.
+
 Default Level 1 prototype:
 
 - HTML + CSS only.
@@ -103,6 +105,7 @@ After approval, create <workflow>/prototype/index.html, <workflow>/prototype/css
 Keep it pure static HTML/CSS unless Level 2 is explicitly approved.
 Map pages back to requirements/user stories and update traceability when useful.
 Run `scripts/validate_artifacts.py <workflow> --gate 03-full` before entering 04.
+If the gate fails because approval is pending, ask the user to approve/request changes; do not rewrite the artifact to fake approval.
 ```
 
 ## 04 Implementation
