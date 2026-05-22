@@ -12,7 +12,7 @@ Use this orchestrator. Do not invoke downstream skills yet. Normalize the reques
 
 ## 01 Requirements
 
-Use `requirements-analyst` when the source is a PRD, business process, product idea, or unclear requirement. Before starting, verify that `requirements-analyst` is available. If unavailable, update `STATUS.md` Provider health and either pause for user action or enter `PROVIDER_DEGRADED` fallback mode with explicit quality risk. In fallback mode, the workflow may still generate artifacts directly, but must preserve the same output depth and should not mark 01 as clean `DONE` unless the quality bar is met.
+Use `requirements-analyst` when the source is a PRD, business process, product idea, or unclear requirement. Before starting, verify that external `requirements-analyst` is available. If unavailable, use bundled `providers/requirements-analyst/SKILL.md`; update `STATUS.md` Provider health with the actual provider. If both external and bundled providers are unavailable, pause for user action. In fallback mode, preserve the same output depth and do not mark 01 as clean `DONE` unless the quality bar is met.
 
 Do not force all requirements output into one file. Preserve useful `requirements-analyst`-style detailed outputs under `requirements/`, and use `01_REQUIREMENTS.md` as the summary, index, approval, and handoff artifact.
 

@@ -12,10 +12,11 @@ A provider may use its own analysis method and may preserve richer provider-nati
 
 Before starting a phase, check whether the preferred provider is actually available in the current runtime. If not available:
 
-- Record the unavailable provider in `STATUS.md` Provider health.
+- Run or equivalently perform `scripts/check_providers.py` and record provider health in `STATUS.md`.
 - Do not keep the Provider column as if the unavailable provider executed the phase.
-- Either stop for user action, or explicitly enter `PROVIDER_DEGRADED` fallback mode.
-- In fallback mode, document the fallback provider, quality risk, missing method-specific capabilities, and compensating checks.
+- Prefer bundled providers under `providers/` when external providers are unavailable.
+- If no bundled provider exists, stop for user action.
+- In fallback/adapter mode, document the fallback provider, quality risk, missing method-specific capabilities, and compensating checks.
 - Do not mark a phase `DONE` if fallback output is shallower than the provider-native quality bar; use `DONE_DEGRADED`, `NEEDS_REVIEW`, or `BLOCKED`.
 
 ## 01 Requirements Analysis

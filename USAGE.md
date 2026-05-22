@@ -352,8 +352,15 @@ implementation/IMPLEMENTATION_PLAN.md
 
 如果 provider 不可用：
 
-1. 优先暂停，让用户安装/启用对应 skill/provider；或
-2. 明确进入 `PROVIDER_DEGRADED` fallback mode。
+1. 优先使用仓库内置 provider：`providers/requirements-analyst/`、`providers/gstack-style-review/`、`providers/superpowers-adapter/`；
+2. 如果没有内置 provider，暂停让用户安装/启用对应 skill/provider；
+3. 如果只能降级执行，明确进入 `PROVIDER_DEGRADED` fallback mode。
+
+可先运行：
+
+```bash
+python3 scripts/check_providers.py --json
+```
 
 fallback 时必须更新 `STATUS.md`：
 

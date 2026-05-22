@@ -130,11 +130,14 @@ python3 <skill-root>/scripts/init_workflow.py \
 规则：
 
 - 01 首选 `requirements-analyst`；02 首选 gstack-style review；04/05 首选 superpowers。
+- 先运行或等价执行 `scripts/check_providers.py`，将结果写入 `STATUS.md` Provider health。
 - 如果首选 provider 可用，使用它，并保留 provider-native 深度产物。
-- 如果首选 provider 不可用，不能只在正文里随口说明后继续；必须二选一：
-  1. 停下来提示用户安装/启用 provider；或
-  2. 明确进入 `PROVIDER_DEGRADED` fallback mode，说明 fallback provider、能力差异、质量风险和额外检查。
-- fallback mode 仍必须满足 workflow artifact contract；如果达不到同等深度，不得把阶段标记为 DONE，只能标记为 `DONE_DEGRADED` / `NEEDS_REVIEW` / `BLOCKED`。
+- 如果首选 provider 不可用，优先使用 bundled provider：
+  - `providers/requirements-analyst/SKILL.md`
+  - `providers/gstack-style-review/SKILL.md`
+  - `providers/superpowers-adapter/SKILL.md`（仅 adapter/fallback；外部 superpowers 仍优先）
+- 如果既没有首选 provider，也没有 bundled provider，不能只在正文里随口说明后继续；必须暂停提示用户安装/启用 provider。
+- fallback/adapter mode 仍必须满足 workflow artifact contract；如果达不到同等深度，不得把阶段标记为 DONE，只能标记为 `DONE_DEGRADED` / `NEEDS_REVIEW` / `BLOCKED`。
 - `STATUS.md` 中的 Provider 列必须反映真实执行者，例如 `ai-dev-workflow fallback (requirements-analyst unavailable)`，不得继续写首选 provider 造成误导。
 - 如果用户要求 guided-auto，provider 不可用属于需要确认的运行条件；除非 fallback policy 已明确允许，否则应暂停询问。
 
