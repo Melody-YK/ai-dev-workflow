@@ -8,7 +8,11 @@ AI Dev Workflow owns the artifact locations, handoff rules, status updates, and 
 
 ## 00 Intake
 
-Use this orchestrator. Do not invoke downstream skills yet. Normalize the request and create workflow artifacts.
+Use this orchestrator. Normalize the request and create workflow artifacts.
+
+Default/manual mode: do not invoke downstream skills yet; pause for confirmation before 01.
+
+Guided-auto/continuous mode: 00 is not a hard human gate. After artifacts are initialized and provider preflight is recorded, immediately continue into 01. If 01 has blocking questions, ask them as a decision brief; do not ask a separate “是否进入 01” confirmation.
 
 ## 01 Requirements
 
@@ -38,7 +42,7 @@ Produce detailed requirements artifacts under <workflow>/requirements/:
 - traceability.md for mapping source PRD items to requirements.
 Then update <workflow>/01_REQUIREMENTS.md with only an executive summary, links to the detailed artifacts, key assumptions, open question summary, handoff notes, and approval status.
 Preserve open questions instead of guessing.
-For guided-auto mode, do not merely list blocking open questions and continue. Ask the user with a decision brief: dynamic option count, recommended option with rationale when useful, and an “Other / custom” free-text option for every decision. Persist answers to clarification.md, open-questions.md, STATUS.md, and traceability.md when relevant.
+For guided-auto mode, do not merely list blocking open questions and wait for a separate phase-confirmation. Ask the user with a decision brief immediately: dynamic option count, recommended option with rationale when useful, and an “Other / custom” free-text option for every decision. Persist answers to clarification.md, open-questions.md, STATUS.md, and traceability.md when relevant. After the user answers, continue 01 automatically unless new blocking questions remain.
 Do not mark phase 01 DONE if requirements/requirements.md is much thinner than a direct requirements-analyst output.
 ```
 

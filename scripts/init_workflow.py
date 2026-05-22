@@ -45,6 +45,12 @@ def main() -> int:
     parser.add_argument("--source-prd", required=True, type=pathlib.Path)
     parser.add_argument("--feature", required=True)
     parser.add_argument("--force", action="store_true")
+    parser.add_argument(
+        "--mode",
+        choices=("manual", "guided-auto"),
+        default="manual",
+        help="manual pauses after 00; guided-auto marks 00 as auto-continue into 01.",
+    )
     args = parser.parse_args()
 
     project_root = args.project_root.resolve()
@@ -66,14 +72,18 @@ def main() -> int:
         "CREATED_AT": created_at,
         "RAW_SUMMARY": read_summary(source_prd),
         "CURRENT_PHASE": "01_REQUIREMENTS",
-        "CHECKPOINT_STATUS": "WAITING_FOR_HUMAN_CONFIRMATION",
+        "CHECKPOINT_STATUS": "AUTO_CONTINUE_TO_01" if args.mode == "guided-auto" else "WAITING_FOR_HUMAN_CONFIRMATION",
         "PHASE_00_STATUS": "DONE",
         "PHASE_01_STATUS": "READY",
         "PHASE_02_STATUS": "NOT_STARTED",
         "PHASE_03_STATUS": "NOT_STARTED",
         "PHASE_04_STATUS": "NOT_STARTED",
         "PHASE_05_STATUS": "NOT_STARTED",
-        "NEXT_ACTION": "Run 01 Requirements with requirements-analyst after human confirmation.",
+        "NEXT_ACTION": (
+            "guided-auto: continue directly into 01 Requirements; ask a decision brief only for blocking clarification questions."
+            if args.mode == "guided-auto"
+            else "Run 01 Requirements with requirements-analyst after human confirmation."
+        ),
     }
 
     for template_path in sorted(TEMPLATES.glob("*.md")):
