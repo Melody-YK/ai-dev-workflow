@@ -89,11 +89,22 @@ Map pages back to requirements/user stories and update traceability when useful.
 
 Use superpowers after design and prototype approval. See `references/provider-contracts/superpowers-execution.md`. First write a plan, then execute only after approval unless the user asks for unattended execution.
 
+Do not rerun full brainstorming by default. 01/02/03 already cover requirements clarification, option review, decision confirmation, and prototype validation. In 04, perform only a short pre-plan sanity check for blockers; if none exist, go directly to superpowers writing-plans.
+
+Keep the provider-native deep plan separate from the workflow summary:
+
+```text
+implementation/IMPLEMENTATION_PLAN.md  # authoritative deep writing-plans output
+04_IMPLEMENTATION.md                   # summary, gates, status, execution evidence
+```
+
+Do not compress the deep implementation plan into `04_IMPLEMENTATION.md` tables.
+
 Suggested handoff:
 
 ```text
 Read <workflow>/02_TECHNICAL_DESIGN.md, <workflow>/03_PROTOTYPE.md, the approved prototype if present, and the detailed requirements artifacts under <workflow>/requirements/.
-Create an implementation plan in <workflow>/04_IMPLEMENTATION.md with small TDD-oriented tasks, exact files, commands, expected results, checkpoints, rollback/recovery notes, and traceability updates.
+Do a short pre-plan sanity check in <workflow>/04_IMPLEMENTATION.md. If there are no implementation-planning blockers, create the authoritative deep implementation plan in <workflow>/implementation/IMPLEMENTATION_PLAN.md with small TDD-oriented tasks, exact files, commands, expected results, checkpoints, rollback/recovery notes, and traceability updates. Keep <workflow>/04_IMPLEMENTATION.md as the workflow summary/gate/evidence index.
 Do not implement until approved. If execution is approved, update execution log, changed files, verification commands, and blockers as work proceeds.
 ```
 

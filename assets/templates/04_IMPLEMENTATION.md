@@ -28,10 +28,28 @@
 - 默认 provider：superpowers-style execution。
 - 参考契约：`references/provider-contracts/superpowers-execution.md`。
 - superpowers 只提供计划、TDD、执行和验证纪律；AI Dev Workflow 拥有阶段产物、状态和门禁。
+- 04 阶段默认不重新执行完整 brainstorming。01/02/03 已负责需求澄清、方案评审、决策确认和原型验证；04 只允许做轻量 pre-plan sanity check，用于发现仍阻塞实现计划的 open decisions。
+- 若 pre-plan sanity check 无阻塞项，必须直接进入 superpowers writing-plans 风格的实现计划。
+- `implementation/IMPLEMENTATION_PLAN.md` 是 04 阶段的权威深度实现计划；`04_IMPLEMENTATION.md` 只作为 workflow 摘要、门禁、执行证据和索引。不得把深度计划压缩成下方摘要表格。
+
+## 详细产物索引
+
+- `implementation/IMPLEMENTATION_PLAN.md` — superpowers writing-plans 风格的完整实现计划（任务拆分、文件级改动、TDD/验证策略、命令、检查点、风险、回滚和追踪关系）。
+
+## Pre-plan sanity check
+
+_只检查是否存在阻塞 implementation planning 的未决事项；不要重新发散需求、重做方案 brainstorming 或推翻已批准的 01/02/03 决策。_
+
+| 检查项 | 结论 | 阻塞项 / 处理方式 |
+|---|---|---|
+| 01/02/03 是否已批准 |  |  |
+| 技术栈/架构关键决策是否足够进入计划 |  |  |
+| 原型是否提供页面/流程实现依据 |  |  |
+| 是否存在必须先问用户的 blocker |  |  |
 
 ## 实现计划
 
-_由 superpowers writing-plans 或等价能力填写。_
+_摘要索引。完整计划必须写入 `implementation/IMPLEMENTATION_PLAN.md`，不要在此处压缩替代。_
 
 | 步骤 | 目标 | 涉及文件 | 依赖 | 完成条件 | 状态 |
 |---|---|---|---|---|---|

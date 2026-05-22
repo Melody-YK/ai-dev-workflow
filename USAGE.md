@@ -53,6 +53,8 @@ requirements-analyst → gstack-style review → prototype generation → superp
 │   │   └── style.css
 │   └── pages/
 ├── 04_IMPLEMENTATION.md
+├── implementation/
+│   └── IMPLEMENTATION_PLAN.md
 ├── 05_REVIEW.md
 └── STATUS.md
 ```
@@ -280,26 +282,31 @@ prototype/pages/*.html
 
 ```text
 04_IMPLEMENTATION.md
+implementation/IMPLEMENTATION_PLAN.md
 ```
 
-这一阶段应该包含：
+04 阶段默认不重新完整 brainstorming。01/02/03 已经负责需求澄清、方案评审、决策确认和原型验证。04 只做轻量 pre-plan sanity check：如果没有阻塞实现计划的 open decisions，就直接进入 superpowers writing-plans。
+
+`implementation/IMPLEMENTATION_PLAN.md` 是权威深度实现计划，应该包含：
 
 - 具体任务拆分
-- 具体文件路径
-- 测试优先步骤或验证场景
+- 具体文件路径和文件级变更计划
+- TDD / 测试优先步骤或验证场景
 - 每步检查点和验证命令
 - 预期输出
-- 回滚 / 恢复说明
-- 是否需要人工确认
+- 风险、回滚 / 恢复说明
+- 需求、设计决策、原型页面到实现任务的追踪关系
 
-建议先审计划，再决定是否执行。
+`04_IMPLEMENTATION.md` 只做 workflow 摘要、门禁、执行证据和索引，不要把深度计划压缩成几张表。
+
+建议先审 `implementation/IMPLEMENTATION_PLAN.md`，再决定是否执行。
 
 ### Step 5：执行实现
 
 确认计划后，对 agent 说：
 
 ```text
-按 04_IMPLEMENTATION.md 执行实现
+按 implementation/IMPLEMENTATION_PLAN.md 执行实现，并持续更新 04_IMPLEMENTATION.md 的执行日志和验证证据
 ```
 
 执行时要求：
@@ -398,7 +405,7 @@ prototype/pages/*.html
 1. `requirements/` 下的详细产物是否比原 PRD 更清晰、更可测试，且 `01_REQUIREMENTS.md` 是否做好摘要、索引和门禁？
 2. `02_TECHNICAL_DESIGN.md` 是否能主动收敛范围，而不是照单全收？
 3. `03_PROTOTYPE.md` 和 `prototype/` 是否能提前验证页面、流程、角色和状态？
-4. `04_IMPLEMENTATION.md` 是否能让另一个 agent 不看聊天记录也能执行？
+4. `implementation/IMPLEMENTATION_PLAN.md` 是否保留了 superpowers writing-plans 的深度，能让另一个 agent 不看聊天记录也能执行？
 5. `05_REVIEW.md` 是否有真实证据，而不是“看起来完成了”？
 6. `STATUS.md` 是否能让中途换 agent 也知道项目在哪里？
 

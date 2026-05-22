@@ -141,3 +141,24 @@ Prototype rules:
 - No JavaScript, CDN, backend, build tools, or CSS frameworks unless explicitly approved.
 
 Prototype approval should be recorded before implementation starts. If prototype is skipped, record the reason in `03_PROTOTYPE.md` and `STATUS.md`.
+
+## Implementation artifacts
+
+04 Implementation uses a workflow summary/control file plus a provider-native deep implementation plan.
+
+Required files after implementation planning:
+
+```text
+04_IMPLEMENTATION.md
+implementation/
+└── IMPLEMENTATION_PLAN.md
+```
+
+Rules:
+
+- 04 does not rerun full brainstorming by default. 01/02/03 own requirements clarification, option review, decision confirmation, and prototype validation.
+- 04 may perform only a lightweight pre-plan sanity check to identify blockers that would prevent implementation planning.
+- If no blocker exists, the provider should proceed directly to superpowers-style `writing-plans`.
+- `implementation/IMPLEMENTATION_PLAN.md` is the authoritative deep implementation plan. It should preserve file-level tasks, TDD/verification strategy, commands, checkpoints, risks, rollback/recovery notes, and traceability.
+- `04_IMPLEMENTATION.md` is the workflow summary/control artifact: it indexes the deep plan, records gates, status, execution log, verification evidence, changed files, blockers, and approval decisions.
+- Do not compress provider-native deep planning output into `04_IMPLEMENTATION.md` tables. Summaries are allowed only if they link to the full plan.

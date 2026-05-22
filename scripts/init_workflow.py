@@ -95,7 +95,7 @@ def main() -> int:
             target.write_text(render(template_path.read_text(encoding="utf-8"), values), encoding="utf-8")
             print(f"wrote {target}")
 
-    for relative_dir in ["prototype/css", "prototype/pages"]:
+    for relative_dir in ["prototype/css", "prototype/pages", "implementation"]:
         directory = workflow_dir / relative_dir
         directory.mkdir(parents=True, exist_ok=True)
         print(f"ensured {directory}")
