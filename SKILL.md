@@ -1,5 +1,5 @@
 ---
-name: ai-dev-workflow
+name: run
 description: Orchestrate a lightweight, artifact-driven AI development workflow from PRD/intake through requirements analysis, product/engineering review, static prototype generation, implementation planning, build, and verification. Use when the user wants to run requirements-analyst, gstack, and superpowers together in a controlled workflow, create .ai-workflow artifacts, generate a requirements-driven prototype, or test an AI development process on a PRD.
 ---
 
@@ -30,7 +30,7 @@ description: Orchestrate a lightweight, artifact-driven AI development workflow 
 │   ├── clarification.md
 │   ├── validation.md
 │   ├── prd.md
-│   ├── api.yaml                # optional
+│   ├── api.yaml                # required when API boundary exists
 │   ├── open-questions.md
 │   └── traceability.md
 ├── 02_TECHNICAL_DESIGN.md

@@ -174,10 +174,12 @@ API 合同缺失或未对齐、前端 smoke 等级不足 → 不能声明前端�
 
 ## Claude Code 安装
 
-本仓库同时也是一个 Claude Code plugin。安装后，Claude Code 会扫描 `SKILL.md` 和 `commands/ai-dev-workflow.md`，因此可以直接用自然语言触发：
+本仓库同时也是一个 Claude Code plugin。安装后，Claude Code 会扫描 skill 和 `commands/run.md`。推荐直接用自然语言触发，或使用短命令 `/ai-dev-workflow:run`：
 
 ```text
 使用 ai-dev-workflow，基于 PRD.md 初始化工作流。
+
+/ai-dev-workflow:run 基于 PRD.md 初始化工作流。
 ```
 
 本机可通过本地 marketplace 安装：
