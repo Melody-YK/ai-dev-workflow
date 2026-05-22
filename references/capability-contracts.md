@@ -103,7 +103,8 @@ Detailed provider contract: `references/provider-contracts/review-pack.md`.
 - QA review: define acceptance scenarios, regression paths, manual QA, and test matrix.
 
 **Default provider**
-- `review-pack` internal concepts: product, engineering, security/risk, QA, and release review. External `garrytan/gstack` may be used only when installed and explicitly selected.
+- `gstack-adapter` over real external `garrytan/gstack` for full capability.
+- `review-pack` is only `COMPACT_FALLBACK`; it cannot produce a clean full-gstack `DONE` verdict unless the user explicitly accepts degraded depth.
 
 **Output**
 - `02_TECHNICAL_DESIGN.md`
@@ -198,11 +199,11 @@ Detailed provider contracts:
 **Capability needed**
 - `superpowers` verification-before-completion: verify requirements coverage, prototype coverage, and test/build/lint/manual QA evidence.
 - `superpowers` requesting-code-review: request or simulate review, then record findings and fixes.
-- Optional external `garrytan/gstack` review: release readiness, QA review, engineering review, security/risk review.
+- Optional `gstack-adapter` over real external `garrytan/gstack`: release readiness, QA review, engineering review, security/risk review.
 
 **Default provider**
 - `superpowers`: verification-before-completion, requesting-code-review.
-- Optional external `garrytan/gstack`: review, qa, cso/risk review.
+- Optional `gstack-adapter`: `/review`, `/qa`, `/cso`/risk review when real external gstack is installed.
 
 **Output**
 - `05_REVIEW.md`

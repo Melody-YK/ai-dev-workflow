@@ -4,14 +4,14 @@
 
 核心目标不是“自动化一切”，而是让每一步都有明确输入、输出、人工确认点和质量门禁。
 
-AI Dev Workflow 定义稳定的阶段契约和 artifact 位置；`requirements-analyst`、review-pack、`superpowers` 等 provider 是能力提供者，可以保留有价值的原生产物，但必须写入 workflow 指定的位置。
+AI Dev Workflow 定义稳定的阶段契约和 artifact 位置；`requirements-analyst`、真实外部 `garrytan/gstack`/review-pack fallback、`superpowers` 等 provider 是能力提供者，可以保留有价值的原生产物，但必须写入 workflow 指定的位置。
 
 ## 1. 工作流定位
 
 默认编排三个能力：
 
 ```text
-requirements-analyst → review-pack → prototype generation → superpowers
+requirements-analyst → gstack-adapter/external gstack → prototype generation → superpowers
 ```
 
 它们的分工是：
@@ -20,10 +20,10 @@ requirements-analyst → review-pack → prototype generation → superpowers
 |---|---|---|
 | 00 Intake | 收集原始需求、建立工作目录 | ai-dev-workflow |
 | 01 Requirements | 把 PRD 转成明确、可验证的需求规格 | requirements-analyst |
-| 02 Product & Engineering Review | 审范围、审架构、审安全/风险、审 QA 策略、定本轮交付范围 | review-pack（compact internal provider，不等同完整 garrytan/gstack） |
+| 02 Product & Engineering Review | 审范围、审架构、审安全/风险、审 QA 策略、定本轮交付范围 | gstack-adapter over real garrytan/gstack；review-pack 仅 degraded fallback |
 | 03 Prototype | 生成需求驱动的静态 HTML/CSS 原型，验证页面、流程、角色和状态 | requirements-analyst prototype approach |
 | 04 Implementation | 写实现计划、TDD/验证先行、小步执行、记录证据 | superpowers |
-| 05 Verification & Review | 完成前验证、代码/架构 review、QA/风险复查、发布前确认 | superpowers + optional external garrytan/gstack |
+| 05 Verification & Review | 完成前验证、代码/架构 review、QA/风险复查、发布前确认 | superpowers + optional gstack-adapter over real garrytan/gstack |
 | API Contract Gate | `requirements/api.yaml`、后端 route、前端 client 三方对账；含必填字段/枚举/request-response schema；有前端时按等级记录 browser smoke | workflow contract |
 
 ## 2. 目录结构
@@ -352,9 +352,9 @@ implementation/IMPLEMENTATION_PLAN.md
 
 如果 provider 不可用：
 
-1. 优先使用仓库内置 provider：`providers/requirements-analyst/`、`providers/review-pack/`、`providers/superpowers-adapter/`；
-2. 如果没有内置 provider，暂停让用户安装/启用对应 skill/provider；
-3. 如果只能降级执行，明确进入 `PROVIDER_DEGRADED` fallback mode。
+1. 优先使用真实 provider 或 source-derived adapter：`requirements-analyst` steering、`providers/gstack-adapter/` over real gstack、`providers/superpowers-adapter/` over real superpowers；
+2. 如果只有 compact fallback（如 `review-pack`），明确进入 `PROVIDER_DEGRADED`，不得冒充 full provider；
+3. 如果没有可用 provider，暂停让用户安装/启用对应 skill/provider。
 
 可先运行：
 

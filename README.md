@@ -38,7 +38,7 @@ AI Dev Workflow 的做法是：
 - **人工门禁**：关键阶段默认暂停，等待人确认后再继续。
 - **能力编排**：按能力组织流程，而不是绑定某个固定工具。
 - **稳定契约**：AI Dev Workflow 定义阶段、门禁、产物位置和交接规则；外部 skill 只提供能力。
-- **可替换 skill**：`requirements-analyst`、review-pack、`superpowers` 是默认选择，但不是硬依赖。
+- **可替换 skill**：`requirements-analyst`、真实外部 `garrytan/gstack`（经 adapter）、`superpowers` 是默认选择，但不是硬依赖。
 - **保留 provider 原生产物**：深度产物放在阶段子目录中，阶段主文件只做摘要、索引、门禁和证据。
 - **先原型后实现**：先用静态 HTML/CSS 验证页面、流程、角色和状态，再进入正式实现。
 - **先计划后执行**：04 默认只写实现计划，不直接写业务代码；执行需要显式批准。
@@ -63,7 +63,7 @@ AI Dev Workflow 的做法是：
 例如：
 
 - 01 使用 requirements-analyst 思路，但详细需求产物必须保留在 `requirements/`。
-- 02 使用 review-pack，但多角色深度评审必须保留在 `reviews/`。
+- 02 优先使用真实外部 garrytan/gstack，经 gstack-adapter 映射；review-pack 仅 degraded fallback，但多角色深度评审必须保留在 `reviews/`。
 - 03 使用 requirements-driven prototype generation，但先写 prototype plan，再生成静态 HTML/CSS 页面。
 - 04 使用 superpowers writing-plans / TDD / verification，但深度实现计划必须保留在 `implementation/IMPLEMENTATION_PLAN.md`，并拆成带文件、命令、验证、通过标准和失败处理的小步执行单元。
 
@@ -153,10 +153,10 @@ flowchart TD
 |---|---|---|---|
 | 00 Intake | 建立 workflow 目录和输入摘要 | ai-dev-workflow | `00_INTAKE.md` |
 | 01 Requirements | 需求澄清、规格化、验证标准 | requirements-analyst | `requirements/` |
-| 02 Review | 产品/工程/安全/QA 多角色评审与决策 | review-pack | `reviews/` |
+| 02 Review | 产品/工程/安全/QA 多角色评审与决策 | gstack-adapter over real garrytan/gstack；review-pack degraded fallback | `reviews/` |
 | 03 Prototype | 先计划，再生成静态原型验证流程 | requirements-driven prototype generation | `prototype/` |
 | 04 Implementation | 深度实现计划、TDD、执行证据 | superpowers writing-plans / TDD | `implementation/IMPLEMENTATION_PLAN.md` |
-| 05 Verification | 完成前验证、review、风险证据 | superpowers + optional gstack | `05_REVIEW.md` |
+| 05 Verification | 完成前验证、review、风险证据 | superpowers + optional gstack-adapter | `05_REVIEW.md` |
 
 ## 关键门禁
 

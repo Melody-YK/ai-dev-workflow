@@ -4,7 +4,7 @@
 
 证明实现满足需求，并具备交付/交接条件。
 
-本阶段结合 superpowers verification-before-completion 和可选 review-pack / optional external garrytan/gstack release / QA / risk review。所有结论必须有证据或明确标记为阻塞/例外。
+本阶段结合 superpowers verification-before-completion 和可选真实外部 garrytan/gstack review/QA/risk review。若只使用 review-pack fallback，必须标记 degraded。所有结论必须有证据或明确标记为阻塞/例外。
 
 ## 输入
 
@@ -26,7 +26,7 @@
 
 ## Provider contract
 
-- 默认 provider：superpowers verification + optional review-pack / external garrytan/gstack review/QA/risk review。
+- 默认 provider：superpowers verification + optional gstack-adapter over real external garrytan/gstack review/QA/risk review。review-pack 仅为 compact fallback。
 - 参考契约：
   - `references/provider-contracts/superpowers-execution.md`
   - `references/provider-contracts/review-pack.md`

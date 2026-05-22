@@ -44,7 +44,7 @@ Do not mark phase 01 DONE if requirements/requirements.md is much thinner than a
 
 ## 02 Product & Engineering Review
 
-Use review-pack after requirements exist. Do not let it replace the requirements artifacts. Ask it to act as product, engineering, security/risk, and QA reviewer. See `references/provider-contracts/review-pack.md`.
+Use `gstack-adapter` after requirements exist when real external `garrytan/gstack` is installed. Invoke/map the relevant gstack slices (`/plan-ceo-review`, `/plan-eng-review`, optional `/plan-design-review`, `/plan-devex-review`, `/cso`, `/qa`) into workflow artifacts. If gstack is missing, `review-pack` may be used only as `COMPACT_FALLBACK`; do not mark the phase clean `DONE` unless the user explicitly accepts degraded depth. See `providers/gstack-adapter/references/gstack-mapping.md` and `references/provider-contracts/review-pack.md`.
 
 Suggested handoff:
 
@@ -112,7 +112,7 @@ Do not implement until approved. If execution is approved, update execution log,
 
 ## 05 Verification
 
-Use superpowers verification and optional review-pack review/QA/risk review depending on project type. See `references/provider-contracts/superpowers-execution.md` and `references/provider-contracts/review-pack.md`.
+Use superpowers verification and optional `gstack-adapter` review/QA/risk review when real external gstack is installed. If only review-pack is available, record `COMPACT_FALLBACK` and degraded release confidence. See `references/provider-contracts/superpowers-execution.md`, `providers/gstack-adapter/references/gstack-mapping.md`, and `references/provider-contracts/review-pack.md`.
 
 Suggested handoff:
 

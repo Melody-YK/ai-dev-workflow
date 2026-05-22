@@ -110,10 +110,10 @@ python3 <skill-root>/scripts/init_workflow.py \
 |---|---|---|---|
 | 00 Intake | 捕获原始请求、上下文和约束 | Intake normalization | This orchestrator |
 | 01 Requirements | 生成需求阶段摘要，并保留详细 requirements artifacts | Requirements analysis | `requirements-analyst` |
-| 02 Product & Engineering Review | 挑战范围，形成产品 / 工程设计 | Product / architecture review | `review-pack` bundled provider; optional external `garrytan/gstack` |
+| 02 Product & Engineering Review | 挑战范围，形成产品 / 工程设计 | Product / architecture review | `gstack-adapter` over external `garrytan/gstack`; `review-pack` degraded fallback |
 | 03 Prototype | 生成需求驱动的静态原型 | Prototype planning + static HTML/CSS generation | `requirements-analyst` prototype approach |
 | 04 Implementation | 编写实现计划并纪律化执行 | TDD execution | `superpowers`: writing-plans, subagent-driven-development or executing-plans |
-| 05 Verification & Review | 用证据证明结果可用 | Verification / review / QA | `superpowers` verification + optional `review-pack` / external `garrytan/gstack` review |
+| 05 Verification & Review | 用证据证明结果可用 | Verification / review / QA | `superpowers` verification + optional `gstack-adapter` over external `garrytan/gstack`; `review-pack` degraded fallback |
 
 决策使用哪个能力时，读取：
 
@@ -129,11 +129,12 @@ python3 <skill-root>/scripts/init_workflow.py \
 
 规则：
 
-- 01 首选 `requirements-analyst`；02 首选 review-pack；04/05 首选 superpowers。
+- 01 首选 `requirements-analyst`；02 首选真实外部 `garrytan/gstack` via `gstack-adapter`；04/05 首选 superpowers。
 - 先运行或等价执行 `scripts/check_providers.py`，将结果写入 `STATUS.md` Provider health。
 - 如果首选 provider 可用，使用它，并保留 provider-native 深度产物。
 - 如果首选 provider 不可用，先判断 bundled provider 的 fidelity tier：
   - `providers/requirements-analyst/SKILL.md`：应作为 `BUNDLED_SOURCE_SLICE` 使用，必须加载其真实 steering/templates 才能算发挥该子能力。
+  - `providers/gstack-adapter/SKILL.md`：仅当真实外部 `garrytan/gstack` 安装且对应 slice 实际运行时才是 `ADAPTER_FULL`。
   - `providers/review-pack/SKILL.md`：当前是 `COMPACT_FALLBACK`，不等同完整 `garrytan/gstack`；不能把它的输出当成 gstack full capability。
   - `providers/superpowers-adapter/SKILL.md`：优先作为 `ADAPTER_FULL` 映射外部 superpowers；外部 superpowers 不可用时只是 fallback/degraded。
 - 如果既没有首选 provider，也没有足够 fidelity 的 bundled provider，不能只在正文里随口说明后继续；必须暂停提示用户安装/启用 provider，或明确请求用户接受降级。
