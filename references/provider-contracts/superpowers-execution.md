@@ -51,12 +51,30 @@ implementation/IMPLEMENTATION_PLAN.md  # superpowers writing-plans 的权威深�
 `implementation/IMPLEMENTATION_PLAN.md` 必须保留完整 planning 深度，不得被压缩进 `04_IMPLEMENTATION.md` 的摘要表格。它至少包含：
 
 - 实现计划：任务、目标、涉及文件、依赖、预期结果。
+- 小步执行单元：每个任务必须拆成可单独执行/验证的步骤，而不是只写模块大纲。
+- 测试优先顺序：每个可测试任务必须写明「先写/调整哪个测试或验证场景 → 预期失败/待验证 → 实现哪些文件 → 运行哪些命令确认通过」。
 - 测试计划：新增/修改测试、手工验证场景、允许不写测试的例外理由。
 - 执行检查点：每一步完成条件和验证方式。
 - 文件级变更计划：预计创建/修改的文件和原因。
-- 命令计划：安装、测试、构建、lint、运行和人工验证命令。
+- 命令计划：每个执行单元对应的安装、测试、构建、lint、运行或人工验证命令；不要只在文末列总体验证命令。
+- 失败处理：关键命令失败时如何诊断、回退或标记 blocker。
 - 风险与回滚/恢复说明：如何撤销或降级风险变更。
-- 追踪关系：实现任务对应哪些需求、设计决策和原型页面。
+- 追踪关系：每个执行单元对应哪些需求 / AC、设计决策和原型页面。
+
+推荐执行单元格式：
+
+```markdown
+### Step <n>: <目标>
+
+- Traceability: US-xxx / AC-xxx / E-x / prototype/pages/<page>.html
+- Files: <预计创建或修改的文件>
+- Test/verification first: <先写或先运行的测试/验证；没有自动测试时说明人工验证>
+- Expected initial result: <预期失败、待补实现或基线通过>
+- Implementation: <具体实现动作>
+- Commands: `<可复现命令>`
+- Pass criteria: <通过标准>
+- Failure handling: <失败处理或 blocker 记录方式>
+```
 
 `04_IMPLEMENTATION.md` 必须记录：
 
@@ -86,7 +104,8 @@ implementation/IMPLEMENTATION_PLAN.md  # superpowers writing-plans 的权威深�
 
 - 04 阶段重新展开完整 brainstorming，覆盖或推翻已批准的 01/02/03 决策，但没有明确人工要求。
 - 没有 `implementation/IMPLEMENTATION_PLAN.md` 深度计划就直接改代码，且事后无法还原计划和证据。
-- 将 superpowers writing-plans 的深度内容压缩成 `04_IMPLEMENTATION.md` 的摘要表格，导致文件级计划、命令、检查点、风险或追踪关系缺失。
+- 将 superpowers writing-plans 的深度内容压缩成 `04_IMPLEMENTATION.md` 的摘要表格，导致小步执行单元、测试优先顺序、文件级计划、命令、检查点、风险或追踪关系缺失。
+- `implementation/IMPLEMENTATION_PLAN.md` 只有模块大纲，没有每个执行单元的 test/verification-first 步骤、命令、通过标准和失败处理。
 - 核心行为没有测试或验证证据，且没有明确例外批准。
 - 测试/build/lint 失败但未记录原因和处理方式。
 - 代码变更无法追踪回需求或设计决策。

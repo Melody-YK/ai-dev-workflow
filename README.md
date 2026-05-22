@@ -64,7 +64,7 @@ AI Dev Workflow 的做法是：
 - 01 使用 requirements-analyst 思路，但详细需求产物必须保留在 `requirements/`。
 - 02 使用 gstack-style review，但多角色深度评审必须保留在 `reviews/`。
 - 03 使用 requirements-driven prototype generation，但先写 prototype plan，再生成静态 HTML/CSS 页面。
-- 04 使用 superpowers writing-plans / TDD / verification，但深度实现计划必须保留在 `implementation/IMPLEMENTATION_PLAN.md`。
+- 04 使用 superpowers writing-plans / TDD / verification，但深度实现计划必须保留在 `implementation/IMPLEMENTATION_PLAN.md`，并拆成带文件、命令、验证、通过标准和失败处理的小步执行单元。
 
 一句话：
 

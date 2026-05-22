@@ -159,6 +159,7 @@ Rules:
 - 04 does not rerun full brainstorming by default. 01/02/03 own requirements clarification, option review, decision confirmation, and prototype validation.
 - 04 may perform only a lightweight pre-plan sanity check to identify blockers that would prevent implementation planning.
 - If no blocker exists, the provider should proceed directly to superpowers-style `writing-plans`.
-- `implementation/IMPLEMENTATION_PLAN.md` is the authoritative deep implementation plan. It should preserve file-level tasks, TDD/verification strategy, commands, checkpoints, risks, rollback/recovery notes, and traceability.
+- `implementation/IMPLEMENTATION_PLAN.md` is the authoritative deep implementation plan. It should preserve small executable units, file-level tasks, test/verification-first order, per-step commands, pass criteria, failure handling, risks, rollback/recovery notes, and traceability.
 - `04_IMPLEMENTATION.md` is the workflow summary/control artifact: it indexes the deep plan, records gates, status, execution log, verification evidence, changed files, blockers, and approval decisions.
 - Do not compress provider-native deep planning output into `04_IMPLEMENTATION.md` tables. Summaries are allowed only if they link to the full plan.
+- A module outline alone is not sufficient. Each implementation unit should state traceability, files, test/verification-first step, expected initial result, implementation action, commands, pass criteria, and failure handling.

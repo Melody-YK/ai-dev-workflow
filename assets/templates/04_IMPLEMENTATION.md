@@ -31,10 +31,11 @@
 - 04 阶段默认不重新执行完整 brainstorming。01/02/03 已负责需求澄清、方案评审、决策确认和原型验证；04 只允许做轻量 pre-plan sanity check，用于发现仍阻塞实现计划的 open decisions。
 - 若 pre-plan sanity check 无阻塞项，必须直接进入 superpowers writing-plans 风格的实现计划。
 - `implementation/IMPLEMENTATION_PLAN.md` 是 04 阶段的权威深度实现计划；`04_IMPLEMENTATION.md` 只作为 workflow 摘要、门禁、执行证据和索引。不得把深度计划压缩成下方摘要表格。
+- 深度计划必须拆成小步执行单元。每个单元应包含 Traceability、Files、Test/verification first、Expected initial result、Implementation、Commands、Pass criteria、Failure handling。
 
 ## 详细产物索引
 
-- `implementation/IMPLEMENTATION_PLAN.md` — superpowers writing-plans 风格的完整实现计划（任务拆分、文件级改动、TDD/验证策略、命令、检查点、风险、回滚和追踪关系）。
+- `implementation/IMPLEMENTATION_PLAN.md` — superpowers writing-plans 风格的完整实现计划（小步执行单元、文件级改动、TDD/验证优先策略、每步命令、检查点、失败处理、风险、回滚和追踪关系）。
 
 ## Pre-plan sanity check
 
