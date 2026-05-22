@@ -42,6 +42,7 @@ AI Dev Workflow 的做法是：
 - **保留 provider 原生产物**：深度产物放在阶段子目录中，阶段主文件只做摘要、索引、门禁和证据。
 - **先原型后实现**：先用静态 HTML/CSS 验证页面、流程、角色和状态，再进入正式实现。
 - **先计划后执行**：04 默认只写实现计划，不直接写业务代码；执行需要显式批准。
+- **API 合同优先**：只要存在前后端 / client-server / 服务间 HTTP 边界，`requirements/api.yaml` 就是必需交接物；04/05 必须做 contract ↔ backend routes ↔ frontend client calls 三方对账。
 - **不重复发散**：04 不重新完整 brainstorming；01/02/03 已完成需求澄清、方案评审、决策确认和原型验证。
 
 ## Contract 是什么
@@ -124,7 +125,7 @@ flowchart TD
 │   ├── clarification.md
 │   ├── validation.md
 │   ├── prd.md
-│   ├── api.yaml                    # optional
+│   ├── api.yaml                    # API 边界存在时必需
 │   ├── open-questions.md
 │   └── traceability.md
 ├── 02_TECHNICAL_DESIGN.md          # 02 摘要 / 决策 / 门禁
@@ -167,6 +168,7 @@ flowchart TD
 03 prototype 未批准 → 不能进入 04
 04 implementation plan 未批准 → 不能写业务代码
 05 测试/build/lint/QA 无证据 → 不能声明完成
+API 合同未对齐、前端 smoke 未做 → 不能声明前端全流程可用
 ```
 
 ## Claude Code 安装

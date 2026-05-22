@@ -21,6 +21,7 @@
 - `requirements/prd.md`
 - `requirements/open-questions.md`
 - `requirements/traceability.md`
+- `requirements/api.yaml`（API 边界存在时）
 - 现有代码结构和测试体系
 
 ## Provider contract
@@ -46,6 +47,7 @@ _只检查是否存在阻塞 implementation planning 的未决事项；不要重
 | 01/02/03 是否已批准 |  |  |
 | 技术栈/架构关键决策是否足够进入计划 |  |  |
 | 原型是否提供页面/流程实现依据 |  |  |
+| 若存在 API 边界，`requirements/api.yaml` 是否可作为前后端实现合同 |  |  |
 | 是否存在必须先问用户的 blocker |  |  |
 
 ## 实现计划
@@ -55,6 +57,17 @@ _摘要索引。完整计划必须写入 `implementation/IMPLEMENTATION_PLAN.md`
 | 步骤 | 目标 | 涉及文件 | 依赖 | 完成条件 | 状态 |
 |---|---|---|---|---|---|
 | 1 |  |  |  |  | planned |
+
+## API 合同执行计划
+
+_适用于任何前后端、client/server、服务间或外部 HTTP API。实现不得让前端和后端各自猜接口。_
+
+| API 合同项 | 实现方式 | 验证方式 | 状态 |
+|---|---|---|---|
+| `requirements/api.yaml` operation → 后端 route |  | route inventory / tests | pending |
+| `requirements/api.yaml` operation → 前端 client call |  | client call inventory / browser smoke | pending |
+| 未实现 / 延期 / mock operation |  | 标记 status 与原因 | pending |
+| route/client/API contract parity check |  | 可复现命令或脚本 | pending |
 
 ## 测试计划
 
@@ -122,6 +135,7 @@ _记录实现任务如何对应到需求。必要时更新 `requirements/traceab
 - [ ] 实现计划已批准
 - [ ] 已阅读需求详细产物
 - [ ] 已先定义测试/验证场景，或例外已获批准
+- [ ] 若存在 API 边界，已按 `requirements/api.yaml` 完成前端 client、后端 route 和合同三方对账
 - [ ] 实现按计划完成，偏差已记录
 - [ ] 验证命令已运行并记录结果
 - [ ] 变更文件清单已填写

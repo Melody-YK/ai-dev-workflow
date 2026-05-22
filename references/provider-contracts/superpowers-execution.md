@@ -16,6 +16,7 @@
 - 已批准的 `prototype/`（如存在）
 - `01_REQUIREMENTS.md`
 - `requirements/` 下详细需求产物
+- `requirements/api.yaml`（若存在 API 边界）
 - 现有代码结构和测试体系
 
 05 阶段必须读取：
@@ -24,6 +25,7 @@
 - 实现 diff
 - 相关测试结果
 - 需求、设计和原型 artifact
+- `requirements/api.yaml`、后端 route inventory、前端/client API calls（若存在 API 边界）
 
 ## 子能力
 
@@ -60,6 +62,7 @@ implementation/IMPLEMENTATION_PLAN.md  # superpowers writing-plans 的权威深�
 - 失败处理：关键命令失败时如何诊断、回退或标记 blocker。
 - 风险与回滚/恢复说明：如何撤销或降级风险变更。
 - 追踪关系：每个执行单元对应哪些需求 / AC、设计决策和原型页面。
+- API 合同一致性：如果存在 API 边界，每个相关执行单元必须说明对应的 `requirements/api.yaml` operation，以及后端 route、前端/client call 和验证方式。
 
 推荐执行单元格式：
 
@@ -96,6 +99,8 @@ implementation/IMPLEMENTATION_PLAN.md  # superpowers writing-plans 的权威深�
 - 需求覆盖证据：对照 `requirements/`、验收标准、延期项和 traceability。
 - 原型覆盖证据：对照 `03_PROTOTYPE.md` 和 `prototype/`，检查页面、流程、角色权限、状态和异常场景。
 - 测试/build/lint/typecheck 证据：运行所有可用命令；无法运行时记录原因、影响和替代验证。
+- API 合同一致性证据：若存在 API 边界，必须比较 `requirements/api.yaml`、后端 route inventory 和前端/client API calls。任何 mismatch 都要记录；阻塞核心页面/流程的 mismatch 不能标记 Ready。
+- Browser / 前端 smoke 证据：若存在前端，必须打开核心页面/流程并记录 network/console 结果。仅后端脚本通过不能证明前端可用。
 - 核心路径与异常路径验证：至少覆盖建票、提交、三级审核、下令、执行、校验归档、驳回、作废、中止、越权访问；如不适用必须说明。
 - 手工 QA 证据（适用时）。
 - 代码/架构评审发现和处理结果。
@@ -115,6 +120,8 @@ implementation/IMPLEMENTATION_PLAN.md  # superpowers writing-plans 的权威深�
 - `implementation/IMPLEMENTATION_PLAN.md` 只有模块大纲，没有每个执行单元的 test/verification-first 步骤、命令、通过标准和失败处理。
 - 05 阶段没有主动运行可用的 test / build / lint / typecheck，也没有说明无法运行的原因和影响。
 - 05 阶段没有对照需求、原型和实现计划做覆盖检查。
+- 存在 API 边界但没有做 API contract/backend route/frontend client 三方对账。
+- 存在前端但只验证后端 API 脚本，没有 browser smoke / network / console 证据，却声明前端全流程可用。
 - 核心行为没有测试或验证证据，且没有明确例外批准。
 - 测试/build/lint 失败但未记录原因和处理方式。
 - 代码变更无法追踪回需求或设计决策。

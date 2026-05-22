@@ -1,0 +1,30 @@
+openapi: 3.0.3
+info:
+  title: "{{FEATURE_NAME}} API Contract"
+  version: "0.1.0"
+  description: |
+    Workflow-owned API contract.
+
+    If this feature has any frontend/backend, client/server, service-to-service,
+    or external HTTP boundary, this file is REQUIRED before 02 approval.
+    If no API boundary exists, keep this file and record `x-api-scope: not-applicable`
+    with the reason.
+
+    02 may refine this contract, but must keep it as the source of truth.
+    04 implementation and 05 verification must compare backend routes and frontend
+    client calls against this contract.
+servers:
+  - url: /api/v1
+x-api-scope: draft
+x-contract-rules:
+  - Every implemented backend route must be listed here or explicitly marked internal.
+  - Every frontend/client API call must map to an operation here.
+  - Each operation must include method, path, auth requirement, request shape, response shape, owner, traceability, and status.
+  - Status values: planned, approved, implemented, verified, deferred, rejected.
+paths: {}
+components:
+  securitySchemes:
+    bearerAuth:
+      type: http
+      scheme: bearer
+      bearerFormat: JWT

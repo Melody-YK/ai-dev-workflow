@@ -85,7 +85,7 @@ def main() -> int:
         print(f"wrote {target}")
 
     for detail_dir in ["requirements", "reviews"]:
-        for template_path in sorted((TEMPLATES / detail_dir).glob("*.md")):
+        for template_path in sorted(x for x in (TEMPLATES / detail_dir).iterdir() if x.is_file()):
             relative = template_path.relative_to(TEMPLATES)
             target = workflow_dir / relative
             target.parent.mkdir(parents=True, exist_ok=True)

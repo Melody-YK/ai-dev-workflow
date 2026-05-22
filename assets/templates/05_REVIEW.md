@@ -18,6 +18,7 @@
 - `requirements/prd.md`
 - `requirements/open-questions.md`
 - `requirements/traceability.md`
+- `requirements/api.yaml`（API 边界存在时）
 - `02_TECHNICAL_DESIGN.md`
 - `03_PROTOTYPE.md`
 - `04_IMPLEMENTATION.md`
@@ -39,6 +40,8 @@
 - 对照 `requirements/` 检查需求、验收标准和延期项覆盖情况。
 - 对照 `03_PROTOTYPE.md` 和 `prototype/` 检查页面、流程、角色权限、状态和异常场景覆盖情况。
 - 验证核心路径与异常路径：建票、提交、三级审核、下令、执行、校验归档、驳回、作废、中止、越权访问。
+- 若存在 API 边界，必须执行 API parity review：`requirements/api.yaml` ↔ 后端 route inventory ↔ 前端/client API calls。任何不一致必须记录为 issue；阻塞核心页面/流程的 mismatch 不能标记 Ready。
+- 对前端应用必须执行 browser smoke / manual QA：打开核心页面并检查 network/console 错误。仅后端 API 脚本通过，不能声明“前端全流程可用”。
 - 记录问题的严重度、复现方式、影响范围、建议修复方案和处理状态。
 - 不新增大功能；只允许验证、评审、证据记录和必要的小修复建议。
 
@@ -65,6 +68,22 @@ _记录所有已运行命令。失败必须记录原因、处理方式和是否�
 | 命令 | 目的 | 结果 | 日志 / 证据 |
 |---|---|---|---|
 |  |  | pending |  |
+
+## API 合同一致性证据
+
+_适用于任何 API 边界。_
+
+| Contract operation | Backend route evidence | Frontend/client call evidence | 结果 | 问题 |
+|---|---|---|---|---|
+|  |  |  | pending |  |
+
+## Browser / 前端 Smoke 证据
+
+_适用于有前端的项目。记录页面、操作、network/console 结果。_
+
+| 页面 / 流程 | 操作 | Network / Console 结果 | 结论 |
+|---|---|---|---|
+|  |  | pending | pending |
 
 ## 手工 QA 证据
 
@@ -108,6 +127,8 @@ _必要时将验证证据更新到 `requirements/traceability.md`。_
 - [ ] 已检查原型覆盖，或标记为不适用
 - [ ] 已记录测试/build/lint 证据
 - [ ] 已记录手工 QA 证据，或说明不适用
+- [ ] 若存在 API 边界，已完成 API contract/backend route/frontend client 三方对账
+- [ ] 若存在前端，已完成 browser smoke，并记录 network/console 证据
 - [ ] 已完成代码/架构评审，或说明不适用
 - [ ] 已完成安全/风险复查，或说明不适用
 - [ ] 所有 blocking 问题已修复，或发布状态标记为 Blocked

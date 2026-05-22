@@ -20,6 +20,7 @@
 - `requirements/prd.md`
 - `requirements/open-questions.md`
 - `requirements/traceability.md`
+- `requirements/api.yaml`（API 边界存在时）
 - 来源 PRD：`{{SOURCE_PRD}}`
 - 现有代码结构 / 技术约束（如存在）
 
@@ -88,6 +89,18 @@ _记录关键状态、转换条件、异常路径和权限边界。_
 
 _记录接口、第三方依赖、内部服务、数据同步或事件机制。_
 
+#### API contract review
+
+如果本轮包含前后端、client/server、服务间或外部 HTTP 边界，02 必须审查并冻结 `requirements/api.yaml`。不能只写“API 已对齐”。
+
+| 检查项 | 结论 | 证据 / 处理方式 |
+|---|---|---|
+| `requirements/api.yaml` 是否存在，或明确 not-applicable |  |  |
+| 本轮交付 API 是否覆盖核心流程和异常路径 |  |  |
+| 每个 operation 是否包含 method/path/auth/request/response/status/traceability |  |  |
+| 前端页面/原型是否能映射到 API operation |  |  |
+| 延期、mock、外部集成和内部-only API 是否已标记 |  |  |
+
 ### 工程取舍
 
 _记录为什么选择当前方案，以及被拒绝的备选方案。_
@@ -142,6 +155,7 @@ _记录重要需求在本评审中被接受、调整、延期或拒绝的情况�
 - [ ] 不做什么已记录
 - [ ] 工程方案足够具体，可进入实现计划
 - [ ] 数据模型、状态流转、API / 集成已记录
+- [ ] 若存在 API 边界，`requirements/api.yaml` 已经 review/修订/冻结为 04 的实现合同
 - [ ] 安全、权限、审计或合规风险已检查
 - [ ] QA / 测试策略覆盖核心验收标准
 - [ ] 对需求的任何变更已反映到需求产物或追踪说明中

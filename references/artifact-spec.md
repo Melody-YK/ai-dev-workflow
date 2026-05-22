@@ -79,7 +79,7 @@ requirements/
 ├── clarification.md
 ├── validation.md
 ├── prd.md
-├── api.yaml                # optional
+├── api.yaml                # required when any API boundary exists; otherwise mark not-applicable
 ├── open-questions.md
 └── traceability.md
 ```
@@ -90,6 +90,8 @@ Rules:
 - Detailed provider-native requirements output should live under `requirements/` instead of being compressed into `01_REQUIREMENTS.md`.
 - `requirements/open-questions.md` preserves ambiguity instead of guessing.
 - `requirements/traceability.md` starts with PRD-to-requirement mapping and can be extended later with design, prototype, implementation, and verification links.
+- `requirements/api.yaml` is the workflow-owned API contract when any frontend/backend, client/server, service-to-service, or external HTTP boundary exists. It is not optional in those projects. If no API boundary exists, keep the file and mark it not-applicable with the reason.
+- Each API operation should include method, path, auth/security, request shape, response shape, owner, traceability to requirement/prototype, and status (`planned`, `approved`, `implemented`, `verified`, `deferred`, or `rejected`).
 - Additional files under `requirements/` are allowed if they improve handoff quality and are linked from `01_REQUIREMENTS.md`.
 
 ## Review artifacts
@@ -113,6 +115,7 @@ Rules:
 - Human decisions must be written as comparable decision briefs. Every option must include applicability, benefits, costs/tradeoffs, and downstream impact. Recommended options may have extra rationale, but non-recommended options must not be blank.
 - Detailed gstack-style review output should live under `reviews/` instead of being compressed into `02_TECHNICAL_DESIGN.md`.
 - Review notes must challenge and decide; they should not merely restate requirements.
+- If an API boundary exists, 02 must review and freeze/update `requirements/api.yaml`; a prose statement such as “API aligned” is insufficient without operation-level contract evidence.
 - If 02 changes, defers, or rejects requirements, `requirements/traceability.md` must be updated truthfully.
 
 ## Prototype artifact
@@ -163,6 +166,7 @@ Rules:
 - `04_IMPLEMENTATION.md` is the workflow summary/control artifact: it indexes the deep plan, records gates, status, execution log, verification evidence, changed files, blockers, and approval decisions.
 - Do not compress provider-native deep planning output into `04_IMPLEMENTATION.md` tables. Summaries are allowed only if they link to the full plan.
 - A module outline alone is not sufficient. Each implementation unit should state traceability, files, test/verification-first step, expected initial result, implementation action, commands, pass criteria, and failure handling.
+- If an API boundary exists, implementation must keep backend routes and frontend/client calls aligned with `requirements/api.yaml`. 04 must record a route/client/contract parity check before claiming implementation done.
 
 ## Verification artifacts
 
@@ -172,7 +176,9 @@ Rules:
 
 - Read 01/02/03/04 artifacts, `implementation/IMPLEMENTATION_PLAN.md`, approved prototype files, implementation diff, and current code.
 - Run available test / build / lint / typecheck commands; record unavailable commands with reason and impact.
-- Check requirements coverage, prototype coverage, role/permission coverage, state transitions, core paths, exception paths, and release readiness.
+- Check requirements coverage, prototype coverage, role/permission coverage, state transitions, core paths, exception paths, API contract consistency, and release readiness.
+- If an API boundary exists, compare `requirements/api.yaml` with backend route inventory and frontend/client API calls. Any mismatch must be recorded as an issue; mismatches blocking core pages or flows prevent a Ready conclusion.
+- If a frontend exists, run browser smoke/manual QA and record network/console evidence. Backend-only scripts cannot prove frontend usability.
 - At minimum, validate or explicitly mark not-applicable: create ticket, submit, three-level audit, dispatch, execute, verify/archive, reject, cancel, suspend, unauthorized access.
 - `05_REVIEW.md` must include evidence, issues, severity, reproduction or inspection basis, suggested fix or disposition, remaining risk, and release recommendation.
 - Do not add major new features in 05. If feature gaps are found, record them as issues or blockers unless the user explicitly approves implementation work.

@@ -33,6 +33,7 @@ Produce detailed requirements artifacts under <workflow>/requirements/:
 - clarification.md for resolved ambiguities, assumptions, and stakeholder decisions.
 - validation.md for acceptance criteria, validation rules, testable scenarios, consistency checks, and requirement quality checks.
 - prd.md for the formalized specification distilled from the full analysis.
+- api.yaml as the workflow-owned OpenAPI/API contract when any API boundary exists; if no API boundary exists, keep it and mark not-applicable with the reason.
 - open-questions.md for ambiguities that require human confirmation.
 - traceability.md for mapping source PRD items to requirements.
 Then update <workflow>/01_REQUIREMENTS.md with only an executive summary, links to the detailed artifacts, key assumptions, open question summary, handoff notes, and approval status.
@@ -54,7 +55,7 @@ First write provider-native review notes:
 - <workflow>/reviews/engineering-review.md
 - <workflow>/reviews/security-risk-review.md
 - <workflow>/reviews/qa-review.md
-Then write <workflow>/02_TECHNICAL_DESIGN.md as a workflow summary/control artifact with executive summary, recommended current delivery scope, non-goals, product review summary, engineering review summary, architecture, data model direction, state transitions, APIs/integrations, risk register, and QA/test matrix.
+Then write <workflow>/02_TECHNICAL_DESIGN.md as a workflow summary/control artifact with executive summary, recommended current delivery scope, non-goals, product review summary, engineering review summary, architecture, data model direction, state transitions, APIs/integrations, API contract review, risk register, and QA/test matrix. If an API boundary exists, review/update/freeze <workflow>/requirements/api.yaml; do not claim API alignment from prose alone.
 If the review accepts, changes, defers, or rejects important requirements, update <workflow>/requirements/traceability.md, especially the design-decision column. Do not claim traceability was updated unless it actually was.
 Surface decisions for human approval.
 ```
@@ -104,7 +105,7 @@ Suggested handoff:
 
 ```text
 Read <workflow>/02_TECHNICAL_DESIGN.md, <workflow>/03_PROTOTYPE.md, the approved prototype if present, and the detailed requirements artifacts under <workflow>/requirements/.
-Do a short pre-plan sanity check in <workflow>/04_IMPLEMENTATION.md. If there are no implementation-planning blockers, create the authoritative deep implementation plan in <workflow>/implementation/IMPLEMENTATION_PLAN.md with small TDD-oriented tasks, exact files, commands, expected results, checkpoints, rollback/recovery notes, and traceability updates. Keep <workflow>/04_IMPLEMENTATION.md as the workflow summary/gate/evidence index.
+Do a short pre-plan sanity check in <workflow>/04_IMPLEMENTATION.md, including whether <workflow>/requirements/api.yaml is present/applicable when an API boundary exists. If there are no implementation-planning blockers, create the authoritative deep implementation plan in <workflow>/implementation/IMPLEMENTATION_PLAN.md with small TDD-oriented tasks, exact files, commands, expected results, checkpoints, rollback/recovery notes, API contract parity checks, and traceability updates. Keep <workflow>/04_IMPLEMENTATION.md as the workflow summary/gate/evidence index.
 Do not implement until approved. If execution is approved, update execution log, changed files, verification commands, and blockers as work proceeds.
 ```
 
@@ -118,7 +119,7 @@ Suggested handoff:
 Enter 05 Verification & Review using the workflow contract. Do not rely on the user prompt to enumerate checks.
 Read <workflow>/01_REQUIREMENTS.md, detailed artifacts under <workflow>/requirements/, <workflow>/02_TECHNICAL_DESIGN.md, <workflow>/03_PROTOTYPE.md, approved <workflow>/prototype/, <workflow>/04_IMPLEMENTATION.md, <workflow>/implementation/IMPLEMENTATION_PLAN.md, and the current implementation code.
 Run available test/build/lint/typecheck/manual QA. If a command cannot run, record why and the impact.
-Check requirement coverage, prototype/page/role/state coverage, core paths, exception paths, permissions, code/architecture risks, and release readiness.
+Check requirement coverage, prototype/page/role/state coverage, core paths, exception paths, permissions, API contract/backend route/frontend client parity, browser smoke evidence where applicable, code/architecture risks, and release readiness.
 Write evidence, issues, fixes or recommendations, risk classification, and release readiness to <workflow>/05_REVIEW.md.
 Update <workflow>/requirements/traceability.md with verification evidence when useful.
 ```

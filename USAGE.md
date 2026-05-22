@@ -24,6 +24,7 @@ requirements-analyst → gstack-style review → prototype generation → superp
 | 03 Prototype | 生成需求驱动的静态 HTML/CSS 原型，验证页面、流程、角色和状态 | requirements-analyst prototype approach |
 | 04 Implementation | 写实现计划、TDD/验证先行、小步执行、记录证据 | superpowers |
 | 05 Verification & Review | 完成前验证、代码/架构 review、QA/风险复查、发布前确认 | superpowers + optional gstack |
+| API Contract Gate | `requirements/api.yaml`、后端 route、前端 client 三方对账；有前端时必须 browser smoke | workflow contract |
 
 ## 2. 目录结构
 
@@ -42,7 +43,7 @@ requirements-analyst → gstack-style review → prototype generation → superp
 │   ├── clarification.md
 │   ├── validation.md
 │   ├── prd.md
-│   ├── api.yaml                # optional
+│   ├── api.yaml                # API 边界存在时必需
 │   ├── open-questions.md
 │   └── traceability.md
 ├── 02_TECHNICAL_DESIGN.md
@@ -226,6 +227,7 @@ PRD.md
 - 产品评审是否收敛本轮交付范围
 - 哪些需求不做、延期或拒绝
 - 工程评审是否给出清楚架构、数据模型、状态流转和 API / 集成设计
+- 若存在 API 边界，`requirements/api.yaml` 是否已从可选草案升级为冻结合同
 - 安全/风险评审是否覆盖权限、审计、数据安全、滥用场景和上线风险
 - QA / 测试策略是否覆盖核心验收标准
 - 需求变更是否写回 traceability 或开放问题
@@ -407,6 +409,7 @@ implementation/IMPLEMENTATION_PLAN.md
 3. `03_PROTOTYPE.md` 和 `prototype/` 是否能提前验证页面、流程、角色和状态？
 4. `implementation/IMPLEMENTATION_PLAN.md` 是否保留了 superpowers writing-plans 的深度，能让另一个 agent 不看聊天记录也能执行？
 5. `05_REVIEW.md` 是否有真实证据，而不是“看起来完成了”？
+6. 若有前后端，是否完成 `api.yaml` ↔ backend routes ↔ frontend client calls 对账和 browser smoke？
 6. `STATUS.md` 是否能让中途换 agent 也知道项目在哪里？
 
 如果这些点成立，第一版流程就算跑通。

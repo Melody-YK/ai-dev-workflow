@@ -47,7 +47,7 @@ requirements/
 ├── clarification.md
 ├── validation.md
 ├── prd.md
-├── api.yaml                # 可选
+├── api.yaml                # API 边界存在时必需；无 API 时必须写明 not-applicable
 ├── open-questions.md
 └── traceability.md
 ```
@@ -64,7 +64,7 @@ requirements/
 | `requirements/clarification.md` | 歧义、假设、相关方决策和已澄清问题 | 计划中 |
 | `requirements/validation.md` | 验收标准、验证规则、可测试场景、边界情况和质量检查 | 计划中 |
 | `requirements/prd.md` | 验证后的正式 PRD / 规格说明 | 计划中 |
-| `requirements/api.yaml` | 可选：OpenAPI / API 草案 | 可选 |
+| `requirements/api.yaml` | OpenAPI / API contract。若存在前后端、client/server、服务间或外部 HTTP 边界则必需；若无 API 边界，必须保留文件并写明 `x-api-scope: not-applicable` 与原因 | 条件必需 |
 | `requirements/open-questions.md` | 需要人工确认的歧义和决策 | 计划中 |
 | `requirements/traceability.md` | 从 PRD 到需求、原型页面、实现任务和验证证据的映射 | 计划中 |
 
@@ -100,6 +100,7 @@ _在需求分析过程中填写。请明确标注假设；不确定且需要人�
 - `requirements/prd.md`
 - `requirements/open-questions.md`
 - `requirements/traceability.md`
+- `requirements/api.yaml`（API 边界存在时必读；无 API 时读取 not-applicable 说明）
 - 来源 PRD：`{{SOURCE_PRD}}`
 
 ## 审批决策
@@ -115,6 +116,7 @@ _在需求分析过程中填写。请明确标注假设；不确定且需要人�
 - [ ] 需求明确且可测试
 - [ ] 领域实体和生命周期状态已记录
 - [ ] 验证规则和验收标准已记录
+- [ ] 若存在 API 边界，`requirements/api.yaml` 已列出 method/path/auth/request/response/owner/traceability/status；若不存在，已明确 not-applicable
 - [ ] 开放问题被记录，而不是被猜测
 - [ ] 已开始建立到来源 PRD 的追踪关系
 - [ ] 进入产品与工程评审前，需求已获得人工确认
