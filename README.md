@@ -32,6 +32,114 @@ AI Dev Workflow 的做法是：
 同时保持能力提供者可替换、workflow artifact contract 稳定。
 ```
 
+## 核心模型：Contract / Artifact / Gate / Provider
+
+AI Dev Workflow 的核心不是“多写几份文档”，而是把 AI 研发过程拆成四个相互制约的部分：
+
+```text
+Contract 规定规则
+Artifact 承载事实
+Gate 检查事实是否符合规则
+Provider 提供专业能力
+```
+
+### Contract：流程契约
+
+Contract 是 workflow 的规则层。它定义：
+
+- 每个阶段必须读取哪些输入；
+- 输出必须写到哪些文件；
+- 哪些 provider 产物必须完整保留；
+- 哪些节点必须等人确认；
+- 什么情况算 `DONE`、`BLOCKED`、`DEGRADED`；
+- 下游阶段如何消费上游产物；
+- 什么行为越界，例如自我批准、跳过澄清、先写代码后补计划。
+
+例如 04 的 contract 要求：先写 `implementation/IMPLEMENTATION_PLAN.md`，通过 `04-plan` gate，等待用户明确批准，然后才能写业务代码；实现后还必须记录执行日志、验证命令、变更文件和追踪关系。
+
+### Artifact：文件化事实
+
+Artifact 是 workflow 里的实际产物文件，例如：
+
+```text
+00_INTAKE.md
+01_REQUIREMENTS.md
+requirements/requirements.md
+requirements/clarification.md
+requirements/traceability.md
+requirements/api.yaml
+02_TECHNICAL_DESIGN.md
+reviews/*.md
+03_PROTOTYPE.md
+prototype/
+04_IMPLEMENTATION.md
+implementation/IMPLEMENTATION_PLAN.md
+05_REVIEW.md
+STATUS.md
+```
+
+Artifact 的作用是把 AI 的过程从“聊天里的临时记忆”变成可检查、可恢复、可交接的项目记录：
+
+- 阶段输出写入文件，而不是只停留在聊天记录；
+- 下游阶段通过 artifact 接收上游结论；
+- provider-native 深度产物不会被压缩成一段 summary；
+- 中途换 agent、压缩上下文或恢复会话时，可以从文件继续；
+- gate 可以检查真实文件，而不是检查模型口头承诺。
+
+### Gate：强制检查
+
+Gate 是脚本化检查，主要由 `scripts/validate_artifacts.py` 和 `scripts/orchestrate.py` 执行。
+
+它不相信“我已经完成了”这种口头说法，而是检查 artifact：
+
+- `01-full`：需求深度、澄清、人类决策来源、traceability、API contract；
+- `02-full`：gstack/review 深度、设计决策、traceability 主矩阵回填；
+- `03-full`：原型文件、页面映射、原型审批；
+- `04-plan`：superpowers writing-plans 结构、输入消费证据、无自批、无提前写代码；
+- `04-complete`：人工执行批准、执行日志、验证命令、变更文件；
+- `05-complete`：测试/build/lint、API parity、browser smoke、风险复查和发布建议证据。
+
+如果 gate 失败，workflow 必须修 artifact、补证据、问用户或标记 degraded/blocker，不能直接进入下一阶段。
+
+### Provider：能力提供者
+
+Provider 是外部或内置的专业能力来源，例如：
+
+- `requirements-analyst`：需求澄清、分析、验证和 PRD/API/traceability 产物；
+- `garrytan/gstack`：产品、工程、安全、QA 等多角色评审；
+- `superpowers`：writing-plans、TDD、执行计划、完成前验证；
+- compact fallback：当外部 provider 不可用时的降级能力。
+
+Provider 不拥有 workflow 状态。它们只提供方法和深度输出；AI Dev Workflow 负责把这些输出映射进稳定 artifact，并用 gate 验收。
+
+### 四者的关系
+
+```text
+Provider 产生专业输出
+        ↓
+Artifact 保存输出、决策和证据
+        ↓
+Gate 检查 artifact 是否满足 contract
+        ↓
+Contract 决定能否进入下一阶段
+```
+
+因此，这套 workflow 真正要保证的是：
+
+> 不是让 AI “记得应该怎么做”，而是让它不按 contract 落 artifact、不过 gate，就不能声称完成。
+
+### 为什么 Artifact 不等于普通文档
+
+普通文档可以事后补、可以写得很漂亮但不影响流程。这里的 artifact 是 workflow 状态机的一部分：
+
+- `clarification.md` 没有人类决策来源，`01-full` 不能过；
+- `traceability.md` 设计列没回填，`02-full` 不能过；
+- `03_PROTOTYPE.md` 没有原型审批，不能进 04；
+- `04_IMPLEMENTATION.md` 没有执行批准和验证证据，不能进 05；
+- `05_REVIEW.md` 没有测试/风险/发布证据，不能宣称完成。
+
+所以 artifact 不是“给人看的附属文档”，而是 workflow 的事实数据库和审计对象。
+
 ## 核心原则
 
 - **产物优先**：阶段输出必须写入文件，而不是只留在聊天记录里。
