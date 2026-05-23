@@ -66,7 +66,7 @@ Guided-auto skips ordinary “continue to next phase?” confirmations, but does
 
 Always pause for:
 
-- blocking open requirements decisions;
+- blocking open requirements decisions; `clarification.md` and `open-questions.md` are state-machine inputs, not decorative appendices. If the agent records a recommendation/default without explicit user confirmation provenance, Phase 01 is not done.
 - provider degradation acceptance;
 - prototype approval before implementation;
 - implementation execution after 04 planning; this is a hard stop and requires explicit human/user approval, not agent self-approval or inline execution;

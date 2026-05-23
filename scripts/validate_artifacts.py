@@ -85,6 +85,31 @@ SELF_APPROVAL_PATTERNS = [
     r"执行审批状态：\s*(?:APPROVED|已批准|通过)",
 ]
 
+HUMAN_DECISION_MARKERS = [
+    "用户确认",
+    "用户已确认",
+    "人工确认",
+    "人工已确认",
+    "human confirmed",
+    "confirmed by user",
+    "decision by user",
+    "approved by user",
+    "Melody confirmed",
+]
+
+UNRESOLVED_QUESTION_PATTERNS = [
+    r"状态\s*[:：]\s*待确认",
+    r"状态\s*[:：]\s*待定",
+    r"待定决策",
+    r"需(?:要)?确认",
+    r"待人工确认",
+    r"待确认",
+    r"待审批",
+    r"unresolved",
+    r"open\s+questions?",
+    r"needs?\s+human\s+(?:input|decision|confirmation)",
+]
+
 PLACEHOLDER_PATTERNS = [
     r"\bTBD\b",
     r"\bpending\b",
@@ -198,8 +223,12 @@ def validate_01_full(workflow_dir: pathlib.Path) -> bool:
     failed = validate_min_size(workflow_dir, FULL_REQUIREMENTS_FILES, "01-full")
     req = read_text(workflow_dir / "requirements" / "requirements.md") if (workflow_dir / "requirements" / "requirements.md").exists() else ""
     discovery = read_text(workflow_dir / "requirements" / "discovery.md") if (workflow_dir / "requirements" / "discovery.md").exists() else ""
+    clarification = read_text(workflow_dir / "requirements" / "clarification.md") if (workflow_dir / "requirements" / "clarification.md").exists() else ""
     validation = read_text(workflow_dir / "requirements" / "validation.md") if (workflow_dir / "requirements" / "validation.md").exists() else ""
     traceability = read_text(workflow_dir / "requirements" / "traceability.md") if (workflow_dir / "requirements" / "traceability.md").exists() else ""
+    open_questions = read_text(workflow_dir / "requirements" / "open-questions.md") if (workflow_dir / "requirements" / "open-questions.md").exists() else ""
+    status_text = read_text(workflow_dir / "STATUS.md") if (workflow_dir / "STATUS.md").exists() else ""
+    phase_text = read_text(workflow_dir / "01_REQUIREMENTS.md") if (workflow_dir / "01_REQUIREMENTS.md").exists() else ""
     api = read_text(workflow_dir / "requirements" / "api.yaml") if (workflow_dir / "requirements" / "api.yaml").exists() else ""
 
     required_req_markers = [
@@ -231,6 +260,19 @@ def validate_01_full(workflow_dir: pathlib.Path) -> bool:
     for marker in ["Authenticity", "Completeness", "Consistency", "Feasibility", "Verifiability", "Traceability"]:
         if marker not in validation:
             failed |= fail(f"01-full validation.md missing validation dimension: {marker}")
+    combined_decision_text = f"{clarification}\n{open_questions}\n{status_text}\n{phase_text}"
+    has_human_decision = any(marker.lower() in combined_decision_text.lower() for marker in HUMAN_DECISION_MARKERS)
+    for pattern in UNRESOLVED_QUESTION_PATTERNS:
+        if re.search(pattern, open_questions, re.I) and not has_human_decision:
+            failed |= fail(
+                "01-full cannot pass with unresolved/open clarification questions and no explicit human decision evidence: "
+                + pattern
+            )
+            break
+    if re.search(r"\|\s*(?:采用|默认|建议|推荐)", clarification) and not has_human_decision:
+        failed |= fail(
+            "01-full clarification.md records decisions/recommendations but lacks explicit user/human confirmation provenance"
+        )
     for marker in ["设计", "原型", "实现", "验证"]:
         if marker not in traceability:
             failed |= fail(f"01-full traceability.md must include lifecycle column/coverage for: {marker}")
