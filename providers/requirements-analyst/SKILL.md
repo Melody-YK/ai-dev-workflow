@@ -38,6 +38,19 @@ For phase 01, produce or update:
 - `requirements/api.yaml` when an API/service boundary exists; otherwise explicitly mark API not applicable.
 - `01_REQUIREMENTS.md` as summary/index/gate only.
 
+Phase 01 must preserve the requirements-analyst order:
+
+1. Discovery
+2. Value sorting
+3. Requirements analysis
+4. Clarification
+5. Validation
+6. Specification / PRD
+
+Do not create or update `requirements/validation.md` as final validation while `requirements/open-questions.md` still contains blocking questions or `requirements/clarification.md` lacks explicit user/human answers. Writing recommendations, defaults, or assumed decisions into `clarification.md` is not clarification. If clarification is needed, ask the user before validation and before phase 02.
+
+When asking clarification questions inside `ai-dev-workflow`, prefer a compact decision brief that groups related questions. One-question-at-a-time is allowed only if the user asks for that interaction style or the next answer materially changes the remaining questions. Every persisted decision must include provenance such as `用户确认：...` / `confirmed by user: ...`.
+
 For phase 03, produce or update:
 
 - `03_PROTOTYPE.md`

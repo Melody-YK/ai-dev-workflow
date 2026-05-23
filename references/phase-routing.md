@@ -49,6 +49,7 @@ Produce detailed requirements artifacts under <workflow>/requirements/:
 - traceability.md for mapping source PRD items to requirements.
 Then update <workflow>/01_REQUIREMENTS.md with only an executive summary, links to the detailed artifacts, key assumptions, open question summary, handoff notes, and approval status.
 Preserve open questions instead of guessing.
+Respect requirements-analyst ordering: do not run or finalize validation/specification until clarification is complete. `validation.md` checks clarified requirements; it is not a substitute for asking the user. If `open-questions.md` has blocking decisions or `clarification.md` only contains defaults/recommendations without explicit user confirmation provenance, keep 01 in `NEEDS_HUMAN_INPUT` and ask a decision brief before 02.
 For guided-auto mode, do not merely list blocking open questions and wait for a separate phase-confirmation. Ask the user with a decision brief immediately: dynamic option count, recommended option with rationale when useful, and an “Other / custom” free-text option for every decision. Persist answers to clarification.md, open-questions.md, STATUS.md, and traceability.md when relevant. After the user answers, continue 01 automatically unless new blocking questions remain.
 Do not mark phase 01 DONE if requirements/requirements.md is much thinner than a direct requirements-analyst output.
 Run `scripts/validate_artifacts.py <workflow> --gate 01-full` before marking 01 DONE.

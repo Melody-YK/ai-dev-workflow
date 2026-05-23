@@ -288,6 +288,10 @@ def validate_01_full(workflow_dir: pathlib.Path) -> bool:
         failed |= fail(
             "01-full clarification.md records decisions/recommendations but lacks explicit user/human confirmation provenance"
         )
+    if validation.strip() and re.search(r"(待确认|待定|needs?\s+human|unresolved)", open_questions, re.I) and not has_human_decision:
+        failed |= fail(
+            "01-full validation.md was produced before blocking clarification questions were answered by the user"
+        )
     for marker in ["设计", "原型", "实现", "验证"]:
         if marker not in traceability:
             failed |= fail(f"01-full traceability.md must include lifecycle column/coverage for: {marker}")
