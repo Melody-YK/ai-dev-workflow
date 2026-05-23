@@ -259,6 +259,48 @@ provider 可以替换
 - [superpowers Execution Contract](references/provider-contracts/superpowers-execution.md)：计划、TDD、执行和完成前验证契约。
 - [评估标准](EVALUATION.md)：说明如何判断这套流程是否真的比裸聊天更好。
 
+## Templates / Source Skill Slices
+
+这些文件是 workflow 运行时应加载或映射的模板 / 原生能力切片，不是 README 摘要。
+
+### Workflow artifact templates
+
+- [scripts/init_workflow.py](scripts/init_workflow.py)：初始化 `00_INTAKE.md`、`01_REQUIREMENTS.md`、`02_TECHNICAL_DESIGN.md`、`03_PROTOTYPE.md`、`04_IMPLEMENTATION.md`、`05_REVIEW.md`、`STATUS.md`。
+- [references/artifact-spec.md](references/artifact-spec.md)：各阶段 artifact 结构和必需内容。
+- [references/phase-routing.md](references/phase-routing.md)：阶段推进、停止点和 gate 顺序。
+
+### requirements-analyst templates
+
+`requirements-analyst` 在本仓库中保留 source-derived steering/templates；Phase 01/03 需要按需加载这些文件，而不是只读摘要：
+
+- [template-discovery.md](providers/requirements-analyst/references/steering/template-discovery.md)
+- [template-sort.md](providers/requirements-analyst/references/steering/template-sort.md)
+- [template-analysis.md](providers/requirements-analyst/references/steering/template-analysis.md)
+- [template-data-model.md](providers/requirements-analyst/references/steering/template-data-model.md)
+- [template-clarification.md](providers/requirements-analyst/references/steering/template-clarification.md)
+- [template-validation.md](providers/requirements-analyst/references/steering/template-validation.md)
+- [template-prd.md](providers/requirements-analyst/references/steering/template-prd.md)
+- [template-openapi.md](providers/requirements-analyst/references/steering/template-openapi.md)
+- [template-rtm.md](providers/requirements-analyst/references/steering/template-rtm.md)
+
+### superpowers source skill slices
+
+`superpowers` 优先通过外部 plugin 原生调用；若运行环境不能原生调用，使用本仓库保留的 source skill slices，并标记 `BUNDLED_SOURCE_SLICE`：
+
+- [writing-plans/SKILL.md](providers/superpowers-adapter/references/source-skills/writing-plans/SKILL.md)：04 实现计划原生格式。
+- [writing-plans/plan-document-reviewer-prompt.md](providers/superpowers-adapter/references/source-skills/writing-plans/plan-document-reviewer-prompt.md)：实现计划评审 prompt。
+- [test-driven-development/SKILL.md](providers/superpowers-adapter/references/source-skills/test-driven-development/SKILL.md)：TDD 纪律。
+- [executing-plans/SKILL.md](providers/superpowers-adapter/references/source-skills/executing-plans/SKILL.md)：按计划执行。
+- [subagent-driven-development/SKILL.md](providers/superpowers-adapter/references/source-skills/subagent-driven-development/SKILL.md)：子代理逐任务实现 + 评审流程。
+- [verification-before-completion/SKILL.md](providers/superpowers-adapter/references/source-skills/verification-before-completion/SKILL.md)：完成前验证。
+- [requesting-code-review/SKILL.md](providers/superpowers-adapter/references/source-skills/requesting-code-review/SKILL.md)：代码评审请求/模拟。
+
+### gstack adapter
+
+`gstack` 当前没有 vendored 模板。它是外部真实 `garrytan/gstack` 的 adapter：只有安装并实际使用对应外部 slice（如 `plan-ceo-review`、`plan-eng-review`、`review`、`qa`、`cso`）时，才记录为 `ADAPTER_FULL`。
+
+- [providers/gstack-adapter/SKILL.md](providers/gstack-adapter/SKILL.md)：gstack slice 到 `reviews/`、`02_TECHNICAL_DESIGN.md`、`05_REVIEW.md` 和 traceability 的映射规则。
+
 ## 仓库结构
 
 ```text
