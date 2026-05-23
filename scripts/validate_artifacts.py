@@ -207,6 +207,67 @@ def validate_01_full(workflow_dir: pathlib.Path) -> bool:
     return failed
 
 
+def traceability_rows_before_section(traceability: str, section: str) -> list[list[str]]:
+    """Return markdown table rows before a later phase section.
+
+    Phase 02 must update the primary traceability matrix, not only append a
+    narrative review section. This helper intentionally inspects the rows before
+    `## 评审决策追溯` so later prototype/implementation sections cannot mask stale
+    design cells.
+    """
+    scope = traceability.split(section, 1)[0] if section in traceability else traceability
+    rows: list[list[str]] = []
+    for line in scope.splitlines():
+        stripped = line.strip()
+        if not stripped.startswith("|") or "---" in stripped:
+            continue
+        cells = [cell.strip() for cell in stripped.strip("|").split("|")]
+        if cells and cells[0] in {"来源PRD章节", "PRD实体", "PRD服务", "编排服务", "维度", "PRD章节"}:
+            continue
+        rows.append(cells)
+    return rows
+
+
+def is_filled_traceability_cell(value: str) -> bool:
+    value = value.strip()
+    if not value:
+        return False
+    return not re.fullmatch(r"(?:TBD|pending|planned|[-—]|⏳.*)", value, re.I)
+
+
+def validate_02_traceability_design(traceability: str) -> bool:
+    failed = False
+    if not traceability.strip():
+        failed |= fail("02-full missing requirements/traceability.md")
+        return failed
+
+    rows = traceability_rows_before_section(traceability, "## 评审决策追溯")
+    feature_rows = [row for row in rows if row and row[0].startswith("三-") and len(row) >= 9]
+    if not feature_rows:
+        failed |= fail("02-full traceability.md missing primary feature traceability rows")
+        return failed
+
+    non_tbd_design_rows = [row for row in feature_rows if is_filled_traceability_cell(row[4])]
+    must_rows = [row for row in feature_rows if any(marker in row[2] for marker in ["F-001", "F-002", "F-003", "F-006", "F-007", "F-008", "F-009", "F-011", "F-012", "F-014", "F-016", "F-004"])]
+    must_rows_without_design = [row for row in must_rows if not is_filled_traceability_cell(row[4])]
+
+    if len(non_tbd_design_rows) < max(8, len(feature_rows) // 2):
+        failed |= fail(
+            f"02-full traceability.md design column is too sparse "
+            f"({len(non_tbd_design_rows)}/{len(feature_rows)} feature rows filled); "
+            "gstack must map reviewed requirements to concrete design modules/APIs/state/security decisions"
+        )
+    if must_rows_without_design:
+        missing = ", ".join(row[2] for row in must_rows_without_design[:12])
+        failed |= fail(f"02-full traceability.md missing design mapping for core/MUST requirements: {missing}")
+
+    design_text = "\n".join(row[4] for row in feature_rows)
+    for marker in ["API", "状态", "权限", "模块"]:
+        if marker not in design_text:
+            failed |= fail(f"02-full traceability.md design mappings must include concrete {marker} references")
+    return failed
+
+
 def validate_02_full(workflow_dir: pathlib.Path) -> bool:
     """Require full gstack-adapter depth and provenance, not compact review notes."""
     failed = validate_01_full(workflow_dir)
@@ -225,6 +286,7 @@ def validate_02_full(workflow_dir: pathlib.Path) -> bool:
     for marker in ["accepted", "deferred", "rejected", "changed", "评审结论", "设计决策"]:
         if marker not in traceability:
             failed |= fail(f"02-full traceability.md missing review-decision marker: {marker}")
+    failed |= validate_02_traceability_design(traceability)
     if "COMPACT_FALLBACK" in design and "DONE" in design:
         failed |= fail("02-full cannot be clean DONE when only COMPACT_FALLBACK review-pack ran")
     return failed

@@ -58,7 +58,7 @@ Run `scripts/validate_artifacts.py <workflow> --gate 01-full` before marking 01 
 
 Use `gstack-adapter` after requirements exist when real external `garrytan/gstack` is installed. Invoke/map the relevant gstack slices (`/plan-ceo-review`, `/plan-eng-review`, optional `/plan-design-review`, `/plan-devex-review`, `/cso`, `/qa`) into workflow artifacts. If gstack is missing, `review-pack` may be used only as `COMPACT_FALLBACK`; do not mark the phase clean `DONE` unless the user explicitly accepts degraded depth. See `providers/gstack-adapter/references/gstack-mapping.md` and `references/provider-contracts/review-pack.md`.
 
-Full-fidelity gate: before marking 02 clean `DONE`, run `scripts/validate_artifacts.py <workflow> --gate 02-full`. If it fails, do not claim full gstack quality. Keep the phase as `NEEDS_GSTACK_DEPTH`, `DONE_DEGRADED`, or `PROVIDER_DEGRADED` until full review notes and traceability updates exist.
+Full-fidelity gate: before marking 02 clean `DONE`, run `scripts/validate_artifacts.py <workflow> --gate 02-full`. If it fails, do not claim full gstack quality. Keep the phase as `NEEDS_GSTACK_DEPTH`, `DONE_DEGRADED`, or `PROVIDER_DEGRADED` until full review notes and traceability updates exist. Phase 02 must update the primary `requirements/traceability.md` design column for reviewed feature rows; appending a short “评审决策追溯” section while the main matrix still says `TBD` is not sufficient.
 
 Suggested handoff:
 
@@ -71,7 +71,7 @@ First write provider-native review notes:
 - <workflow>/reviews/security-risk-review.md
 - <workflow>/reviews/qa-review.md
 Then write <workflow>/02_TECHNICAL_DESIGN.md as a workflow summary/control artifact with executive summary, recommended current delivery scope, non-goals, product review summary, engineering review summary, architecture, data model direction, state transitions, APIs/integrations, API contract review, risk register, and QA/test matrix. If an API boundary exists, review/update/freeze <workflow>/requirements/api.yaml; do not claim API alignment from prose alone.
-If the review accepts, changes, defers, or rejects important requirements, update <workflow>/requirements/traceability.md, especially the design-decision column. Do not claim traceability was updated unless it actually was.
+If the review accepts, changes, defers, or rejects important requirements, update <workflow>/requirements/traceability.md, especially the primary feature table's design-decision column. Map core/MUST rows to concrete design modules, APIs, state transitions, permissions/security controls, and review decisions. Do not claim traceability was updated unless the main matrix cells actually changed from `TBD`.
 Surface decisions for human approval.
 Run `scripts/validate_artifacts.py <workflow> --gate 02-full` before marking 02 DONE.
 ```

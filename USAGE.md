@@ -260,6 +260,7 @@ python3 /Users/melody/.openclaw/workspace/ai-dev-workflow/scripts/orchestrate.py
 - 安全/风险评审是否覆盖权限、审计、数据安全、滥用场景和上线风险
 - QA / 测试策略是否覆盖核心验收标准
 - 需求变更是否写回 traceability 或开放问题
+- `requirements/traceability.md` 主矩阵的设计列是否已从 `TBD` 回填为具体设计映射（模块/API/状态/权限安全/评审决策），而不是只追加摘要小节
 
 ### Step 3：跑 Prototype
 
