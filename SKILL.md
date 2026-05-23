@@ -16,6 +16,8 @@ description: Orchestrate a lightweight, artifact-driven AI development workflow 
 
 Auto-detect the primary language from the user's request and source PRD. Use that language for **all** user-visible replies and generated artifact content unless the user explicitly asks otherwise.
 
+The detected language is a workflow contract, not a soft style preference. `scripts/init_workflow.py` writes it as `Artifact language` in `00_INTAKE.md` and `STATUS.md`; every downstream phase must follow it, and full gates validate that mapped workflow artifacts are localized. If provider-native output is in another language, translate/summarize it into the artifact language when mapping it into workflow files.
+
 For Chinese PRDs or Chinese user instructions:
 
 - final phase summaries must be in Chinese;
@@ -23,6 +25,7 @@ For Chinese PRDs or Chinese user instructions:
 - artifact headings, labels, table headers, status notes, and handoff prompts must be in Chinese;
 - do not switch to English just because provider skills, templates, filenames, or examples are English;
 - English technical identifiers such as file paths, API operation IDs, enum values, and command names may remain English.
+- if a phase artifact drifts into another natural language, rewrite the artifact before running or claiming the gate passed.
 
 Before replying to the user at a phase boundary, check the reply language. If it does not match the user's language, rewrite it before sending.
 

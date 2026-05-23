@@ -1,6 +1,6 @@
 {
   "name": "ai-dev-workflow",
-  "version": "0.2.7",
+  "version": "0.2.8",
   "description": "Artifact-driven AI development workflow for PRD intake, requirements engineering, product/engineering review, static prototype, implementation planning, build, and verification.",
   "author": {
     "name": "Melody"

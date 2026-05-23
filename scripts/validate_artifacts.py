@@ -313,8 +313,67 @@ def validate_input_consumption(workflow_dir: pathlib.Path, gate_name: str) -> bo
     return failed
 
 
+def detect_contract_language(workflow_dir: pathlib.Path) -> str | None:
+    texts = []
+    for relative in ["STATUS.md", "00_INTAKE.md"]:
+        path = workflow_dir / relative
+        if path.exists():
+            texts.append(read_text(path))
+    combined = "\n".join(texts)
+    match = re.search(r"Artifact language\s*[:：]\s*`?([A-Za-z]{2}(?:-[A-Za-z]{2})?)`?", combined, re.I)
+    if match:
+        return match.group(1)
+    return None
+
+
+def strip_allowed_english(text: str) -> str:
+    """Remove technical tokens that are allowed to stay English."""
+    text = re.sub(r"```.*?```", " ", text, flags=re.S)
+    text = re.sub(r"`[^`]+`", " ", text)
+    text = re.sub(r"https?://\S+", " ", text)
+    text = re.sub(r"[/\w.-]+\.(?:md|py|yaml|yml|json|html|css|js|ts|tsx|java|vue|sql)\b", " ", text, flags=re.I)
+    text = re.sub(r"\b[A-Z][A-Z0-9_]{2,}\b", " ", text)
+    text = re.sub(r"\b(?:GET|POST|PUT|PATCH|DELETE|HTTP|API|URL|ID|PRD|TBD|TODO)\b", " ", text)
+    return text
+
+
+def language_ratio(text: str) -> tuple[int, int]:
+    cleaned = strip_allowed_english(text)
+    cjk = len(re.findall(r"[\u4e00-\u9fff]", cleaned))
+    latin_words = len(re.findall(r"\b[A-Za-z]{4,}\b", cleaned))
+    return cjk, latin_words
+
+
+def validate_language_contract(workflow_dir: pathlib.Path, gate_name: str, files: list[str]) -> bool:
+    language = detect_contract_language(workflow_dir)
+    failed = False
+    if not language:
+        return fail(f"{gate_name} missing Artifact language in STATUS.md or 00_INTAKE.md")
+
+    for relative in files:
+        path = workflow_dir / relative
+        if not path.exists() or path.is_dir():
+            continue
+        text = read_text(path)
+        cjk, latin_words = language_ratio(text)
+        if language.lower().startswith("zh"):
+            if cjk < max(80, latin_words * 2):
+                failed |= fail(
+                    f"{gate_name} language mismatch in {relative}: Artifact language is {language}, "
+                    f"but localized Chinese content appears too sparse (cjk={cjk}, latin_words={latin_words})"
+                )
+        elif language.lower().startswith("en"):
+            if cjk > max(120, latin_words * 2):
+                failed |= fail(
+                    f"{gate_name} language mismatch in {relative}: Artifact language is {language}, "
+                    f"but Chinese content dominates (cjk={cjk}, latin_words={latin_words})"
+                )
+    return failed
+
+
 def validate_04_plan(workflow_dir: pathlib.Path) -> bool:
     failed = False
+    failed |= validate_language_contract(workflow_dir, "04-plan", ["04_IMPLEMENTATION.md", "implementation/IMPLEMENTATION_PLAN.md"])
     failed |= validate_input_consumption(workflow_dir, "04-plan")
     plan = workflow_dir / "implementation" / "IMPLEMENTATION_PLAN.md"
     if not plan.exists():
@@ -372,6 +431,22 @@ def validate_04_plan(workflow_dir: pathlib.Path) -> bool:
 def validate_01_full(workflow_dir: pathlib.Path) -> bool:
     """Require provider-native requirements-analyst depth, not summary output."""
     failed = validate_canonical_contract(workflow_dir)
+    failed |= validate_language_contract(
+        workflow_dir,
+        "01-full",
+        [
+            "01_REQUIREMENTS.md",
+            "requirements/discovery.md",
+            "requirements/sort.md",
+            "requirements/requirements.md",
+            "requirements/datamodel.md",
+            "requirements/clarification.md",
+            "requirements/validation.md",
+            "requirements/prd.md",
+            "requirements/open-questions.md",
+            "requirements/traceability.md",
+        ],
+    )
     failed |= validate_min_size(workflow_dir, FULL_REQUIREMENTS_FILES, "01-full")
     req = read_text(workflow_dir / "requirements" / "requirements.md") if (workflow_dir / "requirements" / "requirements.md").exists() else ""
     discovery = read_text(workflow_dir / "requirements" / "discovery.md") if (workflow_dir / "requirements" / "discovery.md").exists() else ""
@@ -507,6 +582,17 @@ def validate_02_traceability_design(traceability: str) -> bool:
 def validate_02_full(workflow_dir: pathlib.Path) -> bool:
     """Require full gstack-adapter depth and provenance, not compact review notes."""
     failed = validate_01_full(workflow_dir)
+    failed |= validate_language_contract(
+        workflow_dir,
+        "02-full",
+        [
+            "02_TECHNICAL_DESIGN.md",
+            "reviews/product-review.md",
+            "reviews/engineering-review.md",
+            "reviews/security-risk-review.md",
+            "reviews/qa-review.md",
+        ],
+    )
     failed |= validate_input_consumption(workflow_dir, "02-full")
     failed |= validate_min_size(workflow_dir, FULL_REVIEW_FILES, "02-full")
     design = read_text(workflow_dir / "02_TECHNICAL_DESIGN.md") if (workflow_dir / "02_TECHNICAL_DESIGN.md").exists() else ""
@@ -532,6 +618,7 @@ def validate_02_full(workflow_dir: pathlib.Path) -> bool:
 def validate_03_full(workflow_dir: pathlib.Path) -> bool:
     """Require requirements-analyst-style prototype closure and traceability."""
     failed = validate_02_full(workflow_dir)
+    failed |= validate_language_contract(workflow_dir, "03-full", ["03_PROTOTYPE.md"])
     failed |= validate_input_consumption(workflow_dir, "03-full")
     proto = workflow_dir / "03_PROTOTYPE.md"
     text = read_text(proto) if proto.exists() else ""
@@ -605,6 +692,7 @@ def validate_04_complete(workflow_dir: pathlib.Path) -> bool:
 
 def validate_05_complete(workflow_dir: pathlib.Path) -> bool:
     failed = validate_04_complete(workflow_dir)
+    failed |= validate_language_contract(workflow_dir, "05-complete", ["05_REVIEW.md"])
     failed |= validate_input_consumption(workflow_dir, "05-complete")
     review = workflow_dir / "05_REVIEW.md"
     text = read_text(review)

@@ -9,6 +9,12 @@
 - 来源 PRD：`{{SOURCE_PRD}}`
 - 创建时间：`{{CREATED_AT}}`
 
+## 语言契约
+
+- Artifact language：`{{ARTIFACT_LANGUAGE}}`
+- 判定依据：用户请求 / 功能名 / 来源 PRD 的主要语言。
+- 约束：除非用户明确要求切换语言，下游阶段的摘要、问题、表头、状态、审批、handoff 和 artifact 正文必须使用该语言。文件路径、命令、API operationId、枚举值、代码标识符可以保留英文。
+
 ## 原始需求摘要
 
 {{RAW_SUMMARY}}

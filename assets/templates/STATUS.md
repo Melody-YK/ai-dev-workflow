@@ -6,10 +6,17 @@
 - 当前阶段：{{CURRENT_PHASE}}
 - 检查点状态：{{CHECKPOINT_STATUS}}
 - 最后更新：{{CREATED_AT}}
+- Artifact language：`{{ARTIFACT_LANGUAGE}}`
 
 ## 契约原则
 
 AI Dev Workflow 拥有阶段契约、状态、门禁和 artifact 位置。`requirements-analyst`、外部 `garrytan/gstack`、`superpowers` 等能力提供者负责方法和详细产出，但不能替代 workflow contract。内置 fallback 必须记录 fidelity tier，不能冒充外部 full provider。
+
+## 语言契约
+
+- Artifact language：`{{ARTIFACT_LANGUAGE}}`
+- 所有用户可见回复、阶段摘要、decision brief、checkpoint prompt、artifact 正文、表头、状态说明和 handoff notes 必须使用该语言。
+- Provider 原生说明、文件路径、命令、API operationId、枚举值和代码标识符可以保留英文，但映射回 workflow artifact 的说明文字必须本地化。
 
 ## Provider health
 

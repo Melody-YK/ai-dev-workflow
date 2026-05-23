@@ -33,6 +33,20 @@ def read_summary(path: pathlib.Path, max_chars: int = 1200) -> str:
     return summary
 
 
+def detect_language(*texts: str) -> str:
+    """Return the workflow artifact language from user/source text.
+
+    This is intentionally simple and deterministic. It only decides the
+    workflow contract language, not code identifiers or API names.
+    """
+    combined = "\n".join(texts)
+    cjk = len(re.findall(r"[\u4e00-\u9fff]", combined))
+    latin_words = len(re.findall(r"\b[A-Za-z]{3,}\b", combined))
+    if cjk >= 20 or cjk >= max(8, latin_words // 3):
+        return "zh-CN"
+    return "en"
+
+
 def render(template: str, values: dict[str, str]) -> str:
     for key, value in values.items():
         template = template.replace("{{" + key + "}}", value)
@@ -64,13 +78,17 @@ def main() -> int:
     workflow_dir.mkdir(parents=True, exist_ok=True)
 
     created_at = dt.datetime.now().astimezone().isoformat(timespec="seconds")
+    raw_summary = read_summary(source_prd)
+    artifact_language = detect_language(args.feature, raw_summary)
+
     values = {
         "FEATURE_NAME": args.feature,
         "FEATURE_SLUG": feature_slug,
         "SOURCE_PRD": str(source_prd),
         "WORKFLOW_DIR": str(workflow_dir),
         "CREATED_AT": created_at,
-        "RAW_SUMMARY": read_summary(source_prd),
+        "RAW_SUMMARY": raw_summary,
+        "ARTIFACT_LANGUAGE": artifact_language,
         "CURRENT_PHASE": "01_REQUIREMENTS",
         "CHECKPOINT_STATUS": "AUTO_CONTINUE_TO_01" if args.mode == "guided-auto" else "WAITING_FOR_HUMAN_CONFIRMATION",
         "PHASE_00_STATUS": "DONE",

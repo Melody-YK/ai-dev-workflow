@@ -3,7 +3,9 @@
 
 ## Language rule
 
-The orchestrator owns user-visible language consistency. Detect the primary language from the user request and source PRD, then keep all phase summaries, decision briefs, checkpoint prompts, and artifact prose in that language. Provider-native skills may contain English instructions, but their mapped workflow outputs and assistant replies must be localized. Technical identifiers, file paths, commands, API operation IDs, and enum values may remain English.
+The orchestrator owns user-visible language consistency. Detect the primary language from the user request and source PRD, write it as `Artifact language` in `00_INTAKE.md` and `STATUS.md`, then keep all phase summaries, decision briefs, checkpoint prompts, and artifact prose in that language. Provider-native skills may contain English instructions, but their mapped workflow outputs and assistant replies must be localized. Technical identifiers, file paths, commands, API operation IDs, and enum values may remain English.
+
+Language is a gate contract. Full gates fail when `Artifact language` is missing or when natural-language artifact content drifts away from it. If a provider emits useful English output for a Chinese workflow, preserve the technical identifiers but rewrite the workflow-facing explanation, table text, decisions, risks, and handoff notes in Chinese before marking the phase done.
 
 Core routing rule:
 
