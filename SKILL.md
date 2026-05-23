@@ -32,6 +32,12 @@ Before replying to the user at a phase boundary, check the reply language. If it
 
 不要把聊天记录当成唯一事实来源。每个阶段的重要输入、输出、决策、开放问题和下一步，都必须写入 `.ai-workflow/<feature-slug>/` 里的 artifact。能力提供者可以替换，但 workflow artifact contract 保持稳定。
 
+**workflow 自己负责流程纪律。** 用户提示词很短不代表可以自创流程或自动跑到底。除非用户明确要求 unattended / continuous / guided-auto，默认人工门禁必须生效。即使用户只给 PRD 路径，也必须使用本 skill 的标准 artifact、状态机和 gate；不得用 `02_REVIEW.md`、`02_STATUS.md`、`04_PLAN.md` 等临时文件替代标准阶段 artifact。
+
+Provider skills 只是能力提供者：`requirements-analyst` 不能改写 01 的 artifact contract，`gstack` 不能改写 02 的 artifact contract，`superpowers` 不能改写 04/05 的 artifact contract。所有 provider-native 产出必须映射回 workflow 指定位置。
+
+硬停点：01 如果存在阻塞澄清问题，必须先问用户；03 原型完成后必须等用户确认；04 implementation plan 通过后必须等用户批准，才能写 backend/frontend 实现代码。
+
 默认工作目录：
 
 ```text

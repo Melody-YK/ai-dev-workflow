@@ -17,6 +17,12 @@ REQUIRED = [
     "STATUS.md",
 ]
 
+FORBIDDEN_ALIAS_ARTIFACTS = {
+    "02_REVIEW.md": "use 02_TECHNICAL_DESIGN.md as the phase-02 workflow artifact",
+    "02_STATUS.md": "use STATUS.md for workflow state",
+    "04_PLAN.md": "use 04_IMPLEMENTATION.md plus implementation/IMPLEMENTATION_PLAN.md",
+}
+
 REQUIREMENTS_DETAIL_PATHS = [
     "requirements",
     "requirements/discovery.md",
@@ -151,6 +157,14 @@ def validate_min_size(workflow_dir: pathlib.Path, files: dict[str, int], gate_na
     return failed
 
 
+def validate_canonical_contract(workflow_dir: pathlib.Path) -> bool:
+    failed = False
+    for filename, guidance in FORBIDDEN_ALIAS_ARTIFACTS.items():
+        if (workflow_dir / filename).exists():
+            failed |= fail(f"canonical contract violation: found {filename}; {guidance}")
+    return failed
+
+
 def has_non_placeholder_table_row(text: str, header: str) -> bool:
     """Heuristic: after a section header, find a table row with real content.
 
@@ -220,7 +234,8 @@ def validate_04_plan(workflow_dir: pathlib.Path) -> bool:
 
 def validate_01_full(workflow_dir: pathlib.Path) -> bool:
     """Require provider-native requirements-analyst depth, not summary output."""
-    failed = validate_min_size(workflow_dir, FULL_REQUIREMENTS_FILES, "01-full")
+    failed = validate_canonical_contract(workflow_dir)
+    failed |= validate_min_size(workflow_dir, FULL_REQUIREMENTS_FILES, "01-full")
     req = read_text(workflow_dir / "requirements" / "requirements.md") if (workflow_dir / "requirements" / "requirements.md").exists() else ""
     discovery = read_text(workflow_dir / "requirements" / "discovery.md") if (workflow_dir / "requirements" / "discovery.md").exists() else ""
     clarification = read_text(workflow_dir / "requirements" / "clarification.md") if (workflow_dir / "requirements" / "clarification.md").exists() else ""

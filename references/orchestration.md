@@ -2,6 +2,15 @@
 
 `ai-dev-workflow` is a workflow package, not a single prompt. Treat each phase as a state-machine transition with explicit provider routing, mandatory gates, and recovery loops.
 
+The workflow contract is authoritative even when the user prompt is short. A short prompt such as “run ai-dev-workflow on this PRD” means: initialize/use the canonical workflow directory, canonical artifacts, provider routing, mandatory gates, and human gates. It does not grant permission to invent alternate artifacts, skip clarification/prototype/implementation approvals, or run unattended.
+
+Forbidden substitutes:
+
+- `02_REVIEW.md` or `02_STATUS.md` instead of `02_TECHNICAL_DESIGN.md`
+- `04_PLAN.md` or provider-native plan paths instead of `04_IMPLEMENTATION.md` plus `implementation/IMPLEMENTATION_PLAN.md`
+- prose like “gate passed” without `scripts/orchestrate.py gate` / validator evidence
+- provider ownership of phase state; providers produce capability outputs, the workflow owns phase state and gates
+
 ## State machine
 
 Canonical states:
