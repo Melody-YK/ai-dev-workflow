@@ -7,6 +7,8 @@ The orchestrator owns user-visible language consistency. Detect the primary lang
 
 Language is a gate contract. Full gates fail when `Artifact language` is missing or when natural-language artifact content drifts away from it. If a provider emits useful English output for a Chinese workflow, preserve the technical identifiers but rewrite the workflow-facing explanation, table text, decisions, risks, and handoff notes in Chinese before marking the phase done.
 
+For Chinese workflows, localize status dashboards and prompts too: use `阶段状态`, `门禁历史`, `产物清单`, `待处理`, `未运行`, `进入 02 前`, `请确认/请补充` instead of English UI prose like `Phase Status`, `Gate History`, `Artifact Inventory`, `PENDING`, `NOT RUN`, `Before proceeding`, or `Could you provide`.
+
 Core routing rule:
 
 > Use provider skills as capability providers, not as owners of the workflow format.

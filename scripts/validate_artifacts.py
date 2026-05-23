@@ -157,6 +157,18 @@ WILDCARD_FILE_PATTERNS = [
     r"\b\*/\*\.vue\b",
 ]
 
+ENGLISH_UI_DRIFT_PATTERNS = [
+    r"^##\s+Phase\s+Status\b",
+    r"^##\s+Gate\s+History\b",
+    r"^##\s+Artifact\s+Inventory\b",
+    r"\bBefore\s+proceeding\s+to\b",
+    r"\bCould\s+you\s+provide\b",
+    r"\bHigh\s+priority\b",
+    r"\bMedium\s+priority\b",
+    r"\bPhase\s+\d+\s+requirements\s+analysis\s+is\s+complete\b",
+    r"\bAll\s+\d+\s+requirements\s+artifacts\s+created\s+and\s+validated\b",
+]
+
 INPUT_CONSUMPTION_REQUIREMENTS = {
     "02-full": {
         "file": "02_TECHNICAL_DESIGN.md",
@@ -357,6 +369,12 @@ def validate_language_contract(workflow_dir: pathlib.Path, gate_name: str, files
         text = read_text(path)
         cjk, latin_words = language_ratio(text)
         if language.lower().startswith("zh"):
+            for pattern in ENGLISH_UI_DRIFT_PATTERNS:
+                if re.search(pattern, text, re.I | re.M):
+                    failed |= fail(
+                        f"{gate_name} language drift in {relative}: English workflow prose matches `{pattern}`; "
+                        "rewrite headings/status/questions in Artifact language zh-CN"
+                    )
             if cjk < max(80, latin_words * 2):
                 failed |= fail(
                     f"{gate_name} language mismatch in {relative}: Artifact language is {language}, "

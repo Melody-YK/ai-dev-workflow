@@ -23,6 +23,7 @@ For Chinese PRDs or Chinese user instructions:
 - final phase summaries must be in Chinese;
 - checkpoint / clarification questions must be in Chinese;
 - artifact headings, labels, table headers, status notes, and handoff prompts must be in Chinese;
+- status dashboards such as “Phase Status”, “Gate History”, “Artifact Inventory”, “PENDING”, “NOT RUN”, “Before proceeding”, and “Could you provide…” must be localized before being written or shown;
 - do not switch to English just because provider skills, templates, filenames, or examples are English;
 - English technical identifiers such as file paths, API operation IDs, enum values, and command names may remain English.
 - if a phase artifact drifts into another natural language, rewrite the artifact before running or claiming the gate passed.
