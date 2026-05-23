@@ -81,6 +81,19 @@ def main() -> int:
     raw_summary = read_summary(source_prd)
     artifact_language = detect_language(args.feature, raw_summary)
 
+    if artifact_language.startswith("zh"):
+        next_action = (
+            "guided-auto：直接进入 01 需求工程；仅对阻塞澄清问题提出 decision brief。"
+            if args.mode == "guided-auto"
+            else "继续进入 01 需求发现/澄清判断；如有阻塞澄清问题，直接提出 decision brief。"
+        )
+    else:
+        next_action = (
+            "guided-auto: continue directly into 01 Requirements; ask a decision brief only for blocking clarification questions."
+            if args.mode == "guided-auto"
+            else "Continue into 01 Requirements discovery/clarification; ask decision briefs for blocking clarification questions."
+        )
+
     values = {
         "FEATURE_NAME": args.feature,
         "FEATURE_SLUG": feature_slug,
@@ -90,18 +103,14 @@ def main() -> int:
         "RAW_SUMMARY": raw_summary,
         "ARTIFACT_LANGUAGE": artifact_language,
         "CURRENT_PHASE": "01_REQUIREMENTS",
-        "CHECKPOINT_STATUS": "AUTO_CONTINUE_TO_01" if args.mode == "guided-auto" else "WAITING_FOR_HUMAN_CONFIRMATION",
+        "CHECKPOINT_STATUS": "AUTO_CONTINUE_TO_01" if args.mode == "guided-auto" else "READY_FOR_01_DISCOVERY",
         "PHASE_00_STATUS": "DONE",
         "PHASE_01_STATUS": "READY",
         "PHASE_02_STATUS": "NOT_STARTED",
         "PHASE_03_STATUS": "NOT_STARTED",
         "PHASE_04_STATUS": "NOT_STARTED",
         "PHASE_05_STATUS": "NOT_STARTED",
-        "NEXT_ACTION": (
-            "guided-auto: continue directly into 01 Requirements; ask a decision brief only for blocking clarification questions."
-            if args.mode == "guided-auto"
-            else "Run 01 Requirements with requirements-analyst after human confirmation."
-        ),
+        "NEXT_ACTION": next_action,
     }
 
     for template_path in sorted(TEMPLATES.glob("*.md")):

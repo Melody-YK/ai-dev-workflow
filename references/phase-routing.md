@@ -19,9 +19,11 @@ Phase chaining rule: every downstream phase must prove that it consumed upstream
 
 Use this orchestrator. Normalize the request and create workflow artifacts.
 
-Default/manual mode: do not invoke downstream skills yet; pause for confirmation before 01.
+Default run mode: if the user explicitly asked to use/run ai-dev-workflow with a PRD or requirement source, 00 is not a human gate. Initialize artifacts, then immediately continue into 01 discovery/clarification. Do not ask “是否继续进入 01” because that is not a meaningful human decision.
 
-Guided-auto/continuous mode: 00 is not a hard human gate. After artifacts are initialized and provider preflight is recorded, immediately continue into 01. If 01 has blocking questions, ask them as a decision brief; do not ask a separate “是否进入 01” confirmation.
+Init-only mode: pause after 00 only when the user explicitly asks to initialize/create artifacts but not analyze yet.
+
+After artifacts are initialized and provider preflight is recorded, immediately continue into 01. If 01 has blocking questions, ask them as a decision brief; do not ask a separate “是否进入 01” confirmation.
 
 ## 01 Requirements
 

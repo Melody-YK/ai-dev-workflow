@@ -126,10 +126,11 @@ python3 <skill-root>/scripts/init_workflow.py \
 4. 只填写 `00_INTAKE.md` 和必要的 `STATUS.md` 初始化状态。
 5. 在 `00_INTAKE.md` 中保留原始 PRD 路径/来源、摘要、已知约束、初始假设和开放问题。
 6. 将 `STATUS.md` 设置为 phase `01_REQUIREMENTS`。
-7. 默认模式：checkpoint 设为 `WAITING_FOR_HUMAN_CONFIRMATION`，暂停并询问用户是否继续运行 `01 Requirements`。
-8. `guided-auto` / continuous 模式：不要在 00 后做“是否继续”的确认门禁；checkpoint 设为 `AUTO_CONTINUE_TO_01` 或等价状态，并立即进入 01 的需求澄清/问答环节。如果有阻塞开放问题，直接提出 decision brief；如果没有阻塞问题，直接运行 01 Requirements。
+7. 如果用户已经明确要求“使用/运行 ai-dev-workflow”并给出 PRD/需求来源，00 后不要再问“是否继续进入 01”。这类确认是冗余普通推进门禁，会延迟真正的需求澄清。
+8. 默认行为：初始化后立即进入 01 的需求发现/澄清判断；如存在阻塞澄清问题，直接提出 decision brief；如果没有阻塞问题，继续运行 01 Requirements。
+9. 只有当用户只是要求“初始化/创建 workflow artifact，不继续分析”时，才在 00 后停住并等待继续指令。
 
-除非用户明确要求 unattended / continuous / guided-auto run，否则不要在初始化后自动进入需求分析。即使用户要求连续推进，每个阶段边界仍然必须更新 `STATUS.md`。
+即使自动越过 00→01 的普通推进确认，后续真正的人类门禁仍然必须保留：阻塞需求澄清、03 原型批准、04 实现执行批准。每个阶段边界仍然必须更新 `STATUS.md`。
 
 ## 阶段路由
 
@@ -237,7 +238,7 @@ Prototype 是 **decision artifact**，不是 shadow product。
 
 ### Guided-auto clarification protocol
 
-如果用户要求 `guided-auto` / 连续推进模式，agent 应自动越过普通“是否继续下一阶段”的门禁；但遇到需要人确认的开放问题时，必须主动提问，而不是把问题只写进 artifact 后继续推进。00 Intake 完成后不得要求用户先确认“是否进入 01”；应直接进入 01 的问答澄清或需求分析。
+当用户已经要求运行 workflow，agent 应自动越过 00→01 这种普通“是否继续下一阶段”的门禁；但遇到需要人确认的开放问题时，必须主动提问，而不是把问题只写进 artifact 后继续推进。00 Intake 完成后不得要求用户先确认“是否进入 01”；应直接进入 01 的问答澄清或需求分析。
 
 提问规则：
 
