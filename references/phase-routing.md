@@ -11,6 +11,8 @@ Core routing rule:
 
 AI Dev Workflow owns the artifact locations, handoff rules, status updates, and human gates. Provider-native rich outputs are welcome when useful, but they must live inside the workflow directory and be indexed by the phase summary/control artifact.
 
+Phase chaining rule: every downstream phase must prove that it consumed upstream artifacts. Starting with 02, the phase control artifact must include `## 输入消费证据` with real rows explaining which upstream conclusions/decisions/traceability/API/prototype/implementation evidence shaped the current phase. Listing filenames is not enough. Full gates fail if the section is missing, empty, or only contains template placeholders.
+
 ## 00 Intake
 
 Use this orchestrator. Normalize the request and create workflow artifacts.
@@ -72,6 +74,7 @@ First write provider-native review notes:
 - <workflow>/reviews/security-risk-review.md
 - <workflow>/reviews/qa-review.md
 Then write <workflow>/02_TECHNICAL_DESIGN.md as a workflow summary/control artifact with executive summary, recommended current delivery scope, non-goals, product review summary, engineering review summary, architecture, data model direction, state transitions, APIs/integrations, API contract review, risk register, and QA/test matrix. If an API boundary exists, review/update/freeze <workflow>/requirements/api.yaml; do not claim API alignment from prose alone.
+Fill `<workflow>/02_TECHNICAL_DESIGN.md` `## 输入消费证据` with concrete rows showing how 01 requirements, clarification decisions, traceability, and api.yaml shaped the review/design.
 If the review accepts, changes, defers, or rejects important requirements, update <workflow>/requirements/traceability.md, especially the primary feature table's design-decision column. Map core/MUST rows to concrete design modules, APIs, state transitions, permissions/security controls, and review decisions. Do not claim traceability was updated unless the main matrix cells actually changed from `TBD`.
 Surface decisions for human approval.
 Run `scripts/validate_artifacts.py <workflow> --gate 02-full` before marking 02 DONE.
@@ -101,6 +104,7 @@ Suggested handoff:
 ```text
 Read <workflow>/01_REQUIREMENTS.md, <workflow>/requirements/requirements.md, <workflow>/requirements/datamodel.md, <workflow>/requirements/clarification.md, <workflow>/requirements/validation.md, <workflow>/requirements/prd.md, <workflow>/02_TECHNICAL_DESIGN.md, and the source PRD.
 First write a prototype plan into <workflow>/03_PROTOTYPE.md with pages, source requirements, user flows, mock data, and out-of-scope items.
+Fill `<workflow>/03_PROTOTYPE.md` `## 输入消费证据` with concrete rows showing how requirements, clarification decisions, 02 review/design decisions, and traceability shaped the prototype plan.
 Wait for approval before generating pages.
 After approval, create <workflow>/prototype/index.html, <workflow>/prototype/css/style.css, and one HTML file per flow under <workflow>/prototype/pages/.
 Keep it pure static HTML/CSS unless Level 2 is explicitly approved.
@@ -136,6 +140,7 @@ Suggested handoff:
 ```text
 Read <workflow>/02_TECHNICAL_DESIGN.md, <workflow>/03_PROTOTYPE.md, the approved prototype if present, and the detailed requirements artifacts under <workflow>/requirements/.
 Do a short pre-plan sanity check in <workflow>/04_IMPLEMENTATION.md, including whether <workflow>/requirements/api.yaml is present/applicable when an API boundary exists. If api.yaml is missing for an API-bearing project, enter API_CONTRACT_DEGRADED and either backfill a baseline contract before implementation or explicitly limit the work and use degraded terminology. If there are no implementation-planning blockers, invoke/load superpowers writing-plans (`superpowers:writing-plans` or `providers/superpowers-adapter/references/source-skills/writing-plans/SKILL.md`) and create the authoritative deep implementation plan in <workflow>/implementation/IMPLEMENTATION_PLAN.md using native writing-plans shape: `REQUIRED SUB-SKILL`, Goal, Architecture, Tech Stack, `### Task N`, exact Files, checkbox action steps, failing-test/run-fail/minimal-implementation/run-pass cadence where testable, commands, expected output, commits/checkpoints, rollback/recovery notes, API contract parity checks including request/response schema, enum/required-field checks, semantic-risk notes, and traceability updates. Keep <workflow>/04_IMPLEMENTATION.md as the workflow summary/gate/evidence index and record Superpowers fidelity/planning source.
+Fill `<workflow>/04_IMPLEMENTATION.md` `## 输入消费证据` with concrete rows showing how requirements, 02 design/reviews, 03 prototype, and api.yaml constrained the implementation plan.
 Run `scripts/validate_artifacts.py <workflow> --gate 04-plan` before asking for implementation approval. Do not implement until approved. If execution is approved, update execution log, changed files, verification commands, and blockers as work proceeds. Before marking 04 complete or entering 05, run `scripts/validate_artifacts.py <workflow> --gate 04-complete`; if it fails, fix the artifacts or mark the phase blocked.
 ```
 
@@ -151,6 +156,7 @@ Read <workflow>/01_REQUIREMENTS.md, detailed artifacts under <workflow>/requirem
 Run available test/build/lint/typecheck/manual QA. If a command cannot run, record why and the impact.
 Check requirement coverage, prototype/page/role/state coverage, core paths, exception paths, permissions, API contract/backend route/frontend client parity, browser smoke evidence levels where applicable, code/architecture risks, semantic side effects of fixes, and release readiness. If api.yaml is missing for an API-bearing project, mark API_CONTRACT_DEGRADED and perform route parity only without claiming complete contract parity. Before finishing, run a cross-artifact consistency scan over 05_REVIEW, STATUS, and traceability.
 Write evidence, issues, fixes or recommendations, risk classification, and release readiness to <workflow>/05_REVIEW.md.
+Fill `<workflow>/05_REVIEW.md` `## 输入消费证据` with concrete rows showing how requirements, design/reviews, prototype, implementation plan/evidence, and actual code/diff determined the verification scope.
 Update <workflow>/requirements/traceability.md with verification evidence when useful.
 Before claiming verification complete, run `scripts/validate_artifacts.py <workflow> --gate 05-complete`. If the gate fails, the release recommendation must be `Blocked` or the missing evidence must be filled.
 ```

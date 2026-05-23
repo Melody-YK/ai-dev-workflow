@@ -26,6 +26,18 @@
 - `04_IMPLEMENTATION.md`
 - 实现 diff
 
+## 输入消费证据
+
+_本阶段必须明确说明 01/02/03/04 和实际实现如何共同决定验证范围。不能只列文件名。_
+
+| 输入 artifact | 已消费内容 | 对 05 验证范围的影响 | 证据位置 |
+|---|---|---|---|
+| `requirements/` / `traceability.md` |  |  |  |
+| `02_TECHNICAL_DESIGN.md` / `reviews/` |  |  |  |
+| `03_PROTOTYPE.md` / `prototype/` |  |  |  |
+| `04_IMPLEMENTATION.md` / `implementation/IMPLEMENTATION_PLAN.md` |  |  |  |
+| 实现 diff / 当前代码 |  |  |  |
+
 ## Provider contract
 
 - 默认 provider：superpowers verification + optional gstack-adapter over real external garrytan/gstack review/QA/risk review。review-pack 仅为 compact fallback。

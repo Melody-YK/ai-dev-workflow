@@ -24,6 +24,16 @@
 - 来源 PRD：`{{SOURCE_PRD}}`
 - 现有代码结构 / 技术约束（如存在）
 
+## 输入消费证据
+
+_本阶段必须明确说明上一阶段产物如何被消费。不能只列文件名；要写出用了哪些结论、决策、开放问题或 traceability 项。_
+
+| 输入 artifact | 已消费内容 | 对 02 的影响 | 证据位置 |
+|---|---|---|---|
+| `01_REQUIREMENTS.md` / `requirements/` |  |  |  |
+| `requirements/traceability.md` |  |  |  |
+| `requirements/api.yaml`（如适用） |  |  |  |
+
 ## Provider contract
 
 - 默认 provider：`gstack-adapter` + 真实外部 `garrytan/gstack`。

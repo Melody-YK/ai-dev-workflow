@@ -157,6 +157,33 @@ WILDCARD_FILE_PATTERNS = [
     r"\b\*/\*\.vue\b",
 ]
 
+INPUT_CONSUMPTION_REQUIREMENTS = {
+    "02-full": {
+        "file": "02_TECHNICAL_DESIGN.md",
+        "section": "## 输入消费证据",
+        "minimum_rows": 2,
+        "markers": ["01_REQUIREMENTS", "requirements", "traceability"],
+    },
+    "03-full": {
+        "file": "03_PROTOTYPE.md",
+        "section": "## 输入消费证据",
+        "minimum_rows": 2,
+        "markers": ["requirements", "02_TECHNICAL_DESIGN", "reviews"],
+    },
+    "04-plan": {
+        "file": "04_IMPLEMENTATION.md",
+        "section": "## 输入消费证据",
+        "minimum_rows": 3,
+        "markers": ["requirements", "02_TECHNICAL_DESIGN", "03_PROTOTYPE"],
+    },
+    "05-complete": {
+        "file": "05_REVIEW.md",
+        "section": "## 输入消费证据",
+        "minimum_rows": 4,
+        "markers": ["requirements", "02_TECHNICAL_DESIGN", "03_PROTOTYPE", "04_IMPLEMENTATION"],
+    },
+}
+
 
 def read_text(path: pathlib.Path) -> str:
     return path.read_text(encoding="utf-8", errors="replace")
@@ -222,8 +249,73 @@ def has_non_placeholder_table_row(text: str, header: str) -> bool:
     return False
 
 
+def table_rows_in_section(text: str, header: str) -> list[list[str]]:
+    idx = text.find(header)
+    if idx < 0:
+        return []
+    section = text[idx:]
+    next_header = re.search(r"\n##\s+", section[len(header) :])
+    if next_header:
+        section = section[: len(header) + next_header.start()]
+
+    rows: list[list[str]] = []
+    for line in section.splitlines():
+        stripped = line.strip()
+        if not stripped.startswith("|") or "---" in stripped:
+            continue
+        cells = [cell.strip() for cell in stripped.strip("|").split("|")]
+        if cells and cells[0] in {"输入 artifact", "Artifact", "artifact"}:
+            continue
+        rows.append(cells)
+    return rows
+
+
+def is_real_consumption_row(row: list[str]) -> bool:
+    if len(row) < 4:
+        return False
+    normalized = [cell.strip().strip("`") for cell in row]
+    if not normalized[0]:
+        return False
+    evidence_cells = normalized[1:]
+    if any(not cell for cell in evidence_cells):
+        return False
+    joined = " ".join(evidence_cells)
+    if re.fullmatch(r"(?:TBD|pending|planned|待填写|待补充|[-—]|\s)+", joined, re.I):
+        return False
+    return bool(re.search(r"\w|[\u4e00-\u9fff]", joined))
+
+
+def validate_input_consumption(workflow_dir: pathlib.Path, gate_name: str) -> bool:
+    requirement = INPUT_CONSUMPTION_REQUIREMENTS[gate_name]
+    path = workflow_dir / requirement["file"]
+    if not path.exists():
+        return fail(f"{gate_name} missing {requirement['file']} for input consumption evidence")
+
+    text = read_text(path)
+    section = requirement["section"]
+    if section not in text:
+        return fail(f"{gate_name} missing {section} section; next phase must prove it consumed previous outputs")
+
+    rows = table_rows_in_section(text, section)
+    real_rows = [row for row in rows if is_real_consumption_row(row)]
+    minimum_rows = int(requirement["minimum_rows"])
+    failed = False
+    if len(real_rows) < minimum_rows:
+        failed |= fail(
+            f"{gate_name} {section} has too few real consumed-input rows "
+            f"({len(real_rows)}/{minimum_rows}); do not advance without proving previous phase outputs shaped this phase"
+        )
+
+    joined = "\n".join(" | ".join(row) for row in real_rows)
+    for marker in requirement["markers"]:
+        if marker not in joined:
+            failed |= fail(f"{gate_name} input consumption evidence missing upstream marker: {marker}")
+    return failed
+
+
 def validate_04_plan(workflow_dir: pathlib.Path) -> bool:
     failed = False
+    failed |= validate_input_consumption(workflow_dir, "04-plan")
     plan = workflow_dir / "implementation" / "IMPLEMENTATION_PLAN.md"
     if not plan.exists():
         failed |= fail("04-plan missing implementation/IMPLEMENTATION_PLAN.md")
@@ -415,6 +507,7 @@ def validate_02_traceability_design(traceability: str) -> bool:
 def validate_02_full(workflow_dir: pathlib.Path) -> bool:
     """Require full gstack-adapter depth and provenance, not compact review notes."""
     failed = validate_01_full(workflow_dir)
+    failed |= validate_input_consumption(workflow_dir, "02-full")
     failed |= validate_min_size(workflow_dir, FULL_REVIEW_FILES, "02-full")
     design = read_text(workflow_dir / "02_TECHNICAL_DESIGN.md") if (workflow_dir / "02_TECHNICAL_DESIGN.md").exists() else ""
     traceability = read_text(workflow_dir / "requirements" / "traceability.md") if (workflow_dir / "requirements" / "traceability.md").exists() else ""
@@ -439,6 +532,7 @@ def validate_02_full(workflow_dir: pathlib.Path) -> bool:
 def validate_03_full(workflow_dir: pathlib.Path) -> bool:
     """Require requirements-analyst-style prototype closure and traceability."""
     failed = validate_02_full(workflow_dir)
+    failed |= validate_input_consumption(workflow_dir, "03-full")
     proto = workflow_dir / "03_PROTOTYPE.md"
     text = read_text(proto) if proto.exists() else ""
     status_text = read_text(workflow_dir / "STATUS.md") if (workflow_dir / "STATUS.md").exists() else ""
@@ -511,6 +605,7 @@ def validate_04_complete(workflow_dir: pathlib.Path) -> bool:
 
 def validate_05_complete(workflow_dir: pathlib.Path) -> bool:
     failed = validate_04_complete(workflow_dir)
+    failed |= validate_input_consumption(workflow_dir, "05-complete")
     review = workflow_dir / "05_REVIEW.md"
     text = read_text(review)
     for pattern in PLACEHOLDER_PATTERNS:

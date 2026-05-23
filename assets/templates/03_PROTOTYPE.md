@@ -13,6 +13,16 @@
 - `02_TECHNICAL_DESIGN.md`
 - 来源 PRD：`{{SOURCE_PRD}}`
 
+## 输入消费证据
+
+_本阶段必须明确说明需求、设计和评审结论如何影响原型页面。不能只列文件名。_
+
+| 输入 artifact | 已消费内容 | 对 03 原型的影响 | 证据位置 |
+|---|---|---|---|
+| `requirements/requirements.md` |  |  |  |
+| `requirements/clarification.md` / `open-questions.md` |  |  |  |
+| `02_TECHNICAL_DESIGN.md` / `reviews/` |  |  |  |
+
 ## 原型级别
 
 默认：Level 1 静态原型。

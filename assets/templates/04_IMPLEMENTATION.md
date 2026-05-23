@@ -26,6 +26,17 @@
 - `requirements/api.yaml`（API 边界存在时）
 - 现有代码结构和测试体系
 
+## 输入消费证据
+
+_本阶段必须明确说明 01/02/03 的产物如何约束实现计划。不能只列文件名。_
+
+| 输入 artifact | 已消费内容 | 对 04 实现计划的影响 | 证据位置 |
+|---|---|---|---|
+| `requirements/` |  |  |  |
+| `02_TECHNICAL_DESIGN.md` / `reviews/` |  |  |  |
+| `03_PROTOTYPE.md` / `prototype/` |  |  |  |
+| `requirements/api.yaml`（如适用） |  |  |  |
+
 ## Provider contract
 
 - 默认 provider：superpowers-style execution。

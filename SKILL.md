@@ -266,7 +266,7 @@ python3 <skill-root>/scripts/orchestrate.py gate <workflow-dir> 01
 - 必需 artifact 已存在。
 - artifact 中没有未处理的 `TBD`，除非已列入 Open Questions。
 - 关键 decisions 已记录在 `STATUS.md`。
-- 本阶段 consumed inputs 和 produced outputs 已写清楚。
+- 本阶段 `## 输入消费证据` 已写清楚：下一阶段必须说明上阶段哪些结论、决策、traceability/API/prototype/implementation 证据被消费，以及它们如何改变本阶段输出；不能只列文件名。
 - 下一阶段有明确 handoff prompt。
 - `01_REQUIREMENTS.md` 只做摘要、索引和门禁；详细需求产物应保存在 `requirements/`，不要被压扁进单一文件。
 - `requirements/requirements.md` 必须是 provider-native 的完整需求分析文档，质量应接近直接运行 `requirements-analyst` 的输出；如果它只有几张简表，不得把 01 阶段标记为 DONE。
