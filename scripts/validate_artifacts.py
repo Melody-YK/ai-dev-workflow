@@ -116,6 +116,26 @@ UNRESOLVED_QUESTION_PATTERNS = [
     r"needs?\s+human\s+(?:input|decision|confirmation)",
 ]
 
+CLARIFICATION_QUESTION_PATTERNS = [
+    r"澄清问题",
+    r"待澄清",
+    r"需要澄清",
+    r"请确认",
+    r"请补充",
+    r"进入\s*02\s*前",
+    r"Before\s+proceeding\s+to\s+Phase\s+02",
+    r"Could\s+you\s+provide",
+    r"clarification\s+questions?",
+    r"questions?\s+for\s+clarification",
+]
+
+PHASE_01_COMPLETE_PATTERNS = [
+    r"01\s+(?:COMPLETE|PASSED|DONE)",
+    r"Phase\s+01[^\n]{0,80}\b(?:complete|passed|done)\b",
+    r"01[^\n]{0,30}(?:完成|通过|已完成)",
+    r"需求(?:分析|工程)[^\n]{0,30}(?:完成|通过|已完成)",
+]
+
 PLACEHOLDER_PATTERNS = [
     r"\bTBD\b",
     r"\bpending\b",
@@ -507,6 +527,21 @@ def validate_01_full(workflow_dir: pathlib.Path) -> bool:
             failed |= fail(f"01-full validation.md missing validation dimension: {marker}")
     combined_decision_text = f"{clarification}\n{open_questions}\n{status_text}\n{phase_text}"
     has_human_decision = any(marker.lower() in combined_decision_text.lower() for marker in HUMAN_DECISION_MARKERS)
+    has_clarification_questions = any(
+        re.search(pattern, combined_decision_text, re.I) for pattern in CLARIFICATION_QUESTION_PATTERNS
+    )
+    claims_phase_01_complete = any(
+        re.search(pattern, combined_decision_text, re.I) for pattern in PHASE_01_COMPLETE_PATTERNS
+    )
+    if has_clarification_questions and not has_human_decision:
+        failed |= fail(
+            "01-full cannot pass while clarification questions are being shown/waiting for user answers; "
+            "mark phase 01 as NEEDS_HUMAN_INPUT instead of COMPLETE/PASSED"
+        )
+    if has_clarification_questions and claims_phase_01_complete:
+        failed |= fail(
+            "01-full artifact/status contradiction: phase 01 claims COMPLETE/PASSED while clarification questions remain"
+        )
     for pattern in UNRESOLVED_QUESTION_PATTERNS:
         if re.search(pattern, open_questions, re.I) and not has_human_decision:
             failed |= fail(
