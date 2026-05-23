@@ -5,9 +5,11 @@ description: Orchestrate a lightweight, artifact-driven AI development workflow 
 
 # AI Dev Workflow
 
-运行一套轻量、可控、以 artifact 为核心的 AI 研发工作流。
+运行一套可控、以 artifact 为核心的 AI 研发工作流。
 
-这个 skill 是一个编排器：它不替代 `requirements-analyst`、外部 `garrytan/gstack` 或 `superpowers` 的能力；内置 `review-pack` 只是紧凑评审 provider，不等同完整 gstack，而是负责阶段路由、产物管理、上下文交接和人工门禁。
+这个 skill 是一个 **orchestrated workflow package**：它不替代 `requirements-analyst`、外部 `garrytan/gstack` 或 `superpowers` 的能力；内置 `review-pack` 只是紧凑评审 provider，不等同完整 gstack。workflow 负责阶段状态机、provider routing、产物位置、强制 gate、失败修复循环和人工门禁。
+
+开始或恢复工作前先读取 `references/orchestration.md`。不要只靠本文件正文记忆阶段规则。
 
 
 ## Language and user-visible output
@@ -133,6 +135,7 @@ python3 <skill-root>/scripts/init_workflow.py \
 
 决策使用哪个能力时，读取：
 
+- `references/orchestration.md`
 - `references/phase-routing.md`
 - `references/capability-contracts.md`
 - `references/artifact-spec.md`
@@ -240,6 +243,17 @@ Prototype 是 **decision artifact**，不是 shadow product。
 当需要用户选择方案时，必须生成 decision brief，而不是只列选项。每个选项都必须有说明：适用场景、优点、缺点/代价、对后续阶段的影响。推荐项可以额外写推荐理由，但非推荐项不能留空或显示 `No preview available`。
 
 ## Quality gates
+
+质量门禁必须通过 `scripts/orchestrate.py gate <workflow-dir> <phase>` 或等价 validator 命令记录。不要只在回复里说“已通过”。
+
+推荐流程：
+
+```bash
+python3 <skill-root>/scripts/orchestrate.py mark-running <workflow-dir> 01
+python3 <skill-root>/scripts/orchestrate.py gate <workflow-dir> 01
+```
+
+如果 gate 失败，按 `references/orchestration.md` 的 forced gate loop 修复并重跑；最多 3 次后停止并标记具体 `NEEDS_*` / `BLOCKED_*` 状态。
 
 进入下一阶段前检查：
 

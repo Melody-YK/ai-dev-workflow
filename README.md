@@ -1,6 +1,6 @@
 # AI Dev Workflow
 
-AI Dev Workflow 是一个轻量、可控、contract-driven 的 AI 研发工作流编排器。
+AI Dev Workflow 是一个可控、contract-driven 的 orchestrated Claude Code workflow package。
 
 它把一个 PRD 或原始需求，拆成一条清晰、可恢复、可审计的研发链路：
 
@@ -8,7 +8,7 @@ AI Dev Workflow 是一个轻量、可控、contract-driven 的 AI 研发工作�
 PRD → Requirements → Product & Engineering Review → Prototype → Implementation → Verification
 ```
 
-核心目标不是让 AI 一口气自动做完所有事，而是让每个阶段都有明确输入、明确输出、人工确认点、provider contract 和可验证证据。
+核心目标不是让 AI 一口气自动做完所有事，而是让每个阶段都有明确输入、明确输出、人工确认点、provider contract、强制 gate、失败修复循环和可验证证据。
 
 ## 为什么需要它
 
@@ -37,7 +37,7 @@ AI Dev Workflow 的做法是：
 - **产物优先**：阶段输出必须写入文件，而不是只留在聊天记录里。
 - **人工门禁**：关键阶段默认暂停，等待人确认后再继续。
 - **能力编排**：按能力组织流程，而不是绑定某个固定工具。
-- **稳定契约**：AI Dev Workflow 定义阶段、门禁、产物位置和交接规则；外部 skill 只提供能力。
+- **稳定契约**：AI Dev Workflow 定义阶段、门禁、产物位置、状态机、失败修复循环和交接规则；外部 skill 只提供能力。
 - **可替换 skill**：`requirements-analyst`、真实外部 `garrytan/gstack`（经 adapter）、`superpowers` 是默认选择，但不是硬依赖。
 - **保留 provider 原生产物**：深度产物放在阶段子目录中，阶段主文件只做摘要、索引、门禁和证据。
 - **先原型后实现**：先用静态 HTML/CSS 验证页面、流程、角色和状态，再进入正式实现。
@@ -206,6 +206,13 @@ python3 scripts/init_workflow.py \
   --feature "feature-name"
 ```
 
+运行带状态写回的 phase gate：
+
+```bash
+python3 scripts/orchestrate.py gate "/path/to/project/.ai-workflow/<feature-slug>" 01
+python3 scripts/orchestrate.py validate-all "/path/to/project/.ai-workflow/<feature-slug>" --all
+```
+
 校验 artifact 是否完整：
 
 ```bash
@@ -244,6 +251,7 @@ provider 可以替换
 
 - [使用说明](USAGE.md)：详细说明如何初始化、推进阶段、检查 artifact。
 - [Artifact Spec](references/artifact-spec.md)：阶段产物、详细产物和目录结构契约。
+- [Orchestration](references/orchestration.md)：状态机、provider registry、强制 gate loop 和恢复命令。
 - [Phase Routing](references/phase-routing.md)：阶段推进、handoff 和门禁规则。
 - [工作流总览](references/workflow-overview.md)：主流程与 requirements 子流程图。
 - [能力契约](references/capability-contracts.md)：各阶段 provider 输入、输出和完成条件。

@@ -1,8 +1,19 @@
 # AI Dev Workflow 使用说明
 
-这是一套轻量、可控、可替换的 AI 研发工作流，用来把一个 PRD 或原始需求，按阶段交给不同能力型 skill 处理，并通过固定 artifact 文件完成交接。
+这是一套可控、可替换的 orchestrated AI 研发工作流，用来把一个 PRD 或原始需求，按阶段交给不同能力型 skill 处理，并通过固定 artifact 文件完成交接。
 
-核心目标不是“自动化一切”，而是让每一步都有明确输入、输出、人工确认点和质量门禁。
+核心目标不是“自动化一切”，而是让每一步都有明确输入、输出、人工确认点、状态机、强制质量门禁和失败修复循环。
+
+关键命令：
+
+```bash
+python3 scripts/orchestrate.py preflight .ai-workflow/<feature-slug> --project-root .
+python3 scripts/orchestrate.py mark-running .ai-workflow/<feature-slug> 01
+python3 scripts/orchestrate.py gate .ai-workflow/<feature-slug> 01
+python3 scripts/orchestrate.py validate-all .ai-workflow/<feature-slug> --all
+```
+
+真实 workflow 运行时优先用 `scripts/orchestrate.py gate`，因为它会把 gate evidence 写回 `STATUS.md` 和阶段 artifact；外部审计时再直接使用 `validate_artifacts.py`。
 
 AI Dev Workflow 定义稳定的阶段契约和 artifact 位置；`requirements-analyst`、真实外部 `garrytan/gstack`/review-pack fallback、`superpowers` 等 provider 是能力提供者，可以保留有价值的原生产物，但必须写入 workflow 指定的位置。
 
@@ -185,11 +196,11 @@ PRD.md
 01 要求满血 requirements-analyst 深度，而不是“摘要够用”。完成前 agent 必须运行并记录：
 
 ```bash
-python3 /Users/melody/.openclaw/workspace/ai-dev-workflow/scripts/validate_artifacts.py \
-  .ai-workflow/<feature-slug> --gate 01-full
+python3 /Users/melody/.openclaw/workspace/ai-dev-workflow/scripts/orchestrate.py gate \
+  .ai-workflow/<feature-slug> 01
 ```
 
-如果失败，01 不能标记 clean DONE；应继续扩展 provider-native artifacts，或明确标记 `DONE_DEGRADED`。
+如果失败，01 不能标记 clean DONE；应继续扩展 provider-native artifacts 并重跑 gate，最多 3 次后明确标记 `NEEDS_REQUIREMENTS_DEPTH` / `DONE_DEGRADED`。
 
 这一阶段重点检查：
 
@@ -234,11 +245,11 @@ PRD.md
 02 要求满血 gstack-adapter 深度。完成前 agent 必须运行并记录：
 
 ```bash
-python3 /Users/melody/.openclaw/workspace/ai-dev-workflow/scripts/validate_artifacts.py \
-  .ai-workflow/<feature-slug> --gate 02-full
+python3 /Users/melody/.openclaw/workspace/ai-dev-workflow/scripts/orchestrate.py gate \
+  .ai-workflow/<feature-slug> 02
 ```
 
-如果失败，不能宣称“完整 gstack 评审已通过”；应继续调用/映射真实 gstack slice，或标记 `NEEDS_GSTACK_DEPTH` / `DONE_DEGRADED`。
+如果失败，不能宣称“完整 gstack 评审已通过”；应继续调用/映射真实 gstack slice 并重跑 gate，最多 3 次后标记 `NEEDS_GSTACK_DEPTH` / `DONE_DEGRADED`。
 
 这一阶段重点检查：
 
@@ -293,8 +304,8 @@ prototype/pages/*.html
 进入 04 前必须运行并记录：
 
 ```bash
-python3 /Users/melody/.openclaw/workspace/ai-dev-workflow/scripts/validate_artifacts.py \
-  .ai-workflow/<feature-slug> --gate 03-full
+python3 /Users/melody/.openclaw/workspace/ai-dev-workflow/scripts/orchestrate.py gate \
+  .ai-workflow/<feature-slug> 03
 ```
 
 如果失败，先修 prototype approval、实际页面文件名和 traceability，不要进入 implementation。
@@ -335,8 +346,8 @@ implementation/IMPLEMENTATION_PLAN.md
 进入执行前，agent 必须运行并记录：
 
 ```bash
-python3 /Users/melody/.openclaw/workspace/ai-dev-workflow/scripts/validate_artifacts.py \
-  .ai-workflow/<feature-slug> --gate 04-plan
+python3 /Users/melody/.openclaw/workspace/ai-dev-workflow/scripts/orchestrate.py gate \
+  .ai-workflow/<feature-slug> 04-plan
 ```
 
 ### Step 5：执行实现
@@ -386,8 +397,8 @@ python3 /Users/melody/.openclaw/workspace/ai-dev-workflow/scripts/validate_artif
 完成前必须运行并记录：
 
 ```bash
-python3 /Users/melody/.openclaw/workspace/ai-dev-workflow/scripts/validate_artifacts.py \
-  .ai-workflow/<feature-slug> --gate 05-complete
+python3 /Users/melody/.openclaw/workspace/ai-dev-workflow/scripts/orchestrate.py gate \
+  .ai-workflow/<feature-slug> 05
 ```
 
 如果 gate 失败，不能输出 Ready / 全流程通过；发布就绪度必须是 `Blocked`，或者先补齐缺失证据。
@@ -519,12 +530,12 @@ D. 其他 / 自定义：你可以直接描述希望的首批范围。
 
 ## 10. 后续可增强点
 
-第一版故意保持简单。后续可以逐步加：
+0.2.0 已加入 orchestrated package 骨架：`scripts/orchestrate.py`、`/continue`、`/validate`、provider registry、phase runner gate 写回和 bounded repair loop。后续可以继续增强：
 
-- `STATE.json`：机器可读状态
-- slash command：一句话触发初始化/推进阶段
-- artifact validator：检查 TBD、遗漏字段、状态不一致
-- provider registry：把 requirements/review/superpowers 替换成任意同能力 skill
+- `STATE.json`：机器可读状态，减少 markdown 解析歧义
+- 真正的 Claude Code sub-agent 调度：把 `agents/*.md` 接入可并行/可恢复执行
+- 更语义化的质量检查：不仅看字数/marker，也抽查需求、评审和测试设计质量
+- provider registry 配置化：把 requirements/review/superpowers 替换成任意同能力 skill
 - retro 阶段：每次实现后沉淀工作流改进
 
 
