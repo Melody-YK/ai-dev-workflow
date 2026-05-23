@@ -69,7 +69,7 @@ Always pause for:
 - blocking open requirements decisions;
 - provider degradation acceptance;
 - prototype approval before implementation;
-- implementation execution after 04 planning;
+- implementation execution after 04 planning; this is a hard stop and requires explicit human/user approval, not agent self-approval or inline execution;
 - release readiness exceptions or unresolved high risks.
 
 Do not convert “artifact generated” into “user approved”.

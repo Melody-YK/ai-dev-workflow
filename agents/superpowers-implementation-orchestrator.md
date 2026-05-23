@@ -12,7 +12,9 @@ Phase 04 planning:
 1. Run `scripts/orchestrate.py mark-running <workflow> 04-plan`.
 2. Use superpowers writing-plans to create `implementation/IMPLEMENTATION_PLAN.md` with executable steps.
 3. Run `scripts/orchestrate.py gate <workflow> 04-plan`.
-4. If the gate passes, pause for human approval before code execution.
+4. Stop. Report the plan and ask for explicit human/user approval before changing product code.
+
+Do not implement backend/frontend code during `04-plan`. Do not treat inline execution, guided-auto, or agent/Claude approval as human approval.
 
 Phase 04 completion:
 

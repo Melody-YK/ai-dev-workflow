@@ -270,7 +270,7 @@ python3 <skill-root>/scripts/orchestrate.py gate <workflow-dir> 01
 - 01/02/03 要求 full-fidelity，不只看 provider availability。01 完成前必须通过 `--gate 01-full`；02 完成前必须通过 `--gate 02-full`；03 进入 04 前必须通过 `--gate 03-full`。如果 gate 失败，不能宣称“满血 requirements-analyst / gstack / prototype”，应标记 `NEEDS_*_DEPTH` 或 `DONE_DEGRADED`。
 - 02 不只是写 review summary。gstack 评审后必须回填 `requirements/traceability.md` 主矩阵的设计列，把核心/MUST需求映射到具体模块、API、状态流转、权限/安全控制和评审决策；只追加“评审决策追溯”小节但主矩阵仍是 `TBD` 不算通过。
 - 不得自我批准 prototype。`03-full` 可以证明原型产物完整，但如果状态仍写着 `awaiting human approval`、`待确认`、`待人工确认` 等，必须停在 03 等用户确认，不能把“用户已批准原型”勾上后进入 04。
-- 04 进入执行前必须通过 `scripts/validate_artifacts.py <workflow-dir> --gate 04-plan`；04 进入 05 前必须通过 `--gate 04-complete`。如果代码已改但 04 artifact 仍是模板、空表或 `TBD`，标记 `BLOCKED_ARTIFACT_DRIFT`，不要继续。
+- 04 进入执行前必须通过 `scripts/validate_artifacts.py <workflow-dir> --gate 04-plan`，然后停下来等待用户明确批准执行；guided-auto、inline execution、Claude/agent 自批都不算批准。04 进入 05 前必须通过 `--gate 04-complete`。如果代码已改但 04 artifact 仍是模板、空表或 `TBD`，或缺少明确人工执行批准，标记 `BLOCKED_ARTIFACT_DRIFT`，不要继续。
 - 05 完成前必须通过 `scripts/validate_artifacts.py <workflow-dir> --gate 05-complete`。如果证据缺失或命令失败未处理，发布建议必须是 `Blocked`，不能输出 Ready / 全流程通过。
 
 基础结构检查：

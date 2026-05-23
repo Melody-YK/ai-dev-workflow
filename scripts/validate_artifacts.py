@@ -63,6 +63,28 @@ PROTOTYPE_OPTIONAL_PATHS = [
     "prototype/pages",
 ]
 
+PRODUCT_CODE_DIRS = [
+    "app",
+    "backend",
+    "frontend",
+    "src",
+    "server",
+    "client",
+    "api",
+    "web",
+]
+
+SELF_APPROVAL_PATTERNS = [
+    r"inline\s+execution",
+    r"self[-\s]?approved",
+    r"auto[-\s]?approved",
+    r"approved\s+by\s+(?:claude|agent|ai)",
+    r"reviewer:\s*(?:claude|agent|ai)",
+    r"审批人：\s*(?:Claude|Agent|AI|模型|自动)",
+    r"计划审批状态：\s*(?:APPROVED|已批准|通过)",
+    r"执行审批状态：\s*(?:APPROVED|已批准|通过)",
+]
+
 PLACEHOLDER_PATTERNS = [
     r"\bTBD\b",
     r"\bpending\b",
@@ -152,6 +174,22 @@ def validate_04_plan(workflow_dir: pathlib.Path) -> bool:
         failed |= fail(f"04-plan missing required execution-unit markers: {', '.join(missing)}")
     if not re.search(r"^###\s+Step\s+\d+", text, re.M):
         failed |= fail("04-plan missing `### Step <n>` execution units")
+
+    impl_text = read_text(workflow_dir / "04_IMPLEMENTATION.md") if (workflow_dir / "04_IMPLEMENTATION.md").exists() else ""
+    status_text = read_text(workflow_dir / "STATUS.md") if (workflow_dir / "STATUS.md").exists() else ""
+    combined = f"{text}\n{impl_text}\n{status_text}"
+    for pattern in SELF_APPROVAL_PATTERNS:
+        if re.search(pattern, combined, re.I):
+            failed |= fail(f"04-plan cannot pass with inline/agent self-approval marker: {pattern}")
+
+    code_dirs = [relative for relative in PRODUCT_CODE_DIRS if (workflow_dir.parents[1] / relative).exists()]
+    if code_dirs:
+        failed |= fail(
+            "04-plan found product code before the planning gate/execution approval: "
+            + ", ".join(code_dirs[:12])
+        )
+    if re.search(r"\b(COMPLETED|DONE)\b|已完成|Gate 04-complete", impl_text, re.I):
+        failed |= fail("04-plan cannot pass after 04 implementation/completion has already been recorded")
     return failed
 
 
@@ -337,6 +375,11 @@ def validate_04_complete(workflow_dir: pathlib.Path) -> bool:
     failed = validate_04_plan(workflow_dir)
     impl = workflow_dir / "04_IMPLEMENTATION.md"
     text = read_text(impl)
+    for pattern in SELF_APPROVAL_PATTERNS:
+        if re.search(pattern, text, re.I):
+            failed |= fail(f"04-complete cannot pass with inline/agent self-approval marker: {pattern}")
+    if not re.search(r"(Plan approval|计划审批|实现计划已批准|执行审批).*?(user|human|用户|人工|Melody|兄弟|明确批准)", text, re.I | re.S):
+        failed |= fail("04-complete missing explicit human/user approval evidence for implementation execution")
     for pattern in [r"计划审批状态：TBD", r"执行审批状态：TBD"]:
         if re.search(pattern, text):
             failed |= fail(f"04-complete unresolved approval placeholder: {pattern}")
