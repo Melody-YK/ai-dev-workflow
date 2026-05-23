@@ -126,6 +126,37 @@ PLACEHOLDER_PATTERNS = [
     r"建议：TBD",
 ]
 
+SUPERPOWERS_FULL_MARKERS = [
+    "REQUIRED SUB-SKILL",
+    "**Goal:**",
+    "**Architecture:**",
+    "**Tech Stack:**",
+]
+
+SUPERPOWERS_STEP_MARKERS = [
+    "Write the failing test",
+    "Run test to verify it fails",
+    "Write minimal implementation",
+    "Run test to verify it passes",
+]
+
+SUPERPOWERS_PLACEHOLDER_PATTERNS = [
+    r"\bTBD\b",
+    r"\bTODO\b",
+    r"implement later",
+    r"add appropriate error handling",
+    r"write tests for (?:the )?above",
+    r"similar to Task",
+]
+
+WILDCARD_FILE_PATTERNS = [
+    r"\bcontroller/\*\.java\b",
+    r"\bservice/\*\.java\b",
+    r"\bmapper/\*\.java\b",
+    r"\b\*/\*\.java\b",
+    r"\b\*/\*\.vue\b",
+]
+
 
 def read_text(path: pathlib.Path) -> str:
     return path.read_text(encoding="utf-8", errors="replace")
@@ -203,16 +234,30 @@ def validate_04_plan(workflow_dir: pathlib.Path) -> bool:
     required = [
         "Traceability",
         "Files",
-        "Test/verification first",
         "Commands",
         "Pass criteria",
-        "Failure handling",
     ]
     missing = contains_required_markers(text, required)
     if missing:
         failed |= fail(f"04-plan missing required execution-unit markers: {', '.join(missing)}")
-    if not re.search(r"^###\s+Step\s+\d+", text, re.M):
-        failed |= fail("04-plan missing `### Step <n>` execution units")
+    if not re.search(r"Superpowers fidelity\s*[:：]\s*(ADAPTER_FULL|BUNDLED_SOURCE_SLICE)", text + "\n" + (read_text(workflow_dir / "04_IMPLEMENTATION.md") if (workflow_dir / "04_IMPLEMENTATION.md").exists() else ""), re.I):
+        failed |= fail("04-plan missing full/source-slice superpowers fidelity evidence")
+    missing_native = contains_required_markers(text, SUPERPOWERS_FULL_MARKERS)
+    if missing_native:
+        failed |= fail("04-plan missing native writing-plans header markers: " + ", ".join(missing_native))
+    if not re.search(r"^###\s+Task\s+\d+", text, re.M):
+        failed |= fail("04-plan missing native `### Task N` writing-plans structure")
+    if not re.search(r"^- \[ \]\s+\*\*Step\s+\d+:", text, re.M):
+        failed |= fail("04-plan missing checkbox `- [ ] **Step N:` action steps")
+    missing_steps = contains_required_markers(text, SUPERPOWERS_STEP_MARKERS)
+    if missing_steps:
+        failed |= fail("04-plan missing TDD action-step markers: " + ", ".join(missing_steps))
+    for pattern in SUPERPOWERS_PLACEHOLDER_PATTERNS:
+        if re.search(pattern, text, re.I):
+            failed |= fail(f"04-plan contains superpowers-forbidden placeholder/instruction: {pattern}")
+    for pattern in WILDCARD_FILE_PATTERNS:
+        if re.search(pattern, text, re.I):
+            failed |= fail(f"04-plan uses wildcard file plan instead of exact file paths: {pattern}")
 
     impl_text = read_text(workflow_dir / "04_IMPLEMENTATION.md") if (workflow_dir / "04_IMPLEMENTATION.md").exists() else ""
     status_text = read_text(workflow_dir / "STATUS.md") if (workflow_dir / "STATUS.md").exists() else ""

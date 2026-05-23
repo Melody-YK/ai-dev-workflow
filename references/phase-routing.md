@@ -111,7 +111,7 @@ If the gate fails because approval is pending, ask the user to approve/request c
 
 ## 04 Implementation
 
-Use superpowers after design and prototype approval. See `references/provider-contracts/superpowers-execution.md`. First write a plan, then execute only after approval unless the user asks for unattended execution.
+Use superpowers after design and prototype approval. See `references/provider-contracts/superpowers-execution.md`. First write a plan, then execute only after approval unless the user asks for unattended execution. Prefer native external superpowers invocation; if unavailable, load the bundled source skill slice from `providers/superpowers-adapter/references/source-skills/` and record the fidelity tier.
 
 04 has two separate gates:
 
@@ -120,7 +120,7 @@ Use superpowers after design and prototype approval. See `references/provider-co
 
 If code has already been changed but `04_IMPLEMENTATION.md` still has template rows, `TBD` approvals, empty execution logs, empty verification commands, or empty changed-file lists, the phase must be marked `BLOCKED_ARTIFACT_DRIFT` / not complete. Backfill evidence before entering 05; do not silently proceed.
 
-Do not rerun full brainstorming by default. 01/02/03 already cover requirements clarification, option review, decision confirmation, and prototype validation. In 04, perform only a short pre-plan sanity check for blockers; if none exist, go directly to superpowers writing-plans.
+Do not rerun full brainstorming by default. 01/02/03 already cover requirements clarification, option review, decision confirmation, and prototype validation. In 04, perform only a short pre-plan sanity check for blockers; if none exist, go directly to native/source-slice superpowers writing-plans.
 
 Keep the provider-native deep plan separate from the workflow summary:
 
@@ -135,7 +135,7 @@ Suggested handoff:
 
 ```text
 Read <workflow>/02_TECHNICAL_DESIGN.md, <workflow>/03_PROTOTYPE.md, the approved prototype if present, and the detailed requirements artifacts under <workflow>/requirements/.
-Do a short pre-plan sanity check in <workflow>/04_IMPLEMENTATION.md, including whether <workflow>/requirements/api.yaml is present/applicable when an API boundary exists. If api.yaml is missing for an API-bearing project, enter API_CONTRACT_DEGRADED and either backfill a baseline contract before implementation or explicitly limit the work and use degraded terminology. If there are no implementation-planning blockers, create the authoritative deep implementation plan in <workflow>/implementation/IMPLEMENTATION_PLAN.md with small TDD-oriented tasks, exact files, commands, expected results, checkpoints, rollback/recovery notes, API contract parity checks including request/response schema, enum/required-field checks, semantic-risk notes, and traceability updates. Keep <workflow>/04_IMPLEMENTATION.md as the workflow summary/gate/evidence index.
+Do a short pre-plan sanity check in <workflow>/04_IMPLEMENTATION.md, including whether <workflow>/requirements/api.yaml is present/applicable when an API boundary exists. If api.yaml is missing for an API-bearing project, enter API_CONTRACT_DEGRADED and either backfill a baseline contract before implementation or explicitly limit the work and use degraded terminology. If there are no implementation-planning blockers, invoke/load superpowers writing-plans (`superpowers:writing-plans` or `providers/superpowers-adapter/references/source-skills/writing-plans/SKILL.md`) and create the authoritative deep implementation plan in <workflow>/implementation/IMPLEMENTATION_PLAN.md using native writing-plans shape: `REQUIRED SUB-SKILL`, Goal, Architecture, Tech Stack, `### Task N`, exact Files, checkbox action steps, failing-test/run-fail/minimal-implementation/run-pass cadence where testable, commands, expected output, commits/checkpoints, rollback/recovery notes, API contract parity checks including request/response schema, enum/required-field checks, semantic-risk notes, and traceability updates. Keep <workflow>/04_IMPLEMENTATION.md as the workflow summary/gate/evidence index and record Superpowers fidelity/planning source.
 Run `scripts/validate_artifacts.py <workflow> --gate 04-plan` before asking for implementation approval. Do not implement until approved. If execution is approved, update execution log, changed files, verification commands, and blockers as work proceeds. Before marking 04 complete or entering 05, run `scripts/validate_artifacts.py <workflow> --gate 04-complete`; if it fails, fix the artifacts or mark the phase blocked.
 ```
 

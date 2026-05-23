@@ -39,6 +39,25 @@
 | verification-before-completion | 完成前运行测试/build/lint/手工 QA 并记录证据 | `04_IMPLEMENTATION.md` / `05_REVIEW.md` |
 | requesting-code-review | 请求或模拟代码评审，记录发现和处理结果 | `05_REVIEW.md` |
 
+## Fidelity tiers and source skills
+
+Do not infer full superpowers fidelity from provider availability alone.
+
+- `ADAPTER_FULL`: the host runtime actually invoked the native external superpowers skill, e.g. `superpowers:writing-plans`, `superpowers:subagent-driven-development`, `superpowers:executing-plans`, `superpowers:verification-before-completion`, or `superpowers:requesting-code-review`, and the output is mapped into workflow artifacts.
+- `BUNDLED_SOURCE_SLICE`: native skill invocation was unavailable, but the source-derived files under `providers/superpowers-adapter/references/source-skills/` were loaded and followed.
+- `COMPACT_FALLBACK` / `SUPERPOWERS_STYLE`: only summaries/contracts were followed. This must not be called full superpowers output.
+
+Required source files by phase:
+
+- 04 planning: `providers/superpowers-adapter/references/source-skills/writing-plans/SKILL.md`.
+- 04 execution with subagents: `providers/superpowers-adapter/references/source-skills/subagent-driven-development/SKILL.md` plus its prompt files.
+- 04 inline execution: `providers/superpowers-adapter/references/source-skills/executing-plans/SKILL.md`.
+- Testable implementation work: `providers/superpowers-adapter/references/source-skills/test-driven-development/SKILL.md`.
+- 05 verification: `providers/superpowers-adapter/references/source-skills/verification-before-completion/SKILL.md`.
+- 05 review: `providers/superpowers-adapter/references/source-skills/requesting-code-review/SKILL.md`.
+
+Phase artifacts must record `Superpowers fidelity`, `Planning source`, and the intended/used execution source. If this evidence is missing, the phase is at most `COMPACT_FALLBACK`.
+
 ## 04 阶段输出要求
 
 04 阶段默认不重新执行完整 `brainstorming`。01/02/03 已经负责需求澄清、方案发散/评审、决策确认和原型验证。04 只允许做轻量 pre-plan sanity check：读取既有产物，确认是否有仍阻塞实现计划的 open decisions；若无 blocker，直接进入 `writing-plans`。
@@ -51,6 +70,11 @@ implementation/IMPLEMENTATION_PLAN.md  # superpowers writing-plans 的权威深�
 ```
 
 `implementation/IMPLEMENTATION_PLAN.md` 必须保留完整 planning 深度，不得被压缩进 `04_IMPLEMENTATION.md` 的摘要表格。它至少包含：
+
+- Native writing-plans header: plan title, `For agentic workers: REQUIRED SUB-SKILL...`, `Goal`, `Architecture`, and `Tech Stack`.
+- Task/checkbox shape from `writing-plans`: `### Task N`, exact `Files` section, and `- [ ] Step ...` entries.
+- Bite-sized steps: tasks must be executable by an agent with little project context; avoid giant module buckets.
+- No placeholders: no `TBD`, `TODO`, `implement later`, `add appropriate error handling`, `write tests for the above`, `similar to Task N`, or unexplained wildcard file plans as primary instructions.
 
 - 实现计划：任务、目标、涉及文件、依赖、预期结果。
 - 小步执行单元：每个任务必须拆成可单独执行/验证的步骤，而不是只写模块大纲。
